@@ -5,7 +5,7 @@ import { Mail, Lock, User, ArrowRight, Activity, ShieldCheck } from 'lucide-reac
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', regCode: '' });
   const [error, setError] = useState('');
   const { login, register } = useAuth();
 
@@ -14,7 +14,7 @@ const Login = () => {
     setError('');
     const res = isLogin 
       ? await login(formData.email, formData.password)
-      : await register(formData.name, formData.email, formData.password);
+      : await register(formData.name, formData.email, formData.password, formData.regCode);
     
     if (!res.success) setError(res.message);
   };
@@ -42,6 +42,7 @@ const Login = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
               >
                 <div className="input-group">
                   <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem' }}>
@@ -53,6 +54,18 @@ const Login = () => {
                     required 
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  />
+                </div>
+                <div className="input-group">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem' }}>
+                    <ShieldCheck size={16} /> Registration Code
+                  </label>
+                  <input 
+                    type="text" 
+                    placeholder="ZEN2026" 
+                    required 
+                    value={formData.regCode}
+                    onChange={(e) => setFormData({...formData, regCode: e.target.value})}
                   />
                 </div>
               </motion.div>
