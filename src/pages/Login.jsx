@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight, Activity, ShieldCheck, DollarSign } from 'lucide-react';
 
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', password: '', regCode: '' });
   const [error, setError] = useState('');
   const { login, register } = useAuth();
@@ -50,7 +50,7 @@ const Login = () => {
                   </label>
                   <input 
                     type="text" 
-                    placeholder="John Doe" 
+                    placeholder="E.g. Ahmed Ali" 
                     required 
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -58,11 +58,11 @@ const Login = () => {
                 </div>
                 <div className="input-group">
                   <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem' }}>
-                    <ShieldCheck size={16} /> Registration Code
+                    <ShieldCheck size={16} /> Invitation Code
                   </label>
                   <input 
                     type="text" 
-                    placeholder="ZEN2026" 
+                    placeholder="Enter Invitation Code" 
                     required 
                     value={formData.regCode}
                     onChange={(e) => setFormData({...formData, regCode: e.target.value})}
@@ -78,7 +78,7 @@ const Login = () => {
             </label>
             <input 
               type="email" 
-              placeholder="trader@zen.com" 
+              placeholder="name@email.com" 
               required 
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
