@@ -4,6 +4,11 @@ const User = require('../models/User');
 const Account = require('../models/Account');
 const router = express.Router();
 
+// @route   GET api/auth/test
+router.get('/test', (req, res) => {
+  res.json({ message: 'Auth route is working' });
+});
+
 // @route   POST api/auth/register
 // @desc    Register user
 router.post('/register', async (req, res) => {
