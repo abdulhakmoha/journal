@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator as CalcIcon, DollarSign, Percent, ArrowRight, Target, AlertCircle, ShieldCheck, Activity } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Calculator as CalcIcon, DollarSign, Percent, ArrowRight, Target, AlertCircle, ShieldCheck, Activity, Plus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const Calculator = ({ accounts }) => {
+const Calculator = ({ accounts, onAddAccount }) => {
   const [selectedAccount, setSelectedAccount] = useState(accounts[0] || { name: 'Custom', initialBalance: 10000 });
   const [customBalance, setCustomBalance] = useState(10000);
   const [isCustom, setIsCustom] = useState(accounts.length === 0);
@@ -11,6 +11,18 @@ const Calculator = ({ accounts }) => {
   const [pipValue, setPipValue] = useState(10); // Standard for 1 lot on USD pairs
   const [lotSize, setLotSize] = useState(0);
   const [riskAmount, setRiskAmount] = useState(0);
+  
+  // New Account Modal State
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newAccountForm, setNewAccountForm] = useState({ name: '', initialBalance: '', type: 'Personal', target: 0 });
+
+  const handleCreateAccount = async (e) => {
+    e.preventDefault();
+    if (!newAccountForm.name || !newAccountForm.initialBalance) return alert('Fadlan buuxi meelaha bannaan');
+    await onAddAccount(newAccountForm);
+    setShowAddModal(false);
+    setNewAccountForm({ name: '', initialBalance: '', type: 'Personal', target: 0 });
+  };
 
   useEffect(() => {
     const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
@@ -42,23 +54,33 @@ const Calculator = ({ accounts }) => {
                 <Activity size={16} color="var(--primary)" /> Account Source
               </label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                <select 
-                  value={isCustom ? 'custom' : selectedAccount?._id} 
-                  onChange={(e) => {
-                    if (e.target.value === 'custom') {
-                      setIsCustom(true);
-                    } else {
-                      setIsCustom(false);
-                      setSelectedAccount(accounts.find(a => a._id === e.target.value));
-                    }
-                  }}
-                  style={{ width: '100%', padding: '15px', fontSize: '1rem' }}
-                >
-                  {accounts.map(acc => (
-                    <option key={acc._id} value={acc._id}>{acc.name} (${acc.initialBalance.toLocaleString()})</option>
-                  ))}
-                  <option value="custom">✍️ Custom Balance (Manual Entry)</option>
-                </select>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <select 
+                    value={isCustom ? 'custom' : selectedAccount?._id} 
+                    onChange={(e) => {
+                      if (e.target.value === 'custom') {
+                        setIsCustom(true);
+                      } else {
+                        setIsCustom(false);
+                        setSelectedAccount(accounts.find(a => a._id === e.target.value));
+                      }
+                    }}
+                    style={{ flex: 1, padding: '15px', fontSize: '1rem' }}
+                  >
+                    {accounts.map(acc => (
+                      <option key={acc._id} value={acc._id}>{acc.name} (${acc.initialBalance.toLocaleString()})</option>
+                    ))}
+                    <option value="custom">✍️ Custom Balance (Manual Entry)</option>
+                  </select>
+                  <button 
+                    onClick={() => setShowAddModal(true)}
+                    className="btn-secondary" 
+                    style={{ padding: '0 15px', borderRadius: '12px' }}
+                    title="Add New Account"
+                  >
+                    <Plus size={20} />
+                  </button>
+                </div>
                 
                 {isCustom && (
                   <div style={{ position: 'relative' }}>
@@ -170,6 +192,47 @@ const Calculator = ({ accounts }) => {
         </div>
 
       </div>
+
+      {/* Add Account Modal */}
+      <AnimatePresence>
+        {showAddModal && (
+          <div className="modal-overlay">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="glass-card" 
+              style={{ width: '100%', maxWidth: '400px', padding: '30px' }}
+            >
+              <h3 style={{ marginBottom: '20px' }}>Add New Trading Account</h3>
+              <form onSubmit={handleCreateAccount} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div className="input-group">
+                  <label>Account Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. My Funding Account" 
+                    value={newAccountForm.name}
+                    onChange={(e) => setNewAccountForm({...newAccountForm, name: e.target.value})}
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Initial Balance ($)</label>
+                  <input 
+                    type="number" 
+                    placeholder="10000" 
+                    value={newAccountForm.initialBalance}
+                    onChange={(e) => setNewAccountForm({...newAccountForm, initialBalance: e.target.value})}
+                  />
+                </div>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                  <button type="button" onClick={() => setShowAddModal(false)} className="btn-secondary" style={{ flex: 1 }}>Cancel</button>
+                  <button type="submit" className="btn-primary" style={{ flex: 1 }}>Create Account</button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
