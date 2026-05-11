@@ -21,25 +21,30 @@ router.post('/register', async (req, res) => {
 
     user = new User({ name, email, password });
     await user.save();
+    console.log('User created successfully:', user._id);
 
-    // Create an initial account for the new user
-    const initialAccount = new Account({
-      user: user._id,
-      name: 'Primary Account',
-      type: 'Personal',
-      initialBalance: req.body.initialBalance || 10000,
-      target: 0
-    });
-    await initialAccount.save();
+    // Create an initial account for the new user (Non-blocking)
+    try {
+      const initialAccount = new Account({
+        user: user._id,
+        name: 'Primary Account',
+        type: 'Personal',
+        initialBalance: 10000,
+        target: 0
+      });
+      await initialAccount.save();
+      console.log('Initial account created for user:', user._id);
+    } catch (accErr) {
+      console.error('Initial Account Creation Failed (Non-blocking):', accErr.message);
+    }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '30d' });
     res.status(201).json({ token, user: { id: user._id, name, email } });
   } catch (err) {
-    console.error('Registration Error Details:', err);
+    console.error('REGISTRATION_CRITICAL_ERROR:', err.message);
     res.status(500).json({ 
-      message: 'Registration failed', 
-      error: err.message,
-      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined 
+      message: 'Registration failed: ' + err.message,
+      error: err.message
     });
   }
 });
