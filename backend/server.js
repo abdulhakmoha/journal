@@ -21,9 +21,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 
 // Database Connection
+console.log('Connecting to MongoDB...');
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/zentrader')
   .then(() => console.log('✅ Connected to MongoDB (ZenTrader)'))
-  .catch((err) => console.error('❌ MongoDB Connection Error:', err));
+  .catch((err) => {
+    console.error('❌ MongoDB Connection Error:', err.message);
+    console.error('MONGO_URI exists:', !!process.env.MONGO_URI);
+  });
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
