@@ -38,7 +38,7 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
 
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'ZenTrader API is running ✅' });
+  res.json({ status: 'ok', message: 'ZenTrader API v2.0 - Running ✅' });
 });
 
 app.get('/health', (req, res) => {
