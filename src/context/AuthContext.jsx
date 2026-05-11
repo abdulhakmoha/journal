@@ -42,10 +42,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (name, email, password, regCode) => {
+  const register = async (name, email, password, regCode, initialBalance) => {
     try {
       console.log('Attempting registration...');
-      const res = await api.post('/api/auth/register', { name, email, password, regCode });
+      const res = await api.post('/api/auth/register', { name, email, password, regCode, initialBalance });
       localStorage.setItem('zentrader_token', res.data.token);
       setToken(res.data.token);
       setUser(res.data.user);

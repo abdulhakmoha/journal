@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Lock, User, ArrowRight, Activity, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Activity, ShieldCheck, DollarSign } from 'lucide-react';
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', regCode: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', regCode: '', initialBalance: '' });
   const [error, setError] = useState('');
   const { login, register } = useAuth();
 
@@ -14,7 +14,7 @@ const Login = () => {
     setError('');
     const res = isLogin 
       ? await login(formData.email, formData.password)
-      : await register(formData.name, formData.email, formData.password, formData.regCode);
+      : await register(formData.name, formData.email, formData.password, formData.regCode, formData.initialBalance);
     
     if (!res.success) setError(res.message);
   };
@@ -66,6 +66,18 @@ const Login = () => {
                     required 
                     value={formData.regCode}
                     onChange={(e) => setFormData({...formData, regCode: e.target.value})}
+                  />
+                </div>
+                <div className="input-group">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem' }}>
+                    <DollarSign size={16} /> Initial Balance ($)
+                  </label>
+                  <input 
+                    type="number" 
+                    placeholder="e.g. 10000" 
+                    required 
+                    value={formData.initialBalance}
+                    onChange={(e) => setFormData({...formData, initialBalance: e.target.value})}
                   />
                 </div>
               </motion.div>
