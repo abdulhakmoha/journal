@@ -110,12 +110,12 @@ function App() {
 
   const handleUpdateProfile = async (profileData) => {
     try {
-      const config = { headers: { 'x-auth-token': token } };
-      const res = await axios.put(`${API_URL}/user/profile`, profileData, config);
+      const res = await api.put('/api/user/profile', profileData);
       setUser(res.data);
       alert('System Config Updated!');
     } catch (err) {
-      alert('Error updating profile');
+      console.error('Profile update error:', err);
+      alert('Error updating profile: ' + (err.response?.data?.message || err.message));
     }
   };
 
