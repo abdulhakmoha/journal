@@ -8,13 +8,7 @@ const router = express.Router();
 // @desc    Register user
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, regCode } = req.body;
-    
-    // Check Registration Code
-    const MASTER_CODE = process.env.REGISTRATION_CODE || 'ZEN2026';
-    if (regCode !== MASTER_CODE) {
-      return res.status(403).json({ message: 'Invalid Registration Code. Only authorized users can sign up.' });
-    }
+    const { name, email, password } = req.body;
     
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: 'User already exists' });

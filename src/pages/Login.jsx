@@ -56,18 +56,6 @@ const Login = () => {
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                   />
                 </div>
-                <div className="input-group">
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem' }}>
-                    <ShieldCheck size={16} /> Invitation Code
-                  </label>
-                  <input 
-                    type="text" 
-                    placeholder="Invitation Code (e.g. ZEN2026)" 
-                    required 
-                    value={formData.regCode}
-                    onChange={(e) => setFormData({...formData, regCode: e.target.value})}
-                  />
-                </div>
               </motion.div>
             )}
           </AnimatePresence>
