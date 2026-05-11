@@ -187,7 +187,12 @@ const Backtest = ({ backtestFields, accounts }) => {
       maxDrawdown: 0,
       mistakeRate: 0,
       bestDay: { name: 'N/A', rate: 0 },
-      bestSession: { name: 'N/A', rate: 0 }
+      bestSession: { name: 'N/A', rate: 0 },
+      bestSetup: { name: 'N/A', rate: 0 },
+      bestHour: { name: 'N/A', rate: 0 },
+      maxWinStreak: 0,
+      maxLossStreak: 0,
+      recoveryFactor: 0
     };
     
     const wins = trades.filter(t => t.status === 'Win');
