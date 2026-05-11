@@ -21,22 +21,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
   next();
-});
+
 app.use('/uploads', express.static('uploads'));
 
 // Database Connection
-console.log('Connecting to MongoDB...');
-const mongoOptions = {
-  dbName: 'zentrader',
-  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of hanging
-};
-
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/zentrader', mongoOptions)
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/zentrader')
   .then(() => console.log('✅ Connected to MongoDB (ZenTrader)'))
-  .catch((err) => {
-    console.error('❌ MongoDB Connection Error:', err.message);
-    console.error('MONGO_URI exists:', !!process.env.MONGO_URI);
-  });
+  .catch((err) => console.error('❌ MongoDB Connection Error'));
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));

@@ -4,11 +4,6 @@ const User = require('../models/User');
 const Account = require('../models/Account');
 const router = express.Router();
 
-// @route   GET api/auth/test
-router.get('/test', (req, res) => {
-  res.json({ message: 'Auth route is working' });
-});
-
 // @route   POST api/auth/register
 // @desc    Register user
 router.post('/register', async (req, res) => {
@@ -63,11 +58,8 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '30d' });
     res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
-    console.error('Login Error Full Details:', err);
-    res.status(500).json({ 
-      message: 'Server error: ' + err.message,
-      stack: err.stack
-    });
+    console.error('Login Error:', err.message);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
