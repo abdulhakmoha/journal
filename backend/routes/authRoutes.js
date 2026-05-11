@@ -35,8 +35,12 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '30d' });
     res.status(201).json({ token, user: { id: user._id, name, email } });
   } catch (err) {
-    console.error('Registration Error:', err);
-    res.status(500).json({ message: 'Server error: ' + err.message });
+    console.error('Registration Error Details:', err);
+    res.status(500).json({ 
+      message: 'Registration failed', 
+      error: err.message,
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined 
+    });
   }
 });
 

@@ -5,7 +5,7 @@ import { Mail, Lock, User, ArrowRight, Activity, ShieldCheck, DollarSign } from 
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', regCode: '', initialBalance: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', regCode: '' });
   const [error, setError] = useState('');
   const { login, register } = useAuth();
 
