@@ -18,6 +18,10 @@ app.use(cors({
 app.options('*', cors()); // Handle preflight requests
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
 app.use('/uploads', express.static('uploads'));
 
 // Database Connection
