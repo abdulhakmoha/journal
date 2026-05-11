@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Account = require('../models/Account');
 const router = express.Router();
 
 // @route   POST api/auth/register
@@ -22,12 +23,11 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     // Create an initial account for the new user
-    const Account = require('../models/Account');
     const initialAccount = new Account({
-      userId: user._id,
+      user: user._id,
       name: 'Primary Account',
       type: 'Personal',
-      initialBalance: req.body.initialBalance || 0,
+      initialBalance: req.body.initialBalance || 10000,
       target: 0
     });
     await initialAccount.save();
