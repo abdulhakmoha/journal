@@ -26,7 +26,12 @@ app.use('/uploads', express.static('uploads'));
 
 // Database Connection
 console.log('Connecting to MongoDB...');
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/zentrader')
+const mongoOptions = {
+  dbName: 'zentrader',
+  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of hanging
+};
+
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/zentrader', mongoOptions)
   .then(() => console.log('✅ Connected to MongoDB (ZenTrader)'))
   .catch((err) => {
     console.error('❌ MongoDB Connection Error:', err.message);
