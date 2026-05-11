@@ -14,7 +14,7 @@ const Login = () => {
     setError('');
     const res = isLogin 
       ? await login(formData.email, formData.password)
-      : await register(formData.name, formData.email, formData.password, formData.regCode, formData.initialBalance);
+      : await register(formData.name, formData.email, formData.password, formData.regCode);
     
     if (!res.success) setError(res.message);
   };
@@ -66,18 +66,6 @@ const Login = () => {
                     required 
                     value={formData.regCode}
                     onChange={(e) => setFormData({...formData, regCode: e.target.value})}
-                  />
-                </div>
-                <div className="input-group">
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem' }}>
-                    <DollarSign size={16} /> Initial Balance ($)
-                  </label>
-                  <input 
-                    type="number" 
-                    placeholder="e.g. 10000" 
-                    required 
-                    value={formData.initialBalance}
-                    onChange={(e) => setFormData({...formData, initialBalance: e.target.value})}
                   />
                 </div>
               </motion.div>
