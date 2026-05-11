@@ -99,6 +99,15 @@ function App() {
     }
   };
 
+  const handleUpdateAccount = async (id, updatedAcc) => {
+    try {
+      const res = await api.put(`/api/accounts/${id}`, updatedAcc);
+      setAccounts(accounts.map(a => a._id === id ? res.data : a));
+    } catch (err) {
+      alert('Error updating account');
+    }
+  };
+
   const handleUpdateProfile = async (profileData) => {
     try {
       const config = { headers: { 'x-auth-token': token } };
@@ -139,6 +148,7 @@ function App() {
           trades={trades} 
           onAddAccount={handleAddAccount}
           onDeleteAccount={handleDeleteAccount}
+          onUpdateAccount={handleUpdateAccount}
         />
       );
       case 'new-trade': return (

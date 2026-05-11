@@ -29,6 +29,21 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
+// @route   PUT api/accounts/:id
+// @desc    Update account
+router.put('/:id', auth, async (req, res) => {
+  try {
+    let account = await Account.findById(req.params.id);
+    if (!account) return res.status(404).json({ message: 'Account not found' });
+    if (account.user.toString() !== req.user) return res.status(401).json({ message: 'Not authorized' });
+
+    account = await Account.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
+    res.json(account);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // @route   DELETE api/accounts/:id
 router.delete('/:id', auth, async (req, res) => {
   try {

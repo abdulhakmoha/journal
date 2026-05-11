@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccount }) => {
+const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccount, onUpdateAccount }) => {
   const [newRule, setNewRule] = useState('');
   const [profile, setProfile] = useState({
     name: user?.name || '',
@@ -53,11 +53,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
 
   const saveEdit = async () => {
     try {
-      // We'll use a standard update pattern. If the parent doesn't have an onUpdateAccount, 
-      // we'll need to add it to App.jsx. For now, we'll assume we can handle it or use onDelete/onAdd.
-      // Actually, let's just trigger an update if the parent supports it.
-      onDeleteAccount(editingAccId); // Simple way: Delete and Add
-      onAddAccount(editAccForm);
+      await onUpdateAccount(editingAccId, editAccForm);
       setEditingAccId(null);
     } catch (err) { console.error(err); }
   };
