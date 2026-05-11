@@ -8,7 +8,7 @@ const api = axios.create({
 
 // Add a request interceptor to include the token in headers
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('zentrader_token');
   if (token) {
     config.headers['x-auth-token'] = token;
   }
