@@ -62,7 +62,7 @@ const Login = () => {
                   </label>
                   <input 
                     type="text" 
-                    placeholder="Enter Invitation Code" 
+                    placeholder="Invitation Code (e.g. ZEN2026)" 
                     required 
                     value={formData.regCode}
                     onChange={(e) => setFormData({...formData, regCode: e.target.value})}
