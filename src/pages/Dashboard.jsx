@@ -81,7 +81,7 @@ const Dashboard = ({ trades, accounts }) => {
           <h2 style={{ fontSize: '1.8rem', color: 'var(--warning)' }}>{disciplineScore}%</h2>
         </div>
         <div className="glass-card" style={{ padding: '20px' }}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Total Battles</p>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Total Trades</p>
           <h2 style={{ fontSize: '1.8rem' }}>{trades.length}</h2>
         </div>
       </div>

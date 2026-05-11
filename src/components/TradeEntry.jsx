@@ -118,8 +118,8 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
         <div>
-          <h2 className="text-gradient">Prepare for Battle</h2>
-          <p style={{ color: 'var(--text-muted)' }}>Execute with your custom-built professional framework.</p>
+          <h2 className="text-gradient">Trade Execution Framework</h2>
+          <p style={{ color: 'var(--text-muted)' }}>Execute your trades using a structured professional process.</p>
         </div>
         <div style={{ textAlign: 'right' }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '5px' }}>Current Potential Grade</p>

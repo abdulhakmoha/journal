@@ -121,7 +121,7 @@ function App() {
 
   const disciplineScore = trades.length === 0 ? 0 : Math.round((trades.filter(t => ['A+', 'A'].includes(t.grade)).length / trades.length) * 100);
 
-  if (loading) return <div className="loading-screen">Loading Arena...</div>;
+  if (loading) return <div className="loading-screen">Loading Terminal...</div>;
   if (!token) return <Login />;
 
   const userRules = user?.customRules || [];

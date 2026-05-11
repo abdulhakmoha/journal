@@ -32,7 +32,7 @@ const Login = () => {
             <Activity size={32} color="var(--primary)" />
           </div>
           <h1 className="text-gradient" style={{ fontSize: '2.5rem' }}>ZenTrader</h1>
-          <p style={{ color: 'var(--text-muted)' }}>{isLogin ? 'Welcome back to the arena.' : 'Start your professional journey.'}</p>
+          <p style={{ color: 'var(--text-muted)' }}>{isLogin ? 'Access your professional trading journal.' : 'Start your performance tracking journey.'}</p>
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

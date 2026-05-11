@@ -158,8 +158,8 @@ const Review = ({ trades, accounts }) => {
             ← Back
           </button>
           <div>
-            <h2 className="text-gradient" style={{ margin: 0 }}>Automated Weekly Review</h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: '5px 0 0 0' }}>AI-generated insights based on your actual trading data.</p>
+            <h2 className="text-gradient" style={{ margin: 0 }}>Performance Analysis Report</h2>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: '5px 0 0 0' }}>Data-driven insights based on your actual execution history.</p>
           </div>
         </div>
         
@@ -215,11 +215,10 @@ const Review = ({ trades, accounts }) => {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
-        {/* AI Insights Panel */}
         <section className="glass-card" style={{ padding: '30px' }}>
           <h4 style={{ marginBottom: '25px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Zap size={18} color="var(--primary)" /> Smart Insights
-            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', background: 'rgba(56,189,248,0.1)', padding: '2px 8px', borderRadius: '10px', marginLeft: '5px' }}>AUTO-GENERATED</span>
+            <Zap size={18} color="var(--primary)" /> Smart Performance Analysis
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', background: 'rgba(56,189,248,0.1)', padding: '2px 8px', borderRadius: '10px', marginLeft: '5px' }}>ALGORITHMIC</span>
           </h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             {insights.map((insight, i) => (

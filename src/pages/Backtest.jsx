@@ -454,8 +454,8 @@ const Backtest = ({ backtestFields, accounts }) => {
         <>
           <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <h2 className="text-gradient">Strategy Lab (Backtesting)</h2>
-              <p style={{ color: 'var(--text-muted)' }}>Build and validate your edge with historical data.</p>
+              <h2 className="text-gradient">Strategy Verification</h2>
+              <p style={{ color: 'var(--text-muted)' }}>Validate your edge using historical market data.</p>
             </div>
             <button className="btn-primary" onClick={() => setShowNewSessionModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <Plus size={20} /> New Session

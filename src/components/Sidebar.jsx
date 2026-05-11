@@ -31,7 +31,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore }) => {
     }}>
       <div className="logo" style={{ marginBottom: '40px' }}>
         <h2 className="text-gradient" style={{ fontSize: '1.5rem' }}>ZenTrader</h2>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Master Your Mindset</p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Professional Performance Analytics</p>
       </div>
 
       <button 
