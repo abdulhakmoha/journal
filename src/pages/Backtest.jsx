@@ -32,6 +32,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
+const BACKEND_URL = 'https://journal-production-6346.up.railway.app';
+
+const getImageUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('http://localhost:5000')) {
+    return url.replace('http://localhost:5000', BACKEND_URL);
+  }
+  if (url.startsWith('http')) return url;
+  return `${BACKEND_URL}${url}`;
+};
+
 const Backtest = ({ backtestFields, accounts }) => {
   const { token, user } = useAuth();
   const [sessions, setSessions] = useState([]);
@@ -763,7 +774,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                     {tradeForm.beforeChart ? (
                       <div style={{ position: 'relative' }}>
                         <img 
-                          src={tradeForm.beforeChart.startsWith('http') ? tradeForm.beforeChart : `http://localhost:5000${tradeForm.beforeChart}`} 
+                          src={getImageUrl(tradeForm.beforeChart)} 
                           alt="Before" 
                           style={{ width: '100%', display: 'block', borderRadius: '8px', cursor: 'pointer' }}
                           onClick={() => setLightbox(tradeForm.beforeChart)}
@@ -788,7 +799,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                     {tradeForm.afterChart ? (
                       <div style={{ position: 'relative' }}>
                         <img 
-                          src={tradeForm.afterChart.startsWith('http') ? tradeForm.afterChart : `http://localhost:5000${tradeForm.afterChart}`} 
+                          src={getImageUrl(tradeForm.afterChart)} 
                           alt="After" 
                           style={{ width: '100%', display: 'block', borderRadius: '8px', cursor: 'pointer' }}
                           onClick={() => setLightbox(tradeForm.afterChart)}
@@ -889,7 +900,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                                 title="View Before Chart"
                               >
                                 <img
-                                  src={trade.beforeChart.startsWith('http') ? trade.beforeChart : `${api.defaults.baseURL}${trade.beforeChart}`}
+                                  src={getImageUrl(trade.beforeChart)}
                                   alt="Before"
                                   style={{ width: '40px', height: '30px', objectFit: 'cover', borderRadius: '4px', border: '1px solid var(--primary)' }}
                                 />
@@ -905,7 +916,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                                 title="View After Chart"
                               >
                                 <img
-                                  src={trade.afterChart.startsWith('http') ? trade.afterChart : `${api.defaults.baseURL}${trade.afterChart}`}
+                                  src={getImageUrl(trade.afterChart)}
                                   alt="After"
                                   style={{ width: '40px', height: '30px', objectFit: 'cover', borderRadius: '4px', border: '1px solid var(--success)' }}
                                 />
@@ -945,7 +956,7 @@ const Backtest = ({ backtestFields, accounts }) => {
           >
             <motion.img 
               initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-              src={lightbox.startsWith('http') ? lightbox : `http://localhost:5000${lightbox}`} 
+              src={getImageUrl(lightbox)} 
               style={{ maxWidth: '90%', maxHeight: '85%', borderRadius: '8px', boxShadow: '0 20px 60px rgba(0,0,0,0.8)' }} 
               onClick={(e) => e.stopPropagation()}
             />
