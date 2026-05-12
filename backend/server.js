@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+// Forced redeploy to apply registration fix
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
