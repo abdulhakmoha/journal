@@ -31,6 +31,11 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/zentrader')
   .then(() => console.log('✅ Connected to MongoDB (ZenTrader)'))
   .catch((err) => console.error('❌ MongoDB Connection Error'));
 
+// Health Check Route
+app.get('/api/check-status', (req, res) => {
+  res.json({ status: 'System Updated', registrationCodeRequired: false });
+});
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/trades', require('./routes/tradeRoutes'));
