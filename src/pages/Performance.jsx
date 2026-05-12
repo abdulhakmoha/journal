@@ -131,10 +131,10 @@ const Performance = ({ trades, accounts }) => {
             <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Net Profit / Loss</p>
           </div>
           <h3 style={{ fontSize: '1.8rem', fontWeight: '900', color: metrics.profit >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '8px' }}>
-            {metrics.profit >= 0 ? '+' : ''}${metrics.profit.toLocaleString()}
+            {metrics.profit >= 0 ? '+' : ''}{metrics.profit.toLocaleString()}%
           </h3>
           <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-            Total money made after losses. <span style={{ color: 'var(--primary)' }}>Positive = profitable</span>
+            Total percentage growth/loss. <span style={{ color: 'var(--primary)' }}>Positive = profitable</span>
           </p>
         </div>
 
@@ -162,7 +162,7 @@ const Performance = ({ trades, accounts }) => {
             {metrics.profitFactor}
           </h3>
           <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-            For every $1 lost, you made <span style={{ color: 'var(--primary)' }}>${metrics.profitFactor}</span>. Above 1.5 = good.
+            For every 1% lost, you made <span style={{ color: 'var(--primary)' }}>{metrics.profitFactor}%</span>. Above 1.5 = good.
           </p>
         </div>
 
@@ -173,7 +173,7 @@ const Performance = ({ trades, accounts }) => {
             <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Avg Gain / Trade</p>
           </div>
           <h3 style={{ fontSize: '1.8rem', fontWeight: '900', color: parseFloat(metrics.expectancy) >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '8px' }}>
-            ${metrics.expectancy}
+            {metrics.expectancy}%
           </h3>
           <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
             Expected profit per trade on average. <span style={{ color: 'var(--primary)' }}>Must be positive</span>
@@ -227,7 +227,7 @@ const Performance = ({ trades, accounts }) => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
                   <span style={{ fontWeight: 'bold' }}>{s.session}</span>
                   <span style={{ color: s.pnl >= 0 ? 'var(--success)' : 'var(--danger)' }}>
-                    ${s.pnl.toLocaleString()} ({s.count} trades)
+                    {s.pnl.toLocaleString()}% ({s.count} trades)
                   </span>
                 </div>
                 <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
@@ -273,7 +273,7 @@ const Performance = ({ trades, accounts }) => {
                   </div>
                 </td>
                 <td style={{ padding: '15px 25px', textAlign: 'right', fontWeight: 'bold', color: p.pnl >= 0 ? 'var(--success)' : 'var(--danger)' }}>
-                  {p.pnl >= 0 ? '+' : ''}${p.pnl.toLocaleString()}
+                  {p.pnl >= 0 ? '+' : ''}{p.pnl.toLocaleString()}%
                 </td>
               </tr>
             ))}
