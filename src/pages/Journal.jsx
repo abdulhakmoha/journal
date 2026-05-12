@@ -18,7 +18,9 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const BACKEND_URL = 'https://journal-production-6346.up.railway.app';
+import api from '../services/api';
+
+const BACKEND_URL = api.defaults.baseURL;
 
 const getImageUrl = (url) => {
   if (!url) return '';
@@ -26,7 +28,10 @@ const getImageUrl = (url) => {
     return url.replace('http://localhost:5000', BACKEND_URL);
   }
   if (url.startsWith('http')) return url;
-  return `${BACKEND_URL}${url}`;
+  // Ensure we don't double slash
+  const cleanBase = BACKEND_URL.endsWith('/') ? BACKEND_URL.slice(0, -1) : BACKEND_URL;
+  const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+  return `${cleanBase}${cleanUrl}`;
 };
 
 const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
@@ -235,10 +240,21 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
           <div style={{ position: 'relative' }}>
             <button 
               className="glass" 
-              style={{ padding: '10px 15px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
+              style={{ 
+                padding: '10px 15px', 
+                borderRadius: '12px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '10px', 
+                cursor: 'pointer',
+                color: 'var(--text-main)',
+                border: '1px solid var(--border)',
+                background: 'rgba(255,255,255,0.05)'
+              }}
               onClick={() => setShowColumnPicker(!showColumnPicker)}
             >
-              <LayoutList size={18} /> Columns
+              <LayoutList size={18} color="var(--primary)" /> 
+              <span style={{ fontWeight: '500' }}>Columns</span>
             </button>
             <AnimatePresence>
               {showColumnPicker && (
