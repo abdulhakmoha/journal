@@ -30,7 +30,7 @@ const upload = multer({
 // @desc    Upload image
 router.post('/', [auth, upload.single('image')], (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
-  res.json({ url: `http://localhost:5000/uploads/${req.file.filename}` });
+  res.json({ url: `/uploads/${req.file.filename}` });
 });
 
 module.exports = router;

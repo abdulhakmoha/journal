@@ -3,6 +3,17 @@ import { CheckCircle2, AlertTriangle, Info, Save, Brain, Upload, Image as ImageI
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../services/api';
 
+const BACKEND_URL = 'https://journal-production-6346.up.railway.app';
+
+const getImageUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('http://localhost:5000')) {
+    return url.replace('http://localhost:5000', BACKEND_URL);
+  }
+  if (url.startsWith('http')) return url;
+  return `${BACKEND_URL}${url}`;
+};
+
 const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) => {
   const [formData, setFormData] = useState(() => {
     if (initialData) return { ...initialData };
@@ -222,7 +233,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
              <h4 style={{ fontSize: '0.8rem', marginBottom: '15px', color: 'var(--text-muted)' }}>BEFORE CHART</h4>
              {formData.beforeChart ? (
                <div style={{ position: 'relative' }}>
-                 <img src={formData.beforeChart.startsWith('http') ? formData.beforeChart : `https://journal-production-6346.up.railway.app${formData.beforeChart}`} alt="Before" style={{ width: '100%', borderRadius: '8px' }} />
+                 <img src={getImageUrl(formData.beforeChart)} alt="Before" style={{ width: '100%', borderRadius: '8px' }} />
                  <button onClick={() => setFormData({...formData, beforeChart: ''})} style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(0,0,0,0.5)', border: 'none', color: 'white', borderRadius: '50%', width: '24px', height: '24px' }}>×</button>
                </div>
              ) : (
@@ -237,7 +248,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
              <h4 style={{ fontSize: '0.8rem', marginBottom: '15px', color: 'var(--text-muted)' }}>AFTER CHART</h4>
              {formData.afterChart ? (
                <div style={{ position: 'relative' }}>
-                 <img src={formData.afterChart.startsWith('http') ? formData.afterChart : `https://journal-production-6346.up.railway.app${formData.afterChart}`} alt="After" style={{ width: '100%', borderRadius: '8px' }} />
+                 <img src={getImageUrl(formData.afterChart)} alt="After" style={{ width: '100%', borderRadius: '8px' }} />
                  <button onClick={() => setFormData({...formData, afterChart: ''})} style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(0,0,0,0.5)', border: 'none', color: 'white', borderRadius: '50%', width: '24px', height: '24px' }}>×</button>
                </div>
              ) : (

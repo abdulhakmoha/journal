@@ -17,6 +17,17 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const BACKEND_URL = 'https://journal-production-6346.up.railway.app';
+
+const getImageUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('http://localhost:5000')) {
+    return url.replace('http://localhost:5000', BACKEND_URL);
+  }
+  if (url.startsWith('http')) return url;
+  return `${BACKEND_URL}${url}`;
+};
+
 const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
   const [view, setView] = useState('list');
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -384,7 +395,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                                    </p>
                                    {trade.beforeChart ? (
                                      <img 
-                                       src={trade.beforeChart.startsWith('http') ? trade.beforeChart : `https://journal-production-6346.up.railway.app${trade.beforeChart}`} 
+                                       src={getImageUrl(trade.beforeChart)} 
                                        alt="Before" 
                                        style={{ width: '100%', borderRadius: '8px', cursor: 'zoom-in' }} 
                                        onClick={() => setSelectedImage(trade.beforeChart)}
@@ -398,7 +409,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                                    </p>
                                    {trade.afterChart ? (
                                      <img 
-                                       src={trade.afterChart.startsWith('http') ? trade.afterChart : `https://journal-production-6346.up.railway.app${trade.afterChart}`} 
+                                       src={getImageUrl(trade.afterChart)} 
                                        alt="After" 
                                        style={{ width: '100%', borderRadius: '8px', cursor: 'zoom-in' }} 
                                        onClick={() => setSelectedImage(trade.afterChart)}
@@ -534,7 +545,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
               <X size={32} />
             </button>
             <img 
-              src={selectedImage.startsWith('http') ? selectedImage : `https://journal-production-6346.up.railway.app${selectedImage}`} 
+              src={getImageUrl(selectedImage)} 
               alt="Expanded Chart" 
               style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '12px', boxShadow: '0 0 50px rgba(56, 189, 248, 0.3)' }} 
             />
