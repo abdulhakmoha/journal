@@ -98,9 +98,19 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
 
     // Validation
     const symbol = formData['Pair'] || formData['Asset'];
-    if (!formData.account || !symbol || !formData.risk || !formData.reward) {
-      alert('Fadlan buuxi meelaha banaan (Account, Pair, Risk, iyo Reward) ka hor inta aadan badbaadin.');
-      return;
+    
+    // Strict validation ONLY for completed trades
+    if (completed) {
+      if (!formData.account || !symbol || !formData.risk || !formData.reward) {
+        alert('Fadlan buuxi meelaha banaan (Account, Pair, Risk, iyo Reward) si aad trade-ka u dhameystirto.');
+        return;
+      }
+    } else {
+      // Minimal validation for Drafts/Active trades
+      if (!formData.account || !symbol) {
+        alert('Fadlan ugu yaraan buuxi (Account iyo Pair) si aad u badbaadiso draft-ka.');
+        return;
+      }
     }
     
     // Map dynamic fields to specific properties for compatibility
