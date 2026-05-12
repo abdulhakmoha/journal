@@ -3,7 +3,7 @@ import { LayoutDashboard, BookOpen, Target, Settings, Brain, PlusCircle, BarChar
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ activeTab, setActiveTab, disciplineScore }) => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const menuItems = [
     { id: 'dashboard',   label: 'Dashboard',         icon: Zap },
     { id: 'new-trade',   label: 'New Trade',          icon: PlusSquare },
