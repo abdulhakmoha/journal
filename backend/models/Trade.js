@@ -5,8 +5,8 @@ const tradeSchema = new mongoose.Schema({
   account: { type: String, required: true }, // The name or ID of the linked account
   symbol: { type: String, required: true },
   type: { type: String, enum: ['Long', 'Short'], required: true },
-  risk: { type: Number, required: true },
-  reward: { type: Number, required: true },
+  risk: { type: Number },
+  reward: { type: Number },
   rr: { type: Number },
   strategy: { type: String },
   session: { type: String },
