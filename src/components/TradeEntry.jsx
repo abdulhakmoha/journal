@@ -128,7 +128,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       </div>
 
       <form onSubmit={(e) => e.preventDefault()}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '30px', marginBottom: '30px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px', marginBottom: '30px' }}>
           
           {/* DYNAMIC FIELDS SECTION */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

@@ -144,6 +144,7 @@ input:focus, select:focus, textarea:focus {
 .app-container {
   display: flex;
   min-height: 100vh;
+  flex-direction: row;
 }
 
 .main-content {
@@ -151,6 +152,59 @@ input:focus, select:focus, textarea:focus {
   padding: 40px;
   max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .app-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100% !important;
+    height: auto !important;
+    padding: 15px !important;
+    position: static !important;
+    flex-direction: row !important;
+    overflow-x: auto;
+    justify-content: space-between;
+  }
+
+  .sidebar-logo {
+    margin-bottom: 0 !important;
+  }
+
+  .sidebar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px;
+    margin-top: 0 !important;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-nav span {
+    display: none; /* Hide text on very small screens, show icons only */
+  }
+  
+  .sidebar-nav a {
+    padding: 10px !important;
+    justify-content: center !important;
+  }
+
+  .glass-card {
+    padding: 20px !important;
+  }
+
+  h2 {
+    font-size: 1.5rem !important;
+  }
 }
 
 .grading-A { color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
