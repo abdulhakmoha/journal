@@ -16,20 +16,6 @@ router.post('/register', async (req, res) => {
     user = new User({ name, email, password });
     await user.save();
 
-    // Create an initial account for the new user
-    try {
-      const initialAccount = new Account({
-        user: user._id,
-        name: 'Primary Account',
-        type: 'Personal',
-        initialBalance: 10000,
-        target: 0
-      });
-      await initialAccount.save();
-    } catch (accErr) {
-      console.error('Account creation failed:', accErr.message);
-    }
-
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '30d' });
     res.status(201).json({ token, user: { id: user._id, name, email } });
   } catch (err) {
