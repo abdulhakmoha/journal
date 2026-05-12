@@ -1,4 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { 
+  Globe, 
+  FlaskConical, 
+  Zap, 
+  Crown,
+  Award,
+  Settings as SettingsIcon, 
+  LogOut 
+} from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import TradeEntry from './components/TradeEntry';
 import Dashboard from './pages/Dashboard';
@@ -7,6 +16,7 @@ import MindsetMirror from './pages/MindsetMirror';
 import Review from './pages/Review';
 import Performance from './pages/Performance';
 import News from './pages/News';
+import Pricing from './pages/Pricing';
 import Settings from './pages/Settings';
 import Backtest from './pages/Backtest';
 import Calculator from './pages/Calculator';
@@ -174,6 +184,7 @@ function App() {
           initialData={editingTrade} 
         />
       );
+      case 'pricing': return <Pricing />;
       default: return <Dashboard trades={trades} accounts={liveAccounts} />;
     }
   };

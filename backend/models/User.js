@@ -39,6 +39,13 @@ const userSchema = new mongoose.Schema({
     'Killzone Timing (London/NY)',
     'No High Impact News'
   ] },
+  subscription: {
+    plan: { type: String, enum: ['Free', 'Pro', 'Elite'], default: 'Free' },
+    status: { type: String, enum: ['active', 'expired', 'pending'], default: 'active' },
+    startDate: { type: Date, default: Date.now },
+    endDate: { type: Date }
+  },
+  isAdmin: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 

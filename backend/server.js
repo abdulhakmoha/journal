@@ -51,6 +51,7 @@ app.use('/api/accounts', require('./routes/accountRoutes'));
 app.use('/api/backtest', require('./routes/backtestRoutes'));
 app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
+app.use('/api/payments', require('./routes/paymentRoutes'));
 
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'ZenTrader API v2.0 - Running ✅' });
