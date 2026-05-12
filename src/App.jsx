@@ -5,6 +5,7 @@ import {
   Zap, 
   Crown,
   Award,
+  Shield,
   Settings as SettingsIcon, 
   LogOut 
 } from 'lucide-react';
@@ -17,6 +18,7 @@ import Review from './pages/Review';
 import Performance from './pages/Performance';
 import News from './pages/News';
 import Pricing from './pages/Pricing';
+import AdminPayments from './pages/AdminPayments';
 import Settings from './pages/Settings';
 import Backtest from './pages/Backtest';
 import Calculator from './pages/Calculator';
@@ -185,6 +187,7 @@ function App() {
         />
       );
       case 'pricing': return <Pricing />;
+      case 'admin-payments': return <AdminPayments />;
       default: return <Dashboard trades={trades} accounts={liveAccounts} />;
     }
   };

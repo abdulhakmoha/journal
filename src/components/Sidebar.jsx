@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, BookOpen, Target, Settings, Brain, PlusCircle, BarChart2, Zap, PlusSquare, LayoutList, FlaskConical, Calculator, LogOut, Globe } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Target, Settings, Brain, PlusCircle, BarChart2, Zap, PlusSquare, LayoutList, FlaskConical, Calculator, LogOut, Globe, Shield, Award } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ activeTab, setActiveTab, disciplineScore }) => {
@@ -15,6 +15,11 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore }) => {
     { id: 'calculator',  label: 'Risk Calculator',    icon: Calculator },
     { id: 'mindset',     label: 'Mindset Journal',    icon: Brain },
     { id: 'settings',    label: 'Settings',           icon: Settings },
+    { id: 'pricing',     label: 'Pricing & Plans',    icon: Award },
+  ];
+
+  const adminItems = [
+    { id: 'admin-payments', label: 'Admin: Payments', icon: Shield },
   ];
 
   return (
@@ -74,6 +79,41 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore }) => {
             </React.Fragment>
           );
         })}
+
+        {user?.isAdmin && (
+          <>
+            <div style={{ height: '1px', background: 'var(--border)', margin: '10px 0' }}></div>
+            <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', paddingLeft: '16px', marginBottom: '8px' }}>Admin Panel</p>
+            {adminItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '12px 16px',
+                    borderRadius: '12px',
+                    border: 'none',
+                    background: isActive ? 'rgba(245, 158, 11, 0.1)' : 'transparent',
+                    color: isActive ? 'var(--warning)' : 'var(--text-muted)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'left',
+                    width: '100%',
+                    fontWeight: isActive ? '600' : '400'
+                  }}
+                >
+                  <Icon size={20} />
+                  {item.label}
+                </button>
+              );
+            })}
+          </>
+        )}
       </nav>
 
       <div style={{ marginTop: 'auto', padding: '20px 0' }}>
