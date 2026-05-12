@@ -16,6 +16,16 @@ const getImageUrl = (url) => {
 
 const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) => {
   const [formData, setFormData] = useState(() => {
+    // 1. Try to load saved draft from localStorage
+    const savedDraft = localStorage.getItem('zentrader_form_draft');
+    if (savedDraft) {
+      try {
+        return JSON.parse(savedDraft);
+      } catch (e) {
+        console.error('Failed to parse draft');
+      }
+    }
+
     if (initialData) return { ...initialData };
     
     // Initialize dynamic fields from formFields
@@ -42,6 +52,11 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       ...dynamicData // Merge custom categories
     };
   });
+
+  // 2. Save to localStorage whenever formData changes
+  useEffect(() => {
+    localStorage.setItem('zentrader_form_draft', JSON.stringify(formData));
+  }, [formData]);
 
   const [uploading, setUploading] = useState({ before: false, after: false });
   const [grade, setGrade] = useState('D');
@@ -127,6 +142,8 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       session: formData['Trading Session'] || 'London'
     };
 
+    // Clear draft after saving
+    localStorage.removeItem('zentrader_form_draft');
     onSave(finalTrade);
   };
 
