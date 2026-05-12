@@ -5,6 +5,7 @@
   "build_trigger": 1,
   "type": "module",
   "scripts": {
+    "start": "node backend/server.js",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
