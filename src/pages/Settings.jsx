@@ -121,7 +121,12 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
         </button>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '30px', alignItems: 'start' }}>
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
+        gap: '30px', 
+        alignItems: 'start' 
+      }}>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           {/* Personal Profile */}
@@ -147,7 +152,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
               <Activity size={18} color="var(--success)" />
               Trading Accounts
             </h4>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr auto', gap: '10px', marginBottom: '25px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '15px', marginBottom: '25px', alignItems: 'end' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
             <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Name</label>
             <input 
@@ -187,7 +192,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
               onChange={(e) => setAccForm({...accForm, target: e.target.value})}
             />
           </div>
-          <button className="btn-primary" style={{ height: '45px', marginTop: '18px', padding: '0 15px' }} onClick={addAccount}>
+          <button className="btn-primary" style={{ height: '45px' }} onClick={addAccount}>
             <Plus size={20} />
           </button>
         </div>
