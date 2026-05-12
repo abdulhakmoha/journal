@@ -44,29 +44,6 @@ app.get('/api/check-status', (req, res) => {
   res.json({ status: 'System Updated', registrationCodeRequired: false });
 });
 
-// Temporary Admin Creation Route (Visit /api/create-super-admin to activate)
-app.get('/api/create-super-admin', async (req, res) => {
-  try {
-    const User = require('./models/User');
-    const bcrypt = require('bcryptjs');
-    const email = 'admin@zentrader.com';
-    const password = 'admin123';
-    
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    
-    await User.findOneAndUpdate(
-      { email },
-      { name: 'Super Admin', email, password: hashedPassword, isAdmin: true },
-      { upsert: true, new: true }
-    );
-    
-    res.json({ message: '✅ Admin created/updated successfully on Production!' });
-  } catch (err) {
-    res.status(500).json({ message: 'Error creating admin', error: err.message });
-  }
-});
-
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/trades', require('./routes/tradeRoutes'));
