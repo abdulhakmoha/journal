@@ -147,44 +147,48 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
               <Activity size={18} color="var(--success)" />
               Trading Accounts
             </h4>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 0.8fr auto', gap: '12px', marginBottom: '25px' }}>
-          <input 
-            type="text" 
-            placeholder="Account Name" 
-            value={accForm.name} 
-            onChange={(e) => setAccForm({...accForm, name: e.target.value})} 
-          />
-          <select 
-            value={accForm.type} 
-            onChange={(e) => setAccForm({...accForm, type: e.target.value})}
-          >
-            <option>Challenge</option>
-            <option>Funded</option>
-            <option>Personal</option>
-            <option>Backtesting</option>
-          </select>
-          <div style={{ position: 'relative' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr auto', gap: '10px', marginBottom: '25px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Name</label>
+            <input 
+              type="text" 
+              placeholder="E.g. Prop Firm" 
+              value={accForm.name} 
+              onChange={(e) => setAccForm({...accForm, name: e.target.value})} 
+            />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Type</label>
+            <select 
+              value={accForm.type} 
+              onChange={(e) => setAccForm({...accForm, type: e.target.value})}
+            >
+              <option>Challenge</option>
+              <option>Funded</option>
+              <option>Personal</option>
+              <option>Backtesting</option>
+            </select>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Balance ($)</label>
             <input 
               type="number" 
-              placeholder="Balance" 
+              placeholder="10000" 
               value={accForm.initialBalance} 
               onChange={(e) => setAccForm({...accForm, initialBalance: e.target.value})}
-              style={{ width: '100%', paddingLeft: '25px' }}
             />
-            <span style={{ position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)', color: 'var(--primary)', fontSize: '0.8rem', fontWeight: 'bold' }}>$</span>
           </div>
-          <div style={{ position: 'relative' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Target (%)</label>
             <input 
               type="number" 
-              placeholder="Target" 
+              placeholder="8" 
               value={accForm.target} 
               onChange={(e) => setAccForm({...accForm, target: e.target.value})}
-              style={{ width: '100%', paddingRight: '20px' }}
             />
-            <span style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', fontSize: '0.8rem' }}>%</span>
           </div>
-          <button className="btn-primary" style={{ height: '45px', width: '45px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={addAccount}>
-            <Plus size={22} />
+          <button className="btn-primary" style={{ height: '45px', marginTop: '18px', padding: '0 15px' }} onClick={addAccount}>
+            <Plus size={20} />
           </button>
         </div>
 
@@ -192,25 +196,31 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
               {accounts.map((acc) => (
               <div key={acc._id} className="glass" style={{ padding: '20px', borderRadius: '12px', border: editingAccId === acc._id ? '1px solid var(--primary)' : '1px solid transparent' }}>
                 {editingAccId === acc._id ? (
-                  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 0.8fr auto', gap: '12px', alignItems: 'center' }}>
-                    <input type="text" value={editAccForm.name} onChange={(e) => setEditAccForm({...editAccForm, name: e.target.value})} style={{ padding: '10px' }} placeholder="Account Name" />
-                    <select value={editAccForm.type} onChange={(e) => setEditAccForm({...editAccForm, type: e.target.value})} style={{ padding: '10px' }}>
-                      <option>Challenge</option>
-                      <option>Funded</option>
-                      <option>Personal</option>
-                      <option>Backtesting</option>
-                    </select>
-                    <div style={{ position: 'relative' }}>
-                      <input type="number" value={editAccForm.initialBalance} onChange={(e) => setEditAccForm({...editAccForm, initialBalance: e.target.value})} style={{ padding: '10px 10px 10px 20px', width: '100%' }} />
-                      <span style={{ position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)', color: 'var(--success)', fontSize: '0.8rem', fontWeight: 'bold' }}>$</span>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr auto', gap: '10px', alignItems: 'end' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <label style={{ fontSize: '0.65rem' }}>Name</label>
+                      <input type="text" value={editAccForm.name} onChange={(e) => setEditAccForm({...editAccForm, name: e.target.value})} style={{ padding: '8px' }} />
                     </div>
-                    <div style={{ position: 'relative' }}>
-                      <input type="number" value={editAccForm.target} onChange={(e) => setEditAccForm({...editAccForm, target: e.target.value})} style={{ padding: '10px 20px 10px 10px', width: '100%' }} />
-                      <span style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', fontSize: '0.8rem' }}>%</span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <label style={{ fontSize: '0.65rem' }}>Type</label>
+                      <select value={editAccForm.type} onChange={(e) => setEditAccForm({...editAccForm, type: e.target.value})} style={{ padding: '8px' }}>
+                        <option>Challenge</option>
+                        <option>Funded</option>
+                        <option>Personal</option>
+                        <option>Backtesting</option>
+                      </select>
                     </div>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <button onClick={saveEdit} style={{ background: 'var(--success)', color: 'white', border: 'none', borderRadius: '8px', padding: '10px 15px', cursor: 'pointer', fontWeight: 'bold' }}>Save</button>
-                      <button onClick={() => setEditingAccId(null)} style={{ background: 'transparent', color: 'var(--text-muted)', border: 'none', cursor: 'pointer', fontSize: '0.85rem' }}>Cancel</button>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <label style={{ fontSize: '0.65rem' }}>Balance</label>
+                      <input type="number" value={editAccForm.initialBalance} onChange={(e) => setEditAccForm({...editAccForm, initialBalance: e.target.value})} style={{ padding: '8px' }} />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <label style={{ fontSize: '0.65rem' }}>Target %</label>
+                      <input type="number" value={editAccForm.target} onChange={(e) => setEditAccForm({...editAccForm, target: e.target.value})} style={{ padding: '8px' }} />
+                    </div>
+                    <div style={{ display: 'flex', gap: '5px' }}>
+                      <button onClick={saveEdit} style={{ background: 'var(--success)', color: 'white', border: 'none', borderRadius: '8px', padding: '10px', cursor: 'pointer' }}>Save</button>
+                      <button onClick={() => setEditingAccId(null)} style={{ background: 'transparent', color: 'var(--text-muted)', border: 'none', cursor: 'pointer', fontSize: '0.7rem' }}>Cancel</button>
                     </div>
                   </div>
                 ) : (
