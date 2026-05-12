@@ -81,8 +81,8 @@ const AdminPayments = () => {
             {filteredPayments.map((p, i) => (
               <tr key={p._id} style={{ borderBottom: '1px solid var(--border)', fontSize: '0.9rem' }}>
                 <td style={{ padding: '15px 25px' }}>
-                  <div style={{ fontWeight: 'bold' }}>{p.user.name}</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{p.user.email}</div>
+                  <div style={{ fontWeight: 'bold' }}>{p.user?.name || 'Unknown User'}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{p.user?.email || 'No Email'}</div>
                 </td>
                 <td style={{ padding: '15px 25px' }}>
                   <span style={{ fontWeight: 'bold', color: 'var(--primary)' }}>{p.plan}</span>
