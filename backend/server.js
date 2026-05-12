@@ -9,6 +9,13 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const fs = require('fs');
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadsDir)){
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // Middleware - CORS (allow all origins for Railway + Vercel/Netlify/localhost)
 app.use(cors({
