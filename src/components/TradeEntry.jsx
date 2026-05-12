@@ -222,7 +222,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
              <h4 style={{ fontSize: '0.8rem', marginBottom: '15px', color: 'var(--text-muted)' }}>BEFORE CHART</h4>
              {formData.beforeChart ? (
                <div style={{ position: 'relative' }}>
-                 <img src={formData.beforeChart.startsWith('http') ? formData.beforeChart : `http://localhost:5000${formData.beforeChart}`} alt="Before" style={{ width: '100%', borderRadius: '8px' }} />
+                 <img src={formData.beforeChart.startsWith('http') ? formData.beforeChart : `https://journal-production-6346.up.railway.app${formData.beforeChart}`} alt="Before" style={{ width: '100%', borderRadius: '8px' }} />
                  <button onClick={() => setFormData({...formData, beforeChart: ''})} style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(0,0,0,0.5)', border: 'none', color: 'white', borderRadius: '50%', width: '24px', height: '24px' }}>×</button>
                </div>
              ) : (
@@ -237,7 +237,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
              <h4 style={{ fontSize: '0.8rem', marginBottom: '15px', color: 'var(--text-muted)' }}>AFTER CHART</h4>
              {formData.afterChart ? (
                <div style={{ position: 'relative' }}>
-                 <img src={formData.afterChart.startsWith('http') ? formData.afterChart : `http://localhost:5000${formData.afterChart}`} alt="After" style={{ width: '100%', borderRadius: '8px' }} />
+                 <img src={formData.afterChart.startsWith('http') ? formData.afterChart : `https://journal-production-6346.up.railway.app${formData.afterChart}`} alt="After" style={{ width: '100%', borderRadius: '8px' }} />
                  <button onClick={() => setFormData({...formData, afterChart: ''})} style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(0,0,0,0.5)', border: 'none', color: 'white', borderRadius: '50%', width: '24px', height: '24px' }}>×</button>
                </div>
              ) : (
