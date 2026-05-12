@@ -170,8 +170,8 @@ const Pricing = () => {
                 <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '10px' }}>Fadlan u soo dir <strong>${selectedPlan.price} USDT (TRC20)</strong> cinwaanka Binance ee hoose:</p>
                   <div style={{ background: 'var(--bg-dark)', padding: '10px', borderRadius: '8px', fontFamily: 'monospace', fontSize: '0.8rem', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>GELI_CINWAANKA_BINANCE_HALKAN</span>
-                    <button onClick={() => navigator.clipboard.writeText('GELI_CINWAANKA_BINANCE_HALKAN')} style={{ background: 'var(--primary)', border: 'none', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer' }}>Copy</button>
+                    <span>TJRcbveNbnLJ1dmULU2u8KAx5VAYqsAxiK</span>
+                    <button onClick={() => navigator.clipboard.writeText('TJRcbveNbnLJ1dmULU2u8KAx5VAYqsAxiK')} style={{ background: 'var(--primary)', border: 'none', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer' }}>Copy</button>
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
