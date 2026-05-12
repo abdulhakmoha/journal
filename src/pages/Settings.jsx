@@ -121,6 +121,46 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
         </button>
       </header>
 
+      {/* THEME SELECTION */}
+      <section className="glass-card" style={{ padding: '30px' }}>
+        <h3 style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.1rem' }}>
+          <Globe size={20} color="var(--primary)" />
+          Visual Theme
+        </h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '15px' }}>
+          {[
+            { name: 'Elite Blue', color: '#38bdf8', glow: 'rgba(56, 189, 248, 0.2)' },
+            { name: 'Gold', color: '#fbbf24', glow: 'rgba(251, 191, 36, 0.2)' },
+            { name: 'Emerald', color: '#10b981', glow: 'rgba(16, 185, 129, 0.2)' },
+            { name: 'Royal Purple', color: '#818cf8', glow: 'rgba(129, 140, 248, 0.2)' },
+            { name: 'Crimson', color: '#f43f5e', glow: 'rgba(244, 63, 94, 0.2)' }
+          ].map((theme) => (
+            <button
+              key={theme.name}
+              onClick={() => {
+                document.documentElement.style.setProperty('--primary', theme.color);
+                document.documentElement.style.setProperty('--primary-glow', theme.glow);
+                localStorage.setItem('zentrader_theme', JSON.stringify(theme));
+              }}
+              style={{
+                padding: '12px',
+                borderRadius: '12px',
+                border: '1px solid var(--border)',
+                background: 'var(--bg-card)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                transition: 'all 0.2s'
+              }}
+            >
+              <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: theme.color, boxShadow: `0 0 10px ${theme.glow}` }}></div>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-main)' }}>{theme.name}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 

@@ -24,67 +24,64 @@ const News = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', height: 'calc(100vh - 100px)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '25px', height: '100%' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h2 className="text-gradient">Economic Calendar</h2>
-          <p style={{ color: 'var(--text-muted)' }}>Stay ahead of the market with high-impact economic events.</p>
+          <h2 className="text-gradient">Market Intelligence</h2>
+          <p style={{ color: 'var(--text-muted)' }}>Professional economic calendar with high-impact event tracking.</p>
         </div>
-        <div className="glass" style={{ padding: '8px 15px', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem' }}>
-          <AlertTriangle size={16} color="var(--warning)" />
-          <span style={{ color: 'var(--warning)' }}>High Impact Expected Today</span>
+        <div style={{ display: 'flex', gap: '15px' }}>
+           <div className="glass" style={{ padding: '8px 15px', borderRadius: '10px', borderLeft: '4px solid #ef4444' }}>
+              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>HIGH IMPACT</span>
+              <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#ef4444' }}>RED FOLDERS</span>
+           </div>
+           <div className="glass" style={{ padding: '8px 15px', borderRadius: '10px', borderLeft: '4px solid #f59e0b' }}>
+              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>MEDIUM</span>
+              <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#f59e0b' }}>ORANGE</span>
+           </div>
         </div>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '30px', height: '100%' }}>
-        {/* Calendar Widget */}
-        <section className="glass-card" style={{ padding: '20px', height: '100%', minHeight: '600px' }}>
-          <div id="tv-calendar-container" style={{ height: '100%' }}>
-            {/* Widget will be injected here */}
+      {/* Main Calendar View */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '25px', minHeight: '700px' }}>
+        <section className="glass-card" style={{ padding: '20px', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, #ef4444, #f59e0b, #38bdf8)' }}></div>
+          <div id="tv-calendar-container" style={{ height: '100%', minHeight: '650px' }}>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'var(--text-muted)' }}>
-              Loading Real-time Economic Events...
+               <Clock className="animate-spin" style={{ marginRight: '10px' }} /> Synchronizing Market Data...
             </div>
           </div>
         </section>
 
-        {/* News & Tips Sidebar */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-           <section className="glass-card" style={{ padding: '25px' }}>
-              <h4 style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <Info size={18} color="var(--primary)" /> Trading Protocol
-              </h4>
-              <ul style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '12px', paddingLeft: '15px' }}>
-                <li>Avoid trading 15 mins before/after 🔴 High Impact News.</li>
-                <li>Red Folder events (CPI, NFP, FOMC) can cause slippage.</li>
-                <li>Check your pairs' currency specific news daily.</li>
-              </ul>
-           </section>
+        {/* Pro Trading Tips */}
+        <aside style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+          <div className="glass-card" style={{ padding: '20px' }}>
+            <h4 style={{ fontSize: '1rem', marginBottom: '15px', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <Info size={18} />
+              News Protocol
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+               {[
+                 { t: 'Pre-News', d: 'Close active trades 15m before Red Folders.', c: '#ef4444' },
+                 { t: 'Execution', d: 'Avoid market orders during high volatility.', c: '#f59e0b' },
+                 { t: 'Analysis', d: 'Focus on Actual vs Forecast deviation.', c: '#38bdf8' }
+               ].map((tip, i) => (
+                 <div key={i} style={{ padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', borderLeft: `3px solid ${tip.c}` }}>
+                    <p style={{ fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '4px' }}>{tip.t}</p>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{tip.d}</p>
+                 </div>
+               ))}
+            </div>
+          </div>
 
-           <section className="glass-card" style={{ padding: '25px', background: 'rgba(56, 189, 248, 0.03)' }}>
-              <h4 style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <Clock size={18} color="var(--success)" /> Market Sessions
-              </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.8rem' }}>
-                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                   <span>London Open</span>
-                   <span style={{ color: 'var(--primary)' }}>08:00 AM UTC</span>
-                 </div>
-                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                   <span>New York Open</span>
-                   <span style={{ color: 'var(--primary)' }}>01:00 PM UTC</span>
-                 </div>
-                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                   <span>Asian Open</span>
-                   <span style={{ color: 'var(--primary)' }}>12:00 AM UTC</span>
-                 </div>
-              </div>
-           </section>
-
-           <div className="glass" style={{ padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
-              <Globe size={32} color="var(--primary)" style={{ opacity: 0.3, marginBottom: '10px' }} />
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Powered by TradingView Real-time Data Feed</p>
-           </div>
-        </div>
+          <div className="glass-card" style={{ padding: '20px', textAlign: 'center' }}>
+            <Globe size={40} color="var(--primary)" style={{ opacity: 0.2, marginBottom: '15px' }} />
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>
+              "The market is a device for transferring money from the impatient to the patient."
+            </p>
+            <p style={{ fontSize: '0.7rem', color: 'var(--primary)', marginTop: '10px' }}>— Warren Buffett</p>
+          </div>
+        </aside>
       </div>
     </div>
   );

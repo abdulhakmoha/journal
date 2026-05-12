@@ -36,6 +36,23 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
   const [filterAccount, setFilterAccount] = useState('All');
   const [expandedTrade, setExpandedTrade] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [visibleColumns, setVisibleColumns] = useState(() => {
+    const saved = localStorage.getItem('zentrader_visible_columns');
+    return saved ? JSON.parse(saved) : {
+      date: true,
+      symbol: true,
+      type: true,
+      strategy: true,
+      rr: true,
+      account: true,
+      status: true
+    };
+  });
+  const [showColumnPicker, setShowColumnPicker] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('zentrader_visible_columns', JSON.stringify(visibleColumns));
+  }, [visibleColumns]);
 
   const filteredTrades = trades.filter(t => {
     const matchSearch = t.symbol?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -214,6 +231,40 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
               <CalendarIcon size={16} /> Calendar
             </button>
           </div>
+          <div style={{ position: 'relative' }}>
+            <button 
+              className="glass" 
+              style={{ padding: '10px 15px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
+              onClick={() => setShowColumnPicker(!showColumnPicker)}
+            >
+              <LayoutList size={18} /> Columns
+            </button>
+            <AnimatePresence>
+              {showColumnPicker && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="glass-card" 
+                  style={{ position: 'absolute', top: '100%', right: 0, marginTop: '10px', padding: '15px', width: '200px', zIndex: 100, boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}
+                >
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '10px', textTransform: 'uppercase' }}>Show/Hide Columns</p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {Object.keys(visibleColumns).map(col => (
+                      <label key={col} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.85rem', cursor: 'pointer' }}>
+                        <input 
+                          type="checkbox" 
+                          checked={visibleColumns[col]} 
+                          onChange={() => setVisibleColumns({...visibleColumns, [col]: !visibleColumns[col]})}
+                        />
+                        {col.toUpperCase()}
+                      </label>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
           <button className="btn-primary" style={{ padding: '10px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px' }} onClick={onAdd}>
             <Plus size={20} />
             New Trade
@@ -329,49 +380,54 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                       className={expandedTrade === trade._id ? 'active-row' : 'table-row-hover'}
                       onClick={() => toggleExpand(trade._id)}
                     >
-                      <td style={{ padding: '15px 20px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '2px' }}>
-                          <span style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '0.65rem', textTransform: 'uppercase' }}>
-                            {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(trade.timestamp).getDay()]}
-                          </span>
-                          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.05)', padding: '2px 6px', borderRadius: '4px' }}>
-                            {new Date(trade.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </span>
-                        </div>
-                        <div style={{ fontSize: '0.85rem' }}>{new Date(trade.timestamp).toLocaleDateString()}</div>
-                      </td>
-                      <td style={{ padding: '15px 20px', fontWeight: 'bold' }}>{trade.symbol}</td>
-                      <td style={{ padding: '15px 20px' }}>
-                        <span style={{ color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)', fontSize: '0.85rem', fontWeight: '600' }}>
-                          {trade.type}
-                        </span>
-                      </td>
-                      <td style={{ padding: '15px 20px', fontSize: '0.85rem' }}>{trade.strategy}</td>
-                      <td style={{ padding: '15px 20px' }}>
-                        <span style={{ fontWeight: 'bold', color: trade.status === 'Win' ? 'var(--success)' : trade.status === 'Loss' ? 'var(--danger)' : 'var(--text-muted)' }}>
-                          {trade.status === 'Win' ? '+' : trade.status === 'Loss' ? '-' : ''}{trade.reward || 0}%
-                        </span>
-                      </td>
-                      <td style={{ padding: '15px 20px' }}>
-                        <div style={{ display: 'flex', gap: '5px' }}>
-                          {trade.beforeChart && <ImageIcon size={18} color="var(--primary)" />}
-                          {trade.afterChart && <ImageIcon size={18} color="var(--success)" />}
-                          {!trade.beforeChart && !trade.afterChart && <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>No Charts</span>}
-                        </div>
-                      </td>
-                      <td style={{ padding: '15px 20px' }}>
-                         <span style={{ 
-                           padding: '4px 10px', 
-                           borderRadius: '20px', 
-                           fontSize: '0.75rem', 
-                           background: trade.status === 'Win' ? 'rgba(16, 185, 129, 0.1)' : trade.status === 'Loss' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(255,255,255,0.05)',
-                           color: trade.status === 'Win' ? 'var(--success)' : trade.status === 'Loss' ? 'var(--danger)' : 'var(--text-muted)'
-                         }}>
-                           {trade.status}
-                         </span>
-                      </td>
-                      <td style={{ padding: '15px 20px' }} onClick={(e) => e.stopPropagation()}>
-                        <div style={{ display: 'flex', gap: '10px' }}>
+                        {visibleColumns.date && (
+                          <td style={{ padding: '15px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                              <div className="glass" style={{ padding: '5px 8px', borderRadius: '6px', textAlign: 'center', minWidth: '45px' }}>
+                                <span style={{ fontSize: '0.65rem', color: 'var(--primary)', fontWeight: 'bold', display: 'block' }}>{new Date(trade.timestamp).toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}</span>
+                                <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>{new Date(trade.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
+                              </div>
+                              <span style={{ fontSize: '0.85rem' }}>{new Date(trade.timestamp).toLocaleDateString()}</span>
+                            </div>
+                          </td>
+                        )}
+                        {visibleColumns.symbol && <td style={{ padding: '15px', fontWeight: 'bold' }}>{trade.symbol}</td>}
+                        {visibleColumns.type && (
+                          <td style={{ padding: '15px' }}>
+                            <span style={{ color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)', fontSize: '0.85rem' }}>{trade.type}</span>
+                          </td>
+                        )}
+                        {visibleColumns.strategy && <td style={{ padding: '15px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{trade.strategy || 'Price Action'}</td>}
+                        {visibleColumns.rr && (
+                          <td style={{ padding: '15px' }}>
+                            <span style={{ 
+                              color: trade.status === 'Win' ? 'var(--success)' : trade.status === 'Loss' ? 'var(--danger)' : 'var(--text-muted)',
+                              fontWeight: 'bold'
+                            }}>
+                              {trade.status === 'Win' ? '+' : trade.status === 'Loss' ? '-' : ''}
+                              {trade.status === 'BE' ? '0.00%' : `${trade.reward || 0}%`}
+                            </span>
+                          </td>
+                        )}
+                        {visibleColumns.account && <td style={{ padding: '15px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>{trade.account || 'Primary'}</td>}
+                        
+                        <td style={{ padding: '15px' }}>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                             {trade.beforeChart && <ImageIcon size={16} color="var(--primary)" />}
+                             {trade.afterChart && <ImageIcon size={16} color="var(--success)" />}
+                             {!trade.beforeChart && !trade.afterChart && <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>No Charts</span>}
+                          </div>
+                        </td>
+
+                        {visibleColumns.status && (
+                          <td style={{ padding: '15px' }}>
+                            <span className={`status-badge status-${trade.status?.toLowerCase()}`}>
+                              {trade.status}
+                            </span>
+                          </td>
+                        )}
+                      <td style={{ padding: '15px 20px', textAlign: 'right' }} onClick={(e) => e.stopPropagation()}>
+                        <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
                           <button onClick={() => onEdit(trade, idx)} className="icon-btn"><Edit3 size={16} /></button>
                           <button onClick={() => onDelete(trade._id)} className="icon-btn delete"><Trash2 size={16} /></button>
                         </div>

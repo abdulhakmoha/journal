@@ -22,6 +22,20 @@ function App() {
   const [accounts, setAccounts] = useState([]);
   const [editingTrade, setEditingTrade] = useState(null);
 
+  // Theme Initialization
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('zentrader_theme');
+    if (savedTheme) {
+      try {
+        const theme = JSON.parse(savedTheme);
+        document.documentElement.style.setProperty('--primary', theme.color);
+        document.documentElement.style.setProperty('--primary-glow', theme.glow);
+      } catch (e) {
+        console.error('Failed to apply theme');
+      }
+    }
+  }, []);
+
   // Fetch Data from API
   useEffect(() => {
     if (token) {
