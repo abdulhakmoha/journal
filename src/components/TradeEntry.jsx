@@ -142,9 +142,15 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       session: formData['Trading Session'] || 'London'
     };
 
+    // Sanitize numeric fields to avoid empty string errors
+    const sanitizedTrade = { ...finalTrade };
+    if (sanitizedTrade.risk === '') delete sanitizedTrade.risk;
+    if (sanitizedTrade.reward === '') delete sanitizedTrade.reward;
+    if (sanitizedTrade.rr === '') delete sanitizedTrade.rr;
+
     // Clear draft after saving
     localStorage.removeItem('zentrader_form_draft');
-    onSave(finalTrade);
+    onSave(sanitizedTrade);
   };
 
   return (
