@@ -85,17 +85,26 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     const file = e.target.files[0];
     if (!file) return;
 
+    const IMGBB_KEY = 'ab0fb7feaf970b3a72b70ae049436487';
     const data = new FormData();
     data.append('image', file);
     
     setUploading({ ...uploading, [type]: true });
     try {
-      const res = await api.post('/api/upload', data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+      // Direct upload to ImgBB
+      const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+        method: 'POST',
+        body: data
       });
-      setFormData({ ...formData, [type === 'before' ? 'beforeChart' : 'afterChart']: res.data.url });
+      const result = await res.json();
+      
+      if (result.success) {
+        setFormData({ ...formData, [type === 'before' ? 'beforeChart' : 'afterChart']: result.data.url });
+      } else {
+        throw new Error('Upload failed');
+      }
     } catch (err) {
-      alert('Upload failed');
+      alert('Upload failed: ' + err.message);
     } finally {
       setUploading({ ...uploading, [type]: false });
     }
