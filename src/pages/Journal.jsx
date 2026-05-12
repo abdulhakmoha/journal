@@ -143,9 +143,8 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
     const grossLoss = losses.length;
     const profitFactor = grossLoss === 0 ? grossProfit : (grossProfit / grossLoss).toFixed(2);
 
-    const winRate = wins.length / tradesList.length;
-    const avgWin = wins.length === 0 ? 0 : grossProfit / wins.length;
-    const expectancy = ((winRate * avgWin) - ((1 - winRate) * 1)).toFixed(2);
+    const totalNetR = grossProfit - grossLoss;
+    const expectancy = (totalNetR / tradesList.length).toFixed(2);
 
     let bestDay = { name: 'N/A', rate: 0 };
     Object.keys(daysStats).forEach(day => {
@@ -384,7 +383,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                                    </p>
                                    {trade.beforeChart ? (
                                      <img 
-                                       src={trade.beforeChart.startsWith('http') ? trade.beforeChart : `http://localhost:5000${trade.beforeChart}`} 
+                                       src={trade.beforeChart.startsWith('http') ? trade.beforeChart : `https://journal-production-6346.up.railway.app${trade.beforeChart}`} 
                                        alt="Before" 
                                        style={{ width: '100%', borderRadius: '8px', cursor: 'zoom-in' }} 
                                        onClick={() => setSelectedImage(trade.beforeChart)}
@@ -398,7 +397,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                                    </p>
                                    {trade.afterChart ? (
                                      <img 
-                                       src={trade.afterChart.startsWith('http') ? trade.afterChart : `http://localhost:5000${trade.afterChart}`} 
+                                       src={trade.afterChart.startsWith('http') ? trade.afterChart : `https://journal-production-6346.up.railway.app${trade.afterChart}`} 
                                        alt="After" 
                                        style={{ width: '100%', borderRadius: '8px', cursor: 'zoom-in' }} 
                                        onClick={() => setSelectedImage(trade.afterChart)}
@@ -534,7 +533,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
               <X size={32} />
             </button>
             <img 
-              src={selectedImage.startsWith('http') ? selectedImage : `http://localhost:5000${selectedImage}`} 
+              src={selectedImage.startsWith('http') ? selectedImage : `https://journal-production-6346.up.railway.app${selectedImage}`} 
               alt="Expanded Chart" 
               style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '12px', boxShadow: '0 0 50px rgba(56, 189, 248, 0.3)' }} 
             />
