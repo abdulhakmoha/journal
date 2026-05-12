@@ -175,10 +175,10 @@ const Pricing = () => {
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Binance TxID / Hash:</label>
+                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Hash ID / Nambarka Xaqiijinta (Binance):</label>
                   <input 
                     type="text" 
-                    placeholder="Geli Transaction Hash-ka" 
+                    placeholder="Geli TxID-ga ama Magacaaga Binance" 
                     value={transactionId} 
                     onChange={(e) => setTransactionId(e.target.value)} 
                   />
@@ -196,10 +196,10 @@ const Pricing = () => {
                   <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>EVC Plus / Sahal / Zaad</p>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Transaction ID / Message:</label>
+                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Nambarka aad lacagta ka soo dirtay:</label>
                   <input 
                     type="text" 
-                    placeholder="Geli Transaction ID-ga fariinta" 
+                    placeholder="Tusaale: 0615XXXXXX" 
                     value={transactionId} 
                     onChange={(e) => setTransactionId(e.target.value)} 
                   />
