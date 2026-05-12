@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Calendar as CalendarIcon, 
   List as ListIcon, 
@@ -7,13 +7,14 @@ import {
   TrendingUp, 
   TrendingDown, 
   Plus, 
-  Search,
-  Filter,
-  Trash2,
-  Edit3,
-  Image as ImageIcon,
-  Maximize2,
-  X
+  Search, 
+  Filter, 
+  Trash2, 
+  Edit3, 
+  Image as ImageIcon, 
+  Maximize2, 
+  X,
+  LayoutList
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
