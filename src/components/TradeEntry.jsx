@@ -158,7 +158,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
 
              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 {formFields
-                  .filter(field => !['account', 'trading account', 'pair', 'asset', 'strategy'].includes(field.label.toLowerCase()))
+                  .filter(field => !['account', 'trading account', 'strategy'].includes(field.label.toLowerCase()))
                   .map((field, i) => (
                   <div key={i}>
                     <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{field.label}</label>
