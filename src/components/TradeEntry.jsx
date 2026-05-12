@@ -201,7 +201,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
                 ))}
              </div>
 
-             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '15px' }}>
+             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '15px' }}>
                 <div>
                   <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Type</label>
                   <select style={{ width: '100%' }} value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})}>
@@ -210,12 +210,27 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Risk (%)</label>
-                  <input type="number" step="any" placeholder="e.g. 1" style={{ width: '100%' }} value={formData.risk} onChange={(e) => setFormData({...formData, risk: e.target.value})} required />
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Unit</label>
+                  <select 
+                    style={{ width: '100%' }} 
+                    value={formData.riskUnit || '%'} 
+                    onChange={(e) => setFormData({...formData, riskUnit: e.target.value})}
+                  >
+                    <option value="%">% (Percent)</option>
+                    <option value="Pips">Pips</option>
+                  </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Reward (%)</label>
-                  <input type="number" step="any" placeholder="e.g. 3" style={{ width: '100%' }} value={formData.reward} onChange={(e) => setFormData({...formData, reward: e.target.value})} required />
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                    Risk ({formData.riskUnit || '%'})
+                  </label>
+                  <input type="number" step="any" placeholder={formData.riskUnit === 'Pips' ? 'e.g. 10' : 'e.g. 1'} style={{ width: '100%' }} value={formData.risk} onChange={(e) => setFormData({...formData, risk: e.target.value})} required />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                    Reward ({formData.riskUnit || '%'})
+                  </label>
+                  <input type="number" step="any" placeholder={formData.riskUnit === 'Pips' ? 'e.g. 30' : 'e.g. 3'} style={{ width: '100%' }} value={formData.reward} onChange={(e) => setFormData({...formData, reward: e.target.value})} required />
                 </div>
              </div>
 
