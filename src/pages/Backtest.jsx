@@ -840,25 +840,25 @@ const Backtest = ({ backtestFields, accounts }) => {
                <div style={{ padding: '20px', borderBottom: '1px solid var(--border)' }}>
                  <h3 style={{ fontSize: '1rem' }}>Strategy Log ({activeSession.trades.length} Executions)</h3>
                </div>
-               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+               <div style={{ overflowX: 'auto', width: '100%' }}>
+               <table style={{ width: '100%', minWidth: '900px', borderCollapse: 'collapse' }}>
                   <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                     <tr>
-                      <th style={{ padding: '15px 25px', textAlign: 'left' }}>#</th>
-                      <th style={{ padding: '15px 25px', textAlign: 'left' }}>DATE</th>
-                      <th style={{ padding: '15px 25px', textAlign: 'left' }}>PAIR</th>
-                      <th style={{ padding: '15px 25px', textAlign: 'left' }}>TYPE</th>
-                      <th style={{ padding: '15px 25px', textAlign: 'left' }}>STATUS</th>
-                      <th style={{ padding: '15px 25px', textAlign: 'left' }}>R:R</th>
-                      <th style={{ padding: '15px 25px', textAlign: 'left' }}>MISTAKE</th>
-                      <th style={{ padding: '15px 25px', textAlign: 'left' }}>NOTES</th>
-                      <th style={{ padding: '15px 25px', textAlign: 'left' }}>CHARTS</th>
-                      <th style={{ padding: '15px 25px', textAlign: 'center' }} className="no-print">ACTION</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>#</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>DATE</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>PAIR</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>TYPE</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>STATUS</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>R:R</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>MISTAKE</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>NOTES</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>CHARTS</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'center' }} className="no-print">ACTION</th>
                     </tr>
                   </thead>
                   <tbody>
                     {activeSession.trades.slice().reverse().map((trade, idx) => (
                       <tr key={trade._id || idx} style={{ borderBottom: '1px solid var(--border)', fontSize: '0.9rem' }}>
-                        <td style={{ padding: '20px 25px', color: 'var(--text-muted)' }}>{activeSession.trades.length - idx}</td>
                         <td style={{ padding: '20px 25px', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '2px' }}>
                             <span style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '0.65rem', textTransform: 'uppercase' }}>
@@ -868,9 +868,9 @@ const Backtest = ({ backtestFields, accounts }) => {
                           </div>
                           {trade.tradeDate ? new Date(trade.tradeDate).toLocaleDateString('en-GB', { timeZone: 'UTC' }) : new Date(trade.timestamp).toLocaleDateString('en-GB')}
                         </td>
-                        <td style={{ padding: '20px 25px', fontWeight: 'bold' }}>{trade.symbol}</td>
-                        <td style={{ padding: '20px 25px', color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)' }}>{trade.type}</td>
-                        <td style={{ padding: '20px 25px' }}>
+                        <td style={{ padding: '15px 15px', fontWeight: 'bold' }}>{trade.symbol}</td>
+                        <td style={{ padding: '15px 15px', color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)' }}>{trade.type}</td>
+                        <td style={{ padding: '15px 15px' }}>
                           <span style={{
                             padding: '6px 12px',
                             borderRadius: '12px',
@@ -882,16 +882,16 @@ const Backtest = ({ backtestFields, accounts }) => {
                             {trade.status}
                           </span>
                         </td>
-                        <td style={{ padding: '20px 25px', color: parseFloat(trade.rr) > 0 ? 'var(--success)' : parseFloat(trade.rr) < 0 ? 'var(--danger)' : 'var(--text-muted)' }}>
+                        <td style={{ padding: '15px 15px', color: parseFloat(trade.rr) > 0 ? 'var(--success)' : parseFloat(trade.rr) < 0 ? 'var(--danger)' : 'var(--text-muted)' }}>
                           {parseFloat(trade.rr) > 0 ? '+' : ''}{trade.rr}R
                         </td>
-                        <td style={{ padding: '20px 25px' }}>{trade.isMistake ? '🔴 Yes' : '🟢 No'}</td>
-                        <td style={{ padding: '20px 25px' }}>
+                        <td style={{ padding: '15px 15px' }}>{trade.isMistake ? '🔴 Yes' : '🟢 No'}</td>
+                        <td style={{ padding: '15px 15px' }}>
                           <div style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '0.75rem', color: 'var(--text-muted)' }} title={trade.notes}>
                             {trade.notes || '—'}
                           </div>
                         </td>
-                        <td style={{ padding: '20px 25px' }}>
+                        <td style={{ padding: '15px 15px' }}>
                           <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                             {trade.beforeChart ? (
                               <div
@@ -931,13 +931,14 @@ const Backtest = ({ backtestFields, accounts }) => {
                             )}
                           </div>
                         </td>
-                        <td style={{ padding: '15px 25px', textAlign: 'center' }} className="no-print">
+                        <td style={{ padding: '15px 15px', textAlign: 'center' }} className="no-print">
                            <button onClick={() => deleteTrade(trade._id)} style={{ background: 'transparent', border: 'none', color: 'var(--danger)', opacity: 0.5, cursor: 'pointer' }}><Trash2 size={14} /></button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                </table>
+            </div>
             </section>
           </div>
 
