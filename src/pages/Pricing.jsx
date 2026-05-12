@@ -168,17 +168,17 @@ const Pricing = () => {
             {paymentMethod === 'Crypto' && (
               <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} style={{ overflow: 'hidden' }}>
                 <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '10px' }}>Fadlan u soo dir <strong>${selectedPlan.price} USDT (TRC20)</strong> nambaarka wallet-ka ee hoose:</p>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '10px' }}>Fadlan u soo dir <strong>${selectedPlan.price} USDT (TRC20)</strong> cinwaanka Binance ee hoose:</p>
                   <div style={{ background: 'var(--bg-dark)', padding: '10px', borderRadius: '8px', fontFamily: 'monospace', fontSize: '0.8rem', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>TXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
-                    <button onClick={() => navigator.clipboard.writeText('TXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')} style={{ background: 'var(--primary)', border: 'none', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer' }}>Copy</button>
+                    <span>GELI_CINWAANKA_BINANCE_HALKAN</span>
+                    <button onClick={() => navigator.clipboard.writeText('GELI_CINWAANKA_BINANCE_HALKAN')} style={{ background: 'var(--primary)', border: 'none', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer' }}>Copy</button>
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Transaction Hash ID:</label>
+                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Binance TxID / Hash:</label>
                   <input 
                     type="text" 
-                    placeholder="Geli Hash-ka lacagta aad soo dirtay" 
+                    placeholder="Geli Transaction Hash-ka" 
                     value={transactionId} 
                     onChange={(e) => setTransactionId(e.target.value)} 
                   />
@@ -190,10 +190,10 @@ const Pricing = () => {
               <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} style={{ overflow: 'hidden' }}>
                 <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '10px' }}>Fadlan u soo dir <strong>${selectedPlan.price}</strong> nambaarka hoose:</p>
-                  <div style={{ background: 'var(--bg-dark)', padding: '10px', borderRadius: '8px', fontSize: '1rem', fontWeight: 'bold', border: '1px solid var(--border)', textAlign: 'center' }}>
-                    061XXXXXXX / 063XXXXXXX
+                  <div style={{ background: 'var(--bg-dark)', padding: '10px', borderRadius: '8px', fontSize: '1.2rem', fontWeight: 'bold', border: '1px solid var(--border)', textAlign: 'center', color: 'var(--primary)' }}>
+                    617755701
                   </div>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>Magaca: <strong>ZenTrader Platform</strong></p>
+                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>EVC Plus / Sahal / Zaad</p>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
                   <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Transaction ID / Message:</label>
