@@ -143,6 +143,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
     const grossLoss = losses.length;
     const profitFactor = grossLoss === 0 ? grossProfit : (grossProfit / grossLoss).toFixed(2);
 
+    const winRate = wins.length / tradesList.length;
     const totalNetR = grossProfit - grossLoss;
     const expectancy = (totalNetR / tradesList.length).toFixed(2);
 
