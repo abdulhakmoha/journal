@@ -858,8 +858,8 @@ const Backtest = ({ backtestFields, accounts }) => {
                   <tbody>
                     {activeSession.trades.slice().reverse().map((trade, idx) => (
                       <tr key={trade._id || idx} style={{ borderBottom: '1px solid var(--border)', fontSize: '0.9rem' }}>
-                        <td style={{ padding: '15px 25px', color: 'var(--text-muted)' }}>{activeSession.trades.length - idx}</td>
-                        <td style={{ padding: '15px 25px', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                        <td style={{ padding: '20px 25px', color: 'var(--text-muted)' }}>{activeSession.trades.length - idx}</td>
+                        <td style={{ padding: '20px 25px', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '2px' }}>
                             <span style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '0.65rem', textTransform: 'uppercase' }}>
                               {trade.tradeDate ? ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(trade.tradeDate).getUTCDay()] : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(trade.timestamp).getDay()]}
@@ -868,13 +868,13 @@ const Backtest = ({ backtestFields, accounts }) => {
                           </div>
                           {trade.tradeDate ? new Date(trade.tradeDate).toLocaleDateString('en-GB', { timeZone: 'UTC' }) : new Date(trade.timestamp).toLocaleDateString('en-GB')}
                         </td>
-                        <td style={{ padding: '15px 25px', fontWeight: 'bold' }}>{trade.symbol}</td>
-                        <td style={{ padding: '15px 25px', color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)' }}>{trade.type}</td>
-                        <td style={{ padding: '15px 25px' }}>
+                        <td style={{ padding: '20px 25px', fontWeight: 'bold' }}>{trade.symbol}</td>
+                        <td style={{ padding: '20px 25px', color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)' }}>{trade.type}</td>
+                        <td style={{ padding: '20px 25px' }}>
                           <span style={{
-                            padding: '4px 10px',
+                            padding: '6px 12px',
                             borderRadius: '12px',
-                            fontSize: '0.75rem',
+                            fontSize: '0.8rem',
                             fontWeight: 'bold',
                             background: trade.status === 'Win' ? 'rgba(16, 185, 129, 0.15)' : trade.status === 'Loss' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(56, 189, 248, 0.15)',
                             color: trade.status === 'Win' ? 'var(--success)' : trade.status === 'Loss' ? 'var(--danger)' : 'var(--primary)'
@@ -882,29 +882,31 @@ const Backtest = ({ backtestFields, accounts }) => {
                             {trade.status}
                           </span>
                         </td>
-                        <td style={{ padding: '15px 25px', color: parseFloat(trade.rr) > 0 ? 'var(--success)' : parseFloat(trade.rr) < 0 ? 'var(--danger)' : 'var(--text-muted)' }}>
+                        <td style={{ padding: '20px 25px', color: parseFloat(trade.rr) > 0 ? 'var(--success)' : parseFloat(trade.rr) < 0 ? 'var(--danger)' : 'var(--text-muted)' }}>
                           {parseFloat(trade.rr) > 0 ? '+' : ''}{trade.rr}R
                         </td>
-                        <td style={{ padding: '15px 25px' }}>{trade.isMistake ? '🔴 Yes' : '🟢 No'}</td>
-                        <td style={{ padding: '15px 25px' }}>
+                        <td style={{ padding: '20px 25px' }}>{trade.isMistake ? '🔴 Yes' : '🟢 No'}</td>
+                        <td style={{ padding: '20px 25px' }}>
                           <div style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '0.75rem', color: 'var(--text-muted)' }} title={trade.notes}>
                             {trade.notes || '—'}
                           </div>
                         </td>
-                        <td style={{ padding: '15px 25px' }}>
-                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <td style={{ padding: '20px 25px' }}>
+                          <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                             {trade.beforeChart ? (
                               <div
                                 onClick={() => setLightbox(trade.beforeChart)}
-                                style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px' }}
+                                style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}
                                 title="View Before Chart"
                               >
                                 <img
                                   src={getImageUrl(trade.beforeChart)}
                                   alt="Before"
-                                  style={{ width: '40px', height: '30px', objectFit: 'cover', borderRadius: '4px', border: '1px solid var(--primary)' }}
+                                  style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '4px', border: '1px solid var(--primary)', transition: 'transform 0.2s' }}
+                                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                                 />
-                                <span style={{ fontSize: '0.55rem', color: 'var(--primary)' }}>BEFORE</span>
+                                <span style={{ fontSize: '0.6rem', fontWeight: 'bold', color: 'var(--primary)' }}>BEFORE</span>
                               </div>
                             ) : (
                               <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.15)' }}>—</span>
@@ -912,15 +914,17 @@ const Backtest = ({ backtestFields, accounts }) => {
                             {trade.afterChart ? (
                               <div
                                 onClick={() => setLightbox(trade.afterChart)}
-                                style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px' }}
+                                style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}
                                 title="View After Chart"
                               >
                                 <img
                                   src={getImageUrl(trade.afterChart)}
                                   alt="After"
-                                  style={{ width: '40px', height: '30px', objectFit: 'cover', borderRadius: '4px', border: '1px solid var(--success)' }}
+                                  style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '4px', border: '1px solid var(--success)', transition: 'transform 0.2s' }}
+                                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                                 />
-                                <span style={{ fontSize: '0.55rem', color: 'var(--success)' }}>AFTER</span>
+                                <span style={{ fontSize: '0.6rem', fontWeight: 'bold', color: 'var(--success)' }}>AFTER</span>
                               </div>
                             ) : (
                               <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.15)' }}>—</span>
