@@ -401,10 +401,10 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                           <td style={{ padding: '15px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                               <div className="glass" style={{ padding: '5px 8px', borderRadius: '6px', textAlign: 'center', minWidth: '45px' }}>
-                                <span style={{ fontSize: '0.65rem', color: 'var(--primary)', fontWeight: 'bold', display: 'block' }}>{new Date(trade.timestamp).toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}</span>
+                                <span style={{ fontSize: '0.65rem', color: 'var(--primary)', fontWeight: 'bold', display: 'block' }}>{new Date(trade.timestamp).toLocaleDateString('en-GB', { weekday: 'short' }).toUpperCase()}</span>
                                 <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>{new Date(trade.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
                               </div>
-                              <span style={{ fontSize: '0.85rem' }}>{new Date(trade.timestamp).toLocaleDateString()}</span>
+                              <span style={{ fontSize: '0.85rem' }}>{new Date(trade.timestamp).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
                             </div>
                           </td>
                         )}

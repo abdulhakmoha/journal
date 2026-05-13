@@ -7,6 +7,8 @@ const tradeSchema = new mongoose.Schema({
   type: { type: String, enum: ['Long', 'Short'], required: true },
   risk: { type: Number },
   reward: { type: Number },
+  riskUnit: { type: String, default: '%' },
+  riskPercent: { type: Number, default: 1 },
   rr: { type: Number },
   strategy: { type: String },
   session: { type: String },
