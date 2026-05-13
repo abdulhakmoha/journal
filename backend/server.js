@@ -61,6 +61,33 @@ app.get('/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
+const cron = require('node-cron');
+const User = require('./models/User');
+
+// Run every hour to check for expired subscriptions
+cron.schedule('0 * * * *', async () => {
+  console.log('⏰ Running automated subscription expiration check...');
+  try {
+    const expiredUsers = await User.updateMany(
+      { 
+        'subscription.plan': 'Premium', 
+        'subscription.endDate': { $lt: new Date() } 
+      },
+      { 
+        $set: { 
+          'subscription.plan': 'Free', 
+          'subscription.status': 'expired' 
+        } 
+      }
+    );
+    if (expiredUsers.modifiedCount > 0) {
+      console.log(`✅ Automatically expired ${expiredUsers.modifiedCount} premium subscriptions.`);
+    }
+  } catch (error) {
+    console.error('❌ Error running expiration cron job:', error);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
