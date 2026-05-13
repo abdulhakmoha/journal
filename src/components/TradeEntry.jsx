@@ -16,17 +16,24 @@ const getImageUrl = (url) => {
 
 const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) => {
   const [formData, setFormData] = useState(() => {
-    // 1. Try to load saved draft from localStorage
+    // 1. Priority: If editing an existing trade, use that data
+    if (initialData) {
+      return {
+        ...initialData,
+        date: initialData.date ? new Date(initialData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
+      };
+    }
+
+    // 2. Priority: Try to load saved draft from localStorage for new trades
     const savedDraft = localStorage.getItem('zentrader_form_draft');
     if (savedDraft) {
       try {
-        return JSON.parse(savedDraft);
+        const parsed = JSON.parse(savedDraft);
+        if (parsed) return parsed;
       } catch (e) {
         console.error('Failed to parse draft');
       }
     }
-
-    if (initialData) return { ...initialData };
     
     // Initialize dynamic fields from formFields
     const dynamicData = {};
@@ -132,8 +139,8 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       }
     } else {
       // Minimal validation for Drafts/Active trades
-      if (!formData.account || !symbol) {
-        alert('Fadlan ugu yaraan buuxi (Account iyo Pair) si aad u badbaadiso draft-ka.');
+      if (!formData.account) {
+        alert('Fadlan ugu yaraan dooro (Account) si aad u badbaadiso draft-ka.');
         return;
       }
     }
@@ -205,7 +212,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
 
              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 {formFields
-                  .filter(field => !['account', 'trading account', 'strategy'].includes(field.label.toLowerCase()))
+                  .filter(field => !['account', 'trading account'].includes(field.label.toLowerCase()))
                   .map((field, i) => (
                   <div key={i}>
                     <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{field.label}</label>
