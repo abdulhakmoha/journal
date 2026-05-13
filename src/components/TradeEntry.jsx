@@ -144,7 +144,11 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       grade, 
       isCompleted: completed,
       status: completed ? formData.status : 'Active',
-      timestamp: new Date(formData.date).toISOString(),
+      timestamp: (() => {
+        const [year, month, day] = formData.date.split('-').map(Number);
+        const now = new Date();
+        return new Date(year, month - 1, day, now.getHours(), now.getMinutes(), now.getSeconds()).toISOString();
+      })(),
       // Backward compatibility for known fields if they exist in custom form
       symbol: formData['Pair'] || formData['Asset'] || 'Unknown',
       strategy: formData['Strategy'] || 'Standard',
