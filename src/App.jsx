@@ -177,15 +177,32 @@ function App() {
           onUpdateAccount={handleUpdateAccount}
         />
       );
-      case 'new-trade': return (
-        <TradeEntry 
-          onSave={handleSaveTrade} 
-          customRules={userRules} 
-          formFields={user?.formFields || []}
-          accounts={liveAccounts} 
-          initialData={editingTrade} 
-        />
-      );
+      case 'new-trade': 
+        if (user?.subscription?.plan !== 'Premium' && trades.length >= 5 && !editingTrade) {
+          return (
+            <div className="glass-card" style={{ textAlign: 'center', padding: '60px 20px', maxWidth: '600px', margin: '40px auto', borderRadius: '15px' }}>
+              <div style={{ background: 'rgba(239, 68, 68, 0.1)', width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
+                <span style={{ fontSize: '2rem' }}>🛑</span>
+              </div>
+              <h2 style={{ marginBottom: '15px' }}>Tijaabadii 5-ta Trade way dhammaatay!</h2>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '30px', fontSize: '1.1rem', lineHeight: '1.5' }}>
+                Waxaad aragtay awoodda ZenTrader. Si aad u hesho adeeg aan xad lahayn (Unlimited Trades & Analytics), fadlan iska bixi <strong>$7/bil</strong>.
+              </p>
+              <button className="btn-primary" style={{ padding: '15px 40px', fontSize: '1.1rem' }} onClick={() => setActiveTab('pricing')}>
+                Diiwaangeli Hadda ($7)
+              </button>
+            </div>
+          );
+        }
+        return (
+          <TradeEntry 
+            onSave={handleSaveTrade} 
+            customRules={userRules} 
+            formFields={user?.formFields || []}
+            accounts={liveAccounts} 
+            initialData={editingTrade} 
+          />
+        );
       case 'pricing': return <Pricing />;
       case 'admin-payments': return <AdminPayments />;
       default: return <Dashboard trades={trades} accounts={liveAccounts} />;
@@ -194,7 +211,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} disciplineScore={disciplineScore} />
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} disciplineScore={disciplineScore} tradesCount={trades.length} />
       <main className="main-content">
         <header style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { LayoutDashboard, BookOpen, Target, Settings, Brain, PlusCircle, BarChart2, Zap, PlusSquare, LayoutList, FlaskConical, Calculator, LogOut, Globe, Shield, Award } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const Sidebar = ({ activeTab, setActiveTab, disciplineScore }) => {
+const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
   const { user, logout } = useAuth();
   const menuItems = [
     { id: 'dashboard',   label: 'Dashboard',         icon: Zap },
@@ -130,6 +130,28 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore }) => {
           </div>
           <p style={{ textAlign: 'right', marginTop: '5px', fontWeight: 'bold' }}>{disciplineScore}%</p>
         </div>
+        
+        {user?.subscription?.plan !== 'Premium' && (
+          <div className="glass-card" style={{ padding: '15px', fontSize: '0.85rem', marginTop: '15px', cursor: 'pointer' }} onClick={() => setActiveTab('pricing')}>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '5px', display: 'flex', justifyContent: 'space-between' }}>
+              <span>Free Trades</span>
+              <span style={{ color: tradesCount >= 5 ? 'var(--danger)' : 'var(--warning)' }}>{Math.min(tradesCount, 5)} / 5</span>
+            </p>
+            <div style={{ height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
+              <div style={{ 
+                width: `${Math.min((tradesCount / 5) * 100, 100)}%`, 
+                height: '100%', 
+                background: tradesCount >= 5 ? 'var(--danger)' : 'var(--warning)',
+                boxShadow: `0 0 10px ${tradesCount >= 5 ? 'rgba(239, 68, 68, 0.5)' : 'rgba(245, 158, 11, 0.5)'}`,
+                transition: 'width 1s ease'
+              }}></div>
+            </div>
+            {tradesCount >= 5 && (
+              <p style={{ color: 'var(--danger)', fontSize: '0.7rem', marginTop: '8px', textAlign: 'center' }}>Limit reached. Upgrade now.</p>
+            )}
+          </div>
+        )}
+
         <button 
           onClick={() => { if(window.confirm('Ma hubtaa inaad ka baxdo?')) logout(); }}
           style={{ 

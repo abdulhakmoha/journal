@@ -12,28 +12,20 @@ const Pricing = () => {
 
   const plans = [
     {
-      name: 'Free',
+      name: 'Free Trial',
       price: '0',
       icon: <Zap size={24} color="var(--primary)" />,
-      features: ['Journal 50 Trades/month', 'Basic Analytics', '1 Trading Account', 'Limited Backtest'],
+      features: ['Up to 5 Free Trades', 'Basic Analytics', '1 Trading Account', 'Try before you buy'],
       color: 'var(--primary)',
       isPopular: false
     },
     {
-      name: 'Pro',
-      price: '15',
-      icon: <Award size={24} color="var(--accent)" />,
-      features: ['Unlimited Journaling', 'Advanced Performance Data', '5 Trading Accounts', 'Full Backtest Logic', 'Mindset Mirror Access'],
-      color: 'var(--accent)',
-      isPopular: true
-    },
-    {
-      name: 'Elite',
-      price: '30',
+      name: 'Premium',
+      price: '7',
       icon: <Crown size={24} color="var(--warning)" />,
-      features: ['All Pro Features', 'Priority Support', 'Unlimited Accounts', 'Custom Strategy Builder', 'Early Access Features'],
+      features: ['Unlimited Journaling', 'Advanced Performance Data', 'Unlimited Accounts', 'Full Backtest Logic', 'Mindset Mirror Access'],
       color: 'var(--warning)',
-      isPopular: false
+      isPopular: true
     }
   ];
 
@@ -115,11 +107,11 @@ const Pricing = () => {
               </ul>
 
               <button 
-                className={plan.name === 'Free' ? 'btn-secondary' : 'btn-primary'} 
+                className={plan.name === 'Free Trial' ? 'btn-secondary' : 'btn-primary'} 
                 style={{ width: '100%' }}
-                onClick={() => plan.name !== 'Free' && setSelectedPlan(plan)}
+                onClick={() => plan.name !== 'Free Trial' && setSelectedPlan(plan)}
               >
-                {plan.name === 'Free' ? 'Current Plan' : `Get ${plan.name} Now`}
+                {plan.name === 'Free Trial' ? 'Current Plan' : `Get ${plan.name} Now`}
               </button>
             </motion.div>
           ))}
