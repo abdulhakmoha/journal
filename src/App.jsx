@@ -178,7 +178,7 @@ function App() {
         />
       );
       case 'new-trade': 
-        if (user?.subscription?.plan !== 'Premium' && trades.length >= 5 && !editingTrade) {
+        if (user?.subscription?.plan !== 'Premium' && !user?.isAdmin && trades.length >= 5 && !editingTrade) {
           return (
             <div className="glass-card" style={{ textAlign: 'center', padding: '60px 20px', maxWidth: '600px', margin: '40px auto', borderRadius: '15px' }}>
               <div style={{ background: 'rgba(239, 68, 68, 0.1)', width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>

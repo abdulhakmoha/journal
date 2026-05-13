@@ -131,7 +131,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
           <p style={{ textAlign: 'right', marginTop: '5px', fontWeight: 'bold' }}>{disciplineScore}%</p>
         </div>
         
-        {user?.subscription?.plan !== 'Premium' && (
+        {user?.subscription?.plan !== 'Premium' && !user?.isAdmin && (
           <div className="glass-card" style={{ padding: '15px', fontSize: '0.85rem', marginTop: '15px', cursor: 'pointer' }} onClick={() => setActiveTab('pricing')}>
             <p style={{ color: 'var(--text-muted)', marginBottom: '5px', display: 'flex', justifyContent: 'space-between' }}>
               <span>Free Trades</span>
