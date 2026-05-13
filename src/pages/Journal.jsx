@@ -421,8 +421,11 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                               color: trade.status === 'Win' ? 'var(--success)' : trade.status === 'Loss' ? 'var(--danger)' : 'var(--text-muted)',
                               fontWeight: 'bold'
                             }}>
-                              {trade.status === 'Win' ? '+' : trade.status === 'Loss' ? '-' : ''}
-                              {trade.status === 'BE' ? '0.00%' : `${trade.reward || 0}%`}
+                              {trade.status === 'BE' ? '0.00%' : (
+                                trade.status === 'Win' 
+                                  ? `+${trade.riskUnit === 'Pips' ? ((parseFloat(trade.rr) || 0) * (parseFloat(trade.riskPercent) || 1)).toFixed(2) : (trade.reward || 0)}%`
+                                  : `-${trade.riskUnit === 'Pips' ? (parseFloat(trade.riskPercent) || 1).toFixed(2) : (trade.risk || 0)}%`
+                              )}
                             </span>
                           </td>
                         )}

@@ -31,8 +31,16 @@ const Performance = ({ trades, accounts }) => {
     const wins = filteredTrades.filter(t => t.status === 'Win');
     const losses = filteredTrades.filter(t => t.status === 'Loss');
     
-    const grossProfit = wins.reduce((acc, t) => acc + (parseFloat(t.reward) || 0), 0);
-    const grossLoss = Math.abs(losses.reduce((acc, t) => acc + (parseFloat(t.risk) || 0), 0));
+    const grossProfit = wins.reduce((acc, t) => {
+      const isPips = t.riskUnit === 'Pips';
+      const riskPercent = parseFloat(t.riskPercent) || 1;
+      return acc + (isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0));
+    }, 0);
+    const grossLoss = Math.abs(losses.reduce((acc, t) => {
+      const isPips = t.riskUnit === 'Pips';
+      const riskPercent = parseFloat(t.riskPercent) || 1;
+      return acc + (isPips ? riskPercent : parseFloat(t.risk || 0));
+    }, 0));
     
     const winRate = (wins.length / filteredTrades.length) * 100;
     const profitFactor = grossLoss === 0 ? grossProfit.toFixed(2) : (grossProfit / grossLoss).toFixed(2);
@@ -59,8 +67,10 @@ const Performance = ({ trades, accounts }) => {
     const data = days.map(day => {
       const dayTrades = filteredTrades.filter(t => new Date(t.timestamp).getDay() === days.indexOf(day));
       const pnl = dayTrades.reduce((acc, t) => {
-        if (t.status === 'Win') return acc + (parseFloat(t.reward) || 0);
-        if (t.status === 'Loss') return acc - (parseFloat(t.risk) || 0);
+        const isPips = t.riskUnit === 'Pips';
+        const riskPercent = parseFloat(t.riskPercent) || 1;
+        if (t.status === 'Win') return acc + (isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0));
+        if (t.status === 'Loss') return acc - (isPips ? riskPercent : parseFloat(t.risk || 0));
         return acc;
       }, 0);
       return { day, pnl };
@@ -74,8 +84,10 @@ const Performance = ({ trades, accounts }) => {
     return sessions.map(session => {
       const sessionTrades = filteredTrades.filter(t => t.session === session);
       const pnl = sessionTrades.reduce((acc, t) => {
-        if (t.status === 'Win') return acc + (parseFloat(t.reward) || 0);
-        if (t.status === 'Loss') return acc - (parseFloat(t.risk) || 0);
+        const isPips = t.riskUnit === 'Pips';
+        const riskPercent = parseFloat(t.riskPercent) || 1;
+        if (t.status === 'Win') return acc + (isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0));
+        if (t.status === 'Loss') return acc - (isPips ? riskPercent : parseFloat(t.risk || 0));
         return acc;
       }, 0);
       return { session, pnl, count: sessionTrades.length };
@@ -89,8 +101,10 @@ const Performance = ({ trades, accounts }) => {
       const pairTrades = filteredTrades.filter(t => t.symbol === pair);
       const wins = pairTrades.filter(t => t.status === 'Win').length;
       const pnl = pairTrades.reduce((acc, t) => {
-        if (t.status === 'Win') return acc + (parseFloat(t.reward) || 0);
-        if (t.status === 'Loss') return acc - (parseFloat(t.risk) || 0);
+        const isPips = t.riskUnit === 'Pips';
+        const riskPercent = parseFloat(t.riskPercent) || 1;
+        if (t.status === 'Win') return acc + (isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0));
+        if (t.status === 'Loss') return acc - (isPips ? riskPercent : parseFloat(t.risk || 0));
         return acc;
       }, 0);
       return { pair, pnl, winRate: Math.round((wins / pairTrades.length) * 100), count: pairTrades.length };

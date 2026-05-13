@@ -11,8 +11,14 @@ const Dashboard = ({ trades, accounts }) => {
     const accTrades = trades.filter(t => t.account === acc.name);
     let totalPL = 0;
     accTrades.forEach(t => {
-      if (t.status === 'Win') totalPL += parseFloat(t.reward || 0);
-      if (t.status === 'Loss') totalPL -= parseFloat(t.risk || 0);
+      const isPips = t.riskUnit === 'Pips';
+      const riskPercent = parseFloat(t.riskPercent) || 1;
+      
+      if (t.status === 'Win') {
+        totalPL += isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0);
+      } else if (t.status === 'Loss') {
+        totalPL -= isPips ? riskPercent : parseFloat(t.risk || 0);
+      }
     });
     
     const isBlown = totalPL <= -10; 
@@ -37,8 +43,14 @@ const Dashboard = ({ trades, accounts }) => {
     const data = [{ name: 'Start', pl: 0 }];
     
     filteredTrades.forEach((t, i) => {
-      if (t.status === 'Win') cumulativePL += parseFloat(t.reward || 0);
-      if (t.status === 'Loss') cumulativePL -= parseFloat(t.risk || 0);
+      const isPips = t.riskUnit === 'Pips';
+      const riskPercent = parseFloat(t.riskPercent) || 1;
+
+      if (t.status === 'Win') {
+        cumulativePL += isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0);
+      } else if (t.status === 'Loss') {
+        cumulativePL -= isPips ? riskPercent : parseFloat(t.risk || 0);
+      }
       data.push({
         name: `T${i + 1}`,
         pl: parseFloat(cumulativePL.toFixed(2)),
