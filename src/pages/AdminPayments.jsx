@@ -47,7 +47,7 @@ const AdminPayments = () => {
           <h1 className="text-gradient" style={{ fontSize: '2rem' }}>Payment Requests</h1>
           <p style={{ color: 'var(--text-muted)' }}>Manage and verify user subscription payments.</p>
         </div>
-        <button className="btn-secondary" onClick={fetchPayments} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <button onClick={fetchPayments} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '12px', background: 'rgba(56, 189, 248, 0.1)', border: '1px solid var(--primary)', color: 'var(--primary)', cursor: 'pointer', fontWeight: 'bold' }}>
           <RefreshCw size={16} className={loading ? 'spin' : ''} /> Refresh
         </button>
       </header>
@@ -66,17 +66,18 @@ const AdminPayments = () => {
           </div>
         </div>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-            <tr>
-              <th style={{ padding: '15px 25px', textAlign: 'left' }}>USER</th>
-              <th style={{ padding: '15px 25px', textAlign: 'left' }}>PLAN / AMOUNT</th>
-              <th style={{ padding: '15px 25px', textAlign: 'left' }}>METHOD</th>
-              <th style={{ padding: '15px 25px', textAlign: 'left' }}>TRANSACTION ID</th>
-              <th style={{ padding: '15px 25px', textAlign: 'left' }}>STATUS</th>
-              <th style={{ padding: '15px 25px', textAlign: 'center' }}>ACTIONS</th>
-            </tr>
-          </thead>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '900px' }}>
+            <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+              <tr>
+                <th style={{ padding: '15px 25px', textAlign: 'left' }}>USER</th>
+                <th style={{ padding: '15px 25px', textAlign: 'left' }}>PLAN / AMOUNT</th>
+                <th style={{ padding: '15px 25px', textAlign: 'left' }}>METHOD</th>
+                <th style={{ padding: '15px 25px', textAlign: 'left' }}>TRANSACTION ID</th>
+                <th style={{ padding: '15px 25px', textAlign: 'left' }}>STATUS</th>
+                <th style={{ padding: '15px 25px', textAlign: 'right' }}>ACTIONS</th>
+              </tr>
+            </thead>
           <tbody>
             {filteredPayments.map((p, i) => (
               <tr key={p._id} style={{ borderBottom: '1px solid var(--border)', fontSize: '0.9rem' }}>
@@ -121,18 +122,18 @@ const AdminPayments = () => {
                     {p.status.toUpperCase()}
                   </span>
                 </td>
-                <td style={{ padding: '15px 25px', textAlign: 'center' }}>
+                <td style={{ padding: '15px 25px', textAlign: 'right' }}>
                   {p.status === 'pending' && (
                     <button 
                       className="btn-primary" 
-                      style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '5px', margin: '0 auto' }}
+                      style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
                       onClick={() => handleApprove(p._id)}
                     >
                       <ShieldCheck size={14} /> Approve
                     </button>
                   )}
                   {p.status === 'approved' && (
-                    <div style={{ color: 'var(--success)', fontSize: '0.75rem' }}>Verified ✅</div>
+                    <div style={{ color: 'var(--success)', fontSize: '0.75rem', display: 'inline-block' }}>Verified ✅</div>
                   )}
                 </td>
               </tr>
@@ -143,7 +144,8 @@ const AdminPayments = () => {
               </tr>
             )}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );
