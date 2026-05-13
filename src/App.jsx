@@ -186,7 +186,7 @@ function App() {
               </div>
               <h2 style={{ marginBottom: '15px' }}>Tijaabadii 5-ta Trade way dhammaatay!</h2>
               <p style={{ color: 'var(--text-muted)', marginBottom: '30px', fontSize: '1.1rem', lineHeight: '1.5' }}>
-                Waxaad aragtay awoodda ZenTrader. Si aad u hesho adeeg aan xad lahayn (Unlimited Trades & Analytics), fadlan iska bixi <strong>$7/bil</strong>.
+                Waxaad aragtay awoodda SomTrader. Si aad u hesho adeeg aan xad lahayn (Unlimited Trades & Analytics), fadlan iska bixi <strong>$7/bil</strong>.
               </p>
               <button className="btn-primary" style={{ padding: '15px 40px', fontSize: '1.1rem' }} onClick={() => setActiveTab('pricing')}>
                 Diiwaangeli Hadda ($7)

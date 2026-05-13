@@ -31,7 +31,7 @@ const Login = () => {
           <div style={{ display: 'inline-flex', padding: '15px', background: 'rgba(56, 189, 248, 0.1)', borderRadius: '20px', marginBottom: '20px' }}>
             <Activity size={32} color="var(--primary)" />
           </div>
-          <h1 className="text-gradient" style={{ fontSize: '2.5rem' }}>ZenTrader</h1>
+          <h1 className="text-gradient" style={{ fontSize: '2.5rem' }}>SomTrader</h1>
           <p style={{ color: 'var(--text-muted)' }}>{isLogin ? 'Access your professional trading journal.' : 'Start your performance tracking journey.'}</p>
         </div>
 

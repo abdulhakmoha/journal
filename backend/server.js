@@ -36,7 +36,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/zentrader')
-  .then(() => console.log('✅ Connected to MongoDB (ZenTrader)'))
+  .then(() => console.log('✅ Connected to MongoDB (SomTrader)'))
   .catch((err) => console.error('❌ MongoDB Connection Error'));
 
 // Health Check Route
@@ -54,7 +54,7 @@ app.use('/api/user', require('./routes/userRoutes'));
 app.use('/api/payments', require('./routes/paymentRoutes'));
 
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'ZenTrader API v2.0 - Running ✅' });
+  res.json({ status: 'ok', message: 'SomTrader API v2.0 - Running ✅' });
 });
 
 app.get('/health', (req, res) => {
