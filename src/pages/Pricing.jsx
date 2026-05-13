@@ -175,10 +175,10 @@ const Pricing = () => {
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Hash ID / Nambarka Xaqiijinta (Binance):</label>
+                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Gmail-ka aad Binance-ka ku leedahay:</label>
                   <input 
-                    type="text" 
-                    placeholder="Geli TxID-ga ama Magacaaga Binance" 
+                    type="email" 
+                    placeholder="Tusaale: user@gmail.com" 
                     value={transactionId} 
                     onChange={(e) => setTransactionId(e.target.value)} 
                   />
