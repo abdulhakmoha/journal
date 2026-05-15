@@ -1,5 +1,6 @@
 const express = require('express');
 const Trade = require('../models/Trade');
+const User = require('../models/User');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
@@ -14,8 +15,15 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route   POST api/trades
-router.post('/', auth, async (req, res) => {
-  try {
+    const user = await User.findById(req.user);
+    const tradeCount = await Trade.countDocuments({ user: req.user });
+
+    if (user.subscription.plan !== 'Premium' && !user.isAdmin && tradeCount >= 5) {
+      return res.status(403).json({ 
+        message: 'Tijaabadii 5-ta Trade way dhammaatay! Fadlan u cusboonaysii Premium si aad u sii waddo journaling-ka.' 
+      });
+    }
+
     console.log('Saving Trade Body:', req.body);
     const newTrade = new Trade({
       ...req.body,

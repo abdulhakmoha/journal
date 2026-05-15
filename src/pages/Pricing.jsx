@@ -12,14 +12,6 @@ const Pricing = () => {
 
   const plans = [
     {
-      name: 'Free Trial',
-      price: '0',
-      icon: <Zap size={24} color="var(--primary)" />,
-      features: ['Up to 5 Free Trades', 'Basic Analytics', '1 Trading Account', 'Try before you buy'],
-      color: 'var(--primary)',
-      isPopular: false
-    },
-    {
       name: 'Premium',
       price: '7',
       icon: <Crown size={24} color="var(--warning)" />,
@@ -107,11 +99,11 @@ const Pricing = () => {
               </ul>
 
               <button 
-                className={plan.name === 'Free Trial' ? 'btn-secondary' : 'btn-primary'} 
+                className="btn-primary" 
                 style={{ width: '100%' }}
-                onClick={() => plan.name !== 'Free Trial' && setSelectedPlan(plan)}
+                onClick={() => setSelectedPlan(plan)}
               >
-                {plan.name === 'Free Trial' ? 'Current Plan' : `Get ${plan.name} Now`}
+                Get {plan.name} Now
               </button>
             </motion.div>
           ))}
@@ -140,19 +132,19 @@ const Pricing = () => {
               <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>USDT / BTC / ETH</span>
             </div>
             <div 
-              onClick={() => setPaymentMethod('Mobile Money')}
+              onClick={() => setPaymentMethod('EVC Plus')}
               style={{ 
                 padding: '20px', 
                 borderRadius: '12px', 
-                border: `2px solid ${paymentMethod === 'Mobile Money' ? 'var(--primary)' : 'var(--border)'}`,
-                background: paymentMethod === 'Mobile Money' ? 'rgba(56, 189, 248, 0.05)' : 'transparent',
+                border: `2px solid ${paymentMethod === 'EVC Plus' ? 'var(--primary)' : 'var(--border)'}`,
+                background: paymentMethod === 'EVC Plus' ? 'rgba(56, 189, 248, 0.05)' : 'transparent',
                 cursor: 'pointer',
                 textAlign: 'center'
               }}
             >
               <Smartphone size={30} color="var(--success)" style={{ marginBottom: '10px' }} />
-              <p style={{ fontWeight: 'bold' }}>Mobile Money</p>
-              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>EVC / Sahal / Zaad</span>
+              <p style={{ fontWeight: 'bold' }}>EVC Plus</p>
+              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Somalia Mobile Money</span>
             </div>
           </div>
 
@@ -178,14 +170,14 @@ const Pricing = () => {
               </motion.div>
             )}
 
-            {paymentMethod === 'Mobile Money' && (
+            {paymentMethod === 'EVC Plus' && (
               <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} style={{ overflow: 'hidden' }}>
                 <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '10px' }}>Fadlan u soo dir <strong>${selectedPlan.price}</strong> nambaarka hoose:</p>
                   <div style={{ background: 'var(--bg-dark)', padding: '10px', borderRadius: '8px', fontSize: '1.2rem', fontWeight: 'bold', border: '1px solid var(--border)', textAlign: 'center', color: 'var(--primary)' }}>
                     617755701
                   </div>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>EVC Plus / Sahal / Zaad</p>
+                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>EVC Plus Somalia</p>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
                   <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Nambarka aad lacagta ka soo dirtay:</label>

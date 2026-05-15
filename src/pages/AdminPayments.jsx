@@ -40,6 +40,13 @@ const AdminPayments = () => {
     p.transactionId.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const stats = {
+    crypto: payments.filter(p => p.method === 'Crypto').length,
+    evc: payments.filter(p => p.method === 'EVC Plus' || p.method === 'Mobile Money').length,
+    total: payments.length,
+    pending: payments.filter(p => p.status === 'pending').length
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -51,6 +58,26 @@ const AdminPayments = () => {
           <RefreshCw size={16} className={loading ? 'spin' : ''} /> Refresh
         </button>
       </header>
+
+      {/* Stats Section */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+        <div className="glass-card" style={{ padding: '20px', textAlign: 'center' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Total Requests</p>
+          <h3 style={{ fontSize: '1.8rem' }}>{stats.total}</h3>
+        </div>
+        <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid #F7931A' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Crypto Payments</p>
+          <h3 style={{ fontSize: '1.8rem', color: '#F7931A' }}>{stats.crypto}</h3>
+        </div>
+        <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--success)' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>EVC Plus Payments</p>
+          <h3 style={{ fontSize: '1.8rem', color: 'var(--success)' }}>{stats.evc}</h3>
+        </div>
+        <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--warning)' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Pending Approval</p>
+          <h3 style={{ fontSize: '1.8rem', color: 'var(--warning)' }}>{stats.pending}</h3>
+        </div>
+      </div>
 
       <div className="glass-card" style={{ padding: '0', overflow: 'hidden' }}>
         <div style={{ padding: '20px', borderBottom: '1px solid var(--border)', display: 'flex', gap: '15px' }}>
@@ -91,8 +118,8 @@ const AdminPayments = () => {
                 </td>
                 <td style={{ padding: '15px 25px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    {p.method === 'Crypto' ? <DollarSign size={14} color="#F7931A" /> : <User size={14} color="var(--success)" />}
-                    {p.method}
+                    {p.method === 'Crypto' ? <DollarSign size={14} color="#F7931A" /> : <Smartphone size={14} color="var(--success)" />}
+                    {p.method === 'Mobile Money' ? 'EVC Plus' : p.method}
                   </div>
                 </td>
                 <td style={{ padding: '15px 25px' }}>
