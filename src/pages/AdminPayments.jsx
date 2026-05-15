@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, XCircle, Clock, Search, RefreshCw, User, Mail, DollarSign, ExternalLink } from 'lucide-react';
+import { ShieldCheck, XCircle, Clock, Search, RefreshCw, User, Mail, DollarSign, ExternalLink, Smartphone } from 'lucide-react';
 import api from '../services/api';
 
 const AdminPayments = () => {
@@ -146,7 +146,7 @@ const AdminPayments = () => {
                     background: p.status === 'approved' ? 'rgba(16, 185, 129, 0.1)' : p.status === 'rejected' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)',
                     color: p.status === 'approved' ? 'var(--success)' : p.status === 'rejected' ? 'var(--danger)' : 'var(--warning)'
                   }}>
-                    {p.status.toUpperCase()}
+                    {p.status?.toUpperCase() || 'PENDING'}
                   </span>
                 </td>
                 <td style={{ padding: '15px 25px', textAlign: 'right' }}>
