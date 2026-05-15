@@ -383,12 +383,12 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>DATE / TIME</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>SYMBOL</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>TYPE</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>STRATEGY</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>STATUS</th>
                   {visibleColumns.pips && <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>PIPS</th>}
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>P/L (%)</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>ACCOUNT</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>STATUS</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>ACTIONS</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>CHARTS</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'right' }}>ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
@@ -416,7 +416,21 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                             <span style={{ color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)', fontSize: '0.85rem' }}>{trade.type}</span>
                           </td>
                         )}
-                        {visibleColumns.strategy && <td style={{ padding: '15px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{trade.strategy || 'Price Action'}</td>}
+                        {visibleColumns.status && (
+                          <td style={{ padding: '15px' }}>
+                            <span style={{
+                              padding: '6px 12px',
+                              borderRadius: '12px',
+                              fontSize: '0.8rem',
+                              fontWeight: 'bold',
+                              background: trade.status?.toLowerCase().includes('win') ? 'rgba(16, 185, 129, 0.15)' : trade.status?.toLowerCase().includes('loss') ? 'rgba(239, 68, 68, 0.15)' : 'rgba(56, 189, 248, 0.15)',
+                              color: trade.status?.toLowerCase().includes('win') ? 'var(--success)' : trade.status?.toLowerCase().includes('loss') ? 'var(--danger)' : 'var(--primary)'
+                            }}>
+                              {trade.status}
+                            </span>
+                          </td>
+                        )}
+
                         {visibleColumns.pips && (
                           <td style={{ padding: '15px' }}>
                             <span style={{ 
@@ -428,6 +442,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                             </span>
                           </td>
                         )}
+
                         {visibleColumns.rr && (
                           <td style={{ padding: '15px' }}>
                             <span style={{ 
@@ -444,29 +459,23 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                             </span>
                           </td>
                         )}
+
                         {visibleColumns.account && <td style={{ padding: '15px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>{trade.account || 'Primary'}</td>}
                         
                         <td style={{ padding: '15px' }}>
                           <div style={{ display: 'flex', gap: '8px' }}>
                              {trade.beforeChart && <ImageIcon size={16} color="var(--primary)" />}
                              {trade.afterChart && <ImageIcon size={16} color="var(--success)" />}
-                             {!trade.beforeChart && !trade.afterChart && <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>No Charts</span>}
+                             {!trade.beforeChart && !trade.afterChart && <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>—</span>}
                           </div>
                         </td>
 
-                        {visibleColumns.status && (
-                          <td style={{ padding: '15px' }}>
-                            <span className={`status-badge status-${trade.status?.toLowerCase().includes('win') ? 'win' : trade.status?.toLowerCase().includes('loss') ? 'loss' : trade.status?.toLowerCase().includes('be') ? 'be' : 'active'}`}>
-                              {trade.status}
-                            </span>
-                          </td>
-                        )}
-                      <td style={{ padding: '15px 20px', textAlign: 'right' }} onClick={(e) => e.stopPropagation()}>
-                        <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-                          <button onClick={() => onEdit(trade, idx)} className="icon-btn"><Edit3 size={16} /></button>
-                          <button onClick={() => onDelete(trade._id)} className="icon-btn delete"><Trash2 size={16} /></button>
-                        </div>
-                      </td>
+                        <td style={{ padding: '15px 20px', textAlign: 'right' }} onClick={(e) => e.stopPropagation()}>
+                          <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+                            <button onClick={() => onEdit(trade, idx)} className="icon-btn"><Edit3 size={16} /></button>
+                            <button onClick={() => onDelete(trade._id)} className="icon-btn delete"><Trash2 size={16} /></button>
+                          </div>
+                        </td>
                     </tr>
                     <AnimatePresence>
                       {expandedTrade === trade._id && (
