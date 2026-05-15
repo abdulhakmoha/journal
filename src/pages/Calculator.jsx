@@ -16,7 +16,7 @@ const Calculator = ({ accounts, onAddAccount }) => {
   const assetPresets = {
     'EURUSD': 10,
     'GBPUSD': 10,
-    'XAUUSD': 100,
+    'XAUUSD': 10, // 10 Pips = $1.00 move = $100 for 1 lot
     'US30': 1,
     'NAS100': 1,
     'BTCUSD': 1,
@@ -42,37 +42,42 @@ const Calculator = ({ accounts, onAddAccount }) => {
     setNewAccountForm({ name: '', initialBalance: '', type: 'Personal', target: 0 });
   };
 
+  // Centralized Calculation Logic
   useEffect(() => {
     const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
-    if (balance > 0) {
-      // If riskAmount was manually set, we use it. Otherwise calculate from percent.
-      // But for the initial load and balance changes, we prioritize percent.
-      const risk = (balance * (riskPercent / 100));
-      setRiskAmount(risk.toFixed(2));
-    }
-  }, [selectedAccount, isCustom, customBalance]);
-
-  useEffect(() => {
-    const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
-    if (balance > 0 && stopLossPips > 0) {
-      const calculatedLotSize = parseFloat(riskAmount) / (stopLossPips * pipValue);
-      setLotSize(calculatedLotSize.toFixed(2));
+    
+    if (balance > 0 && stopLossPips > 0 && pipValue > 0) {
+      // Calculate Lot Size based on riskAmount
+      const calculatedLotSize = parseFloat(riskAmount) / (parseFloat(stopLossPips) * parseFloat(pipValue));
+      setLotSize(Math.max(0.01, calculatedLotSize).toFixed(2));
+    } else {
+      setLotSize('0.00');
     }
   }, [riskAmount, stopLossPips, pipValue, selectedAccount, isCustom, customBalance]);
 
-  const handleRiskPercentChange = (val) => {
-    setRiskPercent(val);
+  // Initial risk amount calculation when balance changes
+  useEffect(() => {
     const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
     if (balance > 0) {
-      setRiskAmount((balance * (val / 100)).toFixed(2));
+      setRiskAmount((balance * (riskPercent / 100)).toFixed(2));
+    }
+  }, [selectedAccount, isCustom, customBalance]);
+
+  const handleRiskPercentChange = (val) => {
+    const numVal = parseFloat(val) || 0;
+    setRiskPercent(numVal);
+    const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
+    if (balance > 0) {
+      setRiskAmount((balance * (numVal / 100)).toFixed(2));
     }
   };
 
   const handleRiskAmountChange = (val) => {
-    setRiskAmount(val);
+    const numVal = parseFloat(val) || 0;
+    setRiskAmount(numVal);
     const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
     if (balance > 0) {
-      setRiskPercent(((val / balance) * 100).toFixed(2));
+      setRiskPercent(((numVal / balance) * 100).toFixed(2));
     }
   };
 
