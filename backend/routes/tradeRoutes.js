@@ -30,6 +30,8 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route   POST api/trades
+router.post('/', auth, async (req, res) => {
+  try {
     const user = await User.findById(req.user);
     const tradeCount = await Trade.countDocuments({ user: req.user });
 
