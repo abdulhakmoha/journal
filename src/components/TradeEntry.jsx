@@ -333,14 +333,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
                     <option value="Pips">Pips</option>
                   </select>
                 </div>
-                {formData.riskUnit === 'Pips' && (
-                  <div>
-                    <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                      Risk % Per Trade
-                    </label>
-                    <input type="number" step="any" placeholder="e.g. 1" style={{ width: '100%' }} value={formData.riskPercent} onChange={(e) => setFormData({...formData, riskPercent: e.target.value})} required />
-                  </div>
-                )}
+                {/* Removed Risk % Per Trade input as per user request to hide % when Pips is chosen */}
                 <div>
                   <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                     Risk ({formData.riskUnit || '%'})
