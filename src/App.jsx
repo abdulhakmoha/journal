@@ -34,7 +34,6 @@ function App() {
   const [trades, setTrades] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [editingTrade, setEditingTrade] = useState(null);
-  const [showTutorial, setShowTutorial] = useState(!localStorage.getItem('zentrader_onboarded'));
 
   // Theme Initialization
   useEffect(() => {
@@ -227,38 +226,6 @@ function App() {
         </header>
         {renderContent()}
       </main>
-
-      {/* Interactive Onboarding (Tutorial) */}
-      {showTutorial && (
-        <div className="modal-overlay" style={{ zIndex: 9999 }}>
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="glass-card" 
-            style={{ maxWidth: '500px', padding: '40px', textAlign: 'center' }}
-          >
-            <div style={{ fontSize: '3rem', marginBottom: '20px' }}>🚀</div>
-            <h2 style={{ marginBottom: '15px' }}>Ku soo dhawaada ZenTrader!</h2>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '30px', lineHeight: '1.6' }}>
-              Waa kan tusaale yar oo ku saabsan sida system-ku u shaqeeyo:
-              <br /><br />
-              1. <strong>Dashboard:</strong> Ka eeg caafimaadka accounts-kaaga.
-              <br />
-              2. <strong>Journal:</strong> Ku dar trades-kaaga iyo sawiradooda.
-              <br />
-              3. <strong>Calculator:</strong> Xisaabi lot size-ka kugu habboon.
-              <br />
-              4. <strong>Mindset:</strong> Diwaangeli dareenkaaga ka hor trading-ka.
-            </p>
-            <button className="btn-primary" style={{ width: '100%', padding: '15px' }} onClick={() => {
-              setShowTutorial(false);
-              localStorage.setItem('zentrader_onboarded', 'true');
-            }}>
-              Waan fahmay, aan bilaabo!
-            </button>
-          </motion.div>
-        </div>
-      )}
     </div>
   );
 }
