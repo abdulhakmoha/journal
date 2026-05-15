@@ -896,8 +896,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                <table style={{ width: '100%', minWidth: '900px', borderCollapse: 'collapse' }}>
                   <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                     <tr>
-                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>#</th>
-                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>DATE</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>DATE / TIME</th>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>PAIR</th>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>TYPE</th>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>STATUS</th>
