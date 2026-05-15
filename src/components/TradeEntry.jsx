@@ -26,46 +26,48 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     }
 
     // 2. Priority: Try to load saved draft from localStorage for new trades
+    let baseData = {};
     const savedDraft = localStorage.getItem('zentrader_form_draft');
     if (savedDraft) {
       try {
         const parsed = JSON.parse(savedDraft);
-        if (parsed) return parsed;
+        if (parsed) baseData = parsed;
       } catch (e) {
         console.error('Failed to parse draft');
       }
     }
     
-    // Initialize dynamic fields from formFields
+    // Initialize dynamic fields from formFields and merge with baseData
     const dynamicData = {};
     formFields.forEach(field => {
-      dynamicData[field.label] = field.options[0] || '';
+      dynamicData[field.label] = baseData[field.label] || field.options[0] || '';
     });
 
     return {
-      account: accounts[0]?.name || 'Personal Account',
-      type: 'Long',
-      risk: '',
-      reward: '',
-      riskPercent: 1,
-      rr: 0,
-      beforeChart: '',
-      afterChart: '',
-      preMindset: '',
-      postMindset: '',
-      status: 'Active',
-      isMistake: false,
-      isCompleted: false,
-      pips: '',
-      date: new Date().toISOString().split('T')[0],
-      rules: customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {}),
+      account: baseData.account || accounts[0]?.name || 'Personal Account',
+      type: baseData.type || 'Long',
+      risk: baseData.risk || '',
+      reward: baseData.reward || '',
+      riskPercent: baseData.riskPercent || 1,
+      rr: baseData.rr || 0,
+      beforeChart: baseData.beforeChart || '',
+      afterChart: baseData.afterChart || '',
+      preMindset: baseData.preMindset || '',
+      postMindset: baseData.postMindset || '',
+      status: baseData.status || 'Active',
+      isMistake: baseData.isMistake || false,
+      isCompleted: baseData.isCompleted || false,
+      pips: baseData.pips || '',
+      date: baseData.date || new Date().toISOString().split('T')[0],
+      rules: baseData.rules || customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {}),
+      ...baseData,
       ...dynamicData
     };
   };
 
   const [formData, setFormData] = useState(getInitialState);
 
-  // Sync with initialData OR customRules changes
+  // Sync with initialData OR customRules/formFields changes
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -74,19 +76,31 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
         rules: initialData.rules || customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {})
       });
     } else {
-      // For New Trades: Check if rules in state match user settings
-      // This prevents old drafts from overriding new settings rules
-      const currentRuleKeys = Object.keys(formData.rules).sort().join(',');
-      const settingsRuleKeys = [...customRules].sort().join(',');
-      
-      if (currentRuleKeys !== settingsRuleKeys && customRules.length > 0) {
-        setFormData(prev => ({
-          ...prev,
-          rules: customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {})
-        }));
-      }
+      // Ensure all current formFields and rules are present in the state
+      setFormData(prev => {
+        const updated = { ...prev };
+        let changed = false;
+
+        // Sync Dynamic Fields
+        formFields.forEach(field => {
+          if (updated[field.label] === undefined) {
+            updated[field.label] = field.options[0] || '';
+            changed = true;
+          }
+        });
+
+        // Sync Rules
+        const currentRuleKeys = Object.keys(updated.rules || {}).sort().join(',');
+        const settingsRuleKeys = [...customRules].sort().join(',');
+        if (currentRuleKeys !== settingsRuleKeys) {
+          updated.rules = customRules.reduce((acc, rule) => ({ ...acc, [rule]: updated.rules?.[rule] || false }), {});
+          changed = true;
+        }
+
+        return changed ? updated : prev;
+      });
     }
-  }, [initialData, customRules]);
+  }, [initialData, customRules, formFields]);
 
   const resetForm = (showConfirm = true) => {
     if (!showConfirm || window.confirm('Ma hubtaa inaad tirtirto xogtaan?')) {
