@@ -27,4 +27,9 @@ const tradeSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now }
 });
 
+// Performance Indexes
+tradeSchema.index({ user: 1, date: -1 });
+tradeSchema.index({ account: 1 });
+tradeSchema.index({ symbol: 1 });
+
 module.exports = mongoose.model('Trade', tradeSchema);

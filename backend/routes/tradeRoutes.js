@@ -7,8 +7,23 @@ const router = express.Router();
 // @route   GET api/trades
 router.get('/', auth, async (req, res) => {
   try {
-    const trades = await Trade.find({ user: req.user }).sort({ timestamp: -1 });
-    res.json(trades);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 100;
+    const skip = (page - 1) * limit;
+
+    const trades = await Trade.find({ user: req.user })
+      .sort({ date: -1, timestamp: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Trade.countDocuments({ user: req.user });
+    
+    res.json({
+      trades,
+      total,
+      pages: Math.ceil(total / limit),
+      currentPage: page
+    });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
