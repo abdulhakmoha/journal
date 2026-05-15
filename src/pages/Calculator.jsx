@@ -8,9 +8,27 @@ const Calculator = ({ accounts, onAddAccount }) => {
   const [isCustom, setIsCustom] = useState(accounts.length === 0);
   const [riskPercent, setRiskPercent] = useState(1);
   const [stopLossPips, setStopLossPips] = useState(10);
-  const [pipValue, setPipValue] = useState(10); // Standard for 1 lot on USD pairs
+  const [pipValue, setPipValue] = useState(10); 
+  const [selectedAsset, setSelectedAsset] = useState('EURUSD');
   const [lotSize, setLotSize] = useState(0);
   const [riskAmount, setRiskAmount] = useState(0);
+
+  const assetPresets = {
+    'EURUSD': 10,
+    'GBPUSD': 10,
+    'XAUUSD': 100,
+    'US30': 1,
+    'NAS100': 1,
+    'BTCUSD': 1,
+    'Custom': 10
+  };
+
+  const handleAssetChange = (asset) => {
+    setSelectedAsset(asset);
+    if (asset !== 'Custom') {
+      setPipValue(assetPresets[asset]);
+    }
+  };
   
   // New Account Modal State
   const [showAddModal, setShowAddModal] = useState(false);
@@ -158,16 +176,33 @@ const Calculator = ({ accounts, onAddAccount }) => {
 
             <div className="input-group">
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <Activity size={16} color="var(--primary)" /> Asset / Pair
+              </label>
+              <select value={selectedAsset} onChange={(e) => handleAssetChange(e.target.value)} style={{ width: '100%' }}>
+                <option value="EURUSD">EURUSD / Majors ($10)</option>
+                <option value="XAUUSD">XAUUSD / Gold ($100)</option>
+                <option value="US30">US30 / Dow Jones ($1)</option>
+                <option value="NAS100">NAS100 / Nasdaq ($1)</option>
+                <option value="BTCUSD">BTCUSD / Crypto ($1)</option>
+                <option value="Custom">Custom Value</option>
+              </select>
+            </div>
+
+            <div className="input-group">
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                 <DollarSign size={16} color="var(--success)" /> Pip Value (per Lot)
               </label>
               <input 
                 type="number" 
                 value={pipValue} 
-                onChange={(e) => setPipValue(parseFloat(e.target.value) || 0)} 
+                onChange={(e) => {
+                  setPipValue(parseFloat(e.target.value) || 0);
+                  setSelectedAsset('Custom');
+                }} 
                 step="0.01"
                 style={{ width: '100%' }}
               />
-              <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '8px' }}>Standard: 10 (EURUSD), 100 (Gold), 1 (Mini).</p>
+              <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '8px' }}>Standard: 10 (EURUSD), 100 (Gold), 1 (US30).</p>
             </div>
 
           </div>
