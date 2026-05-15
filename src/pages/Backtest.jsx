@@ -146,7 +146,13 @@ const Backtest = ({ backtestFields, accounts }) => {
     if (!tradeForm.rr || isNaN(tradeForm.rr)) return alert('Fadlan geli R:R sax ah');
     
     try {
-      const res = await api.post(`/api/backtest/${activeSession._id}/trades`, tradeForm);
+      const finalTradeData = {
+        ...tradeForm,
+        status: tradeForm.status.split(' ')[0], // Clean emoji
+        pips: tradeForm.pips ? parseFloat(tradeForm.pips) : 0
+      };
+      
+      const res = await api.post(`/api/backtest/${activeSession._id}/trades`, finalTradeData);
       setActiveSession(res.data);
       
       const resetCustomData = {};

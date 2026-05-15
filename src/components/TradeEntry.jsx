@@ -189,8 +189,9 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       ...formData, 
       grade, 
       isCompleted: completed,
-      status: completed ? formData.status : 'Active',
+      status: completed ? formData.status.split(' ')[0] : 'Active', // Clean emoji
       symbol: symbol || 'Unknown',
+      pips: formData.pips ? parseFloat(formData.pips) : 0, // Ensure Number
       timestamp: (() => {
         const [year, month, day] = formData.date.split('-').map(Number);
         const now = new Date();
