@@ -431,13 +431,13 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                         {visibleColumns.rr && (
                           <td style={{ padding: '15px' }}>
                             <span style={{ 
-                              color: trade.status === 'Win' ? 'var(--success)' : trade.status === 'Loss' ? 'var(--danger)' : 'var(--text-muted)',
+                              color: trade.status?.startsWith('Win') ? 'var(--success)' : trade.status?.startsWith('Loss') ? 'var(--danger)' : 'var(--text-muted)',
                               fontWeight: 'bold'
                             }}>
-                              {trade.status === 'BE' ? '0.00%' : (
-                                trade.status === 'Win' 
-                                  ? `+${trade.riskUnit === 'Pips' ? Math.abs((parseFloat(trade.rr) || 0) * (parseFloat(trade.riskPercent) || 1)).toFixed(2) : Math.abs(parseFloat(trade.reward) || 0).toFixed(2)}%`
-                                  : `-${trade.riskUnit === 'Pips' ? Math.abs(parseFloat(trade.riskPercent) || 1).toFixed(2) : Math.abs(parseFloat(trade.risk) || 0).toFixed(2)}%`
+                              {trade.status?.startsWith('BE') ? '0.00%' : (
+                                trade.status?.startsWith('Win') 
+                                  ? `+${trade.riskUnit === 'Pips' ? Math.abs((parseFloat(trade.rr) || 0) * (parseFloat(trade.riskPercent) || 1)).toFixed(2) : (trade.reward || 0)}%`
+                                  : `-${trade.riskUnit === 'Pips' ? Math.abs(parseFloat(trade.riskPercent) || 1).toFixed(2) : (trade.risk || 0)}%`
                               )}
                             </span>
                           </td>
@@ -454,7 +454,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
 
                         {visibleColumns.status && (
                           <td style={{ padding: '15px' }}>
-                            <span className={`status-badge status-${trade.status?.split(' ')[0].toLowerCase()}`}>
+                            <span className={`status-badge status-${trade.status?.startsWith('Win') ? 'win' : trade.status?.startsWith('Loss') ? 'loss' : trade.status?.startsWith('BE') ? 'be' : 'active'}`}>
                               {trade.status}
                             </span>
                           </td>
