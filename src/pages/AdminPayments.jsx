@@ -25,13 +25,24 @@ const AdminPayments = () => {
   }, []);
 
   const handleApprove = async (id) => {
-    if (!window.confirm('Ma hubtaa inaad lacagtan xaqiijiso oo aad account-ka user-ka u bedesho Pro/Elite?')) return;
+    if (!window.confirm('Ma hubtaa inaad lacagtan xaqiijiso?')) return;
     try {
       await api.put(`/api/payments/admin/approve/${id}`);
       alert('Subscription Activated! ✅');
       fetchPayments();
     } catch (err) {
       alert('Error approving payment');
+    }
+  };
+
+  const handleReject = async (id) => {
+    if (!window.confirm('Ma hubtaa inaad lacagtan REJECT garayso?')) return;
+    try {
+      await api.put(`/api/payments/admin/reject/${id}`);
+      alert('Payment Rejected! ❌');
+      fetchPayments();
+    } catch (err) {
+      alert('Error rejecting payment');
     }
   };
 
@@ -48,7 +59,8 @@ const AdminPayments = () => {
     evc: payments.filter(p => p.method === 'EVC Plus' || p.method === 'Mobile Money').length,
     total: payments.length,
     pending: payments.filter(p => p.status === 'pending').length,
-    approved: payments.filter(p => p.status === 'approved').length
+    approved: payments.filter(p => p.status === 'approved').length,
+    rejected: payments.filter(p => p.status === 'rejected').length
   };
 
   return (
@@ -81,6 +93,10 @@ const AdminPayments = () => {
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Pending Approval</p>
           <h3 style={{ fontSize: '1.8rem', color: 'var(--warning)' }}>{stats.pending}</h3>
         </div>
+        <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--danger)', cursor: 'pointer' }} onClick={() => setStatusFilter('rejected')}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Rejected Requests</p>
+          <h3 style={{ fontSize: '1.8rem', color: 'var(--danger)' }}>{stats.rejected}</h3>
+        </div>
       </div>
 
       <div className="glass-card" style={{ padding: '0', overflow: 'hidden' }}>
@@ -97,7 +113,7 @@ const AdminPayments = () => {
           </div>
           
           <div style={{ display: 'flex', gap: '5px', background: 'rgba(0,0,0,0.2)', padding: '4px', borderRadius: '8px' }}>
-            {['all', 'pending', 'approved'].map(s => (
+            {['all', 'pending', 'approved', 'rejected'].map(s => (
               <button 
                 key={s}
                 onClick={() => setStatusFilter(s)}
@@ -175,18 +191,30 @@ const AdminPayments = () => {
                     {p.status?.toUpperCase() || 'PENDING'}
                   </span>
                 </td>
-                <td style={{ padding: '15px 25px', textAlign: 'right' }}>
+                 <td style={{ padding: '15px 25px', textAlign: 'right' }}>
                   {p.status === 'pending' && (
-                    <button 
-                      className="btn-primary" 
-                      style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
-                      onClick={() => handleApprove(p._id)}
-                    >
-                      <ShieldCheck size={14} /> Approve
-                    </button>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                      <button 
+                        className="btn-primary" 
+                        style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+                        onClick={() => handleApprove(p._id)}
+                      >
+                        <ShieldCheck size={14} /> Approve
+                      </button>
+                      <button 
+                        className="btn-secondary" 
+                        style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '5px', borderColor: 'var(--danger)', color: 'var(--danger)' }}
+                        onClick={() => handleReject(p._id)}
+                      >
+                        <XCircle size={14} /> Reject
+                      </button>
+                    </div>
                   )}
                   {p.status === 'approved' && (
                     <div style={{ color: 'var(--success)', fontSize: '0.75rem', display: 'inline-block' }}>Verified ✅</div>
+                  )}
+                  {p.status === 'rejected' && (
+                    <div style={{ color: 'var(--danger)', fontSize: '0.75rem', display: 'inline-block' }}>Rejected ❌</div>
                   )}
                 </td>
               </tr>

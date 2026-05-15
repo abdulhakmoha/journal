@@ -72,4 +72,23 @@ router.put('/admin/approve/:id', auth, async (req, res) => {
   }
 });
 
+// @route   PUT api/payments/admin/reject/:id
+// @desc    Reject a payment (Admin only)
+router.put('/admin/reject/:id', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+    if (!user.isAdmin) return res.status(403).json({ message: 'Access denied' });
+
+    const payment = await Payment.findById(req.params.id);
+    if (!payment) return res.status(404).json({ message: 'Payment not found' });
+
+    payment.status = 'rejected';
+    await payment.save();
+
+    res.json({ message: 'Payment rejected' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
