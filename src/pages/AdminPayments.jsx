@@ -85,6 +85,10 @@ const AdminPayments = () => {
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Crypto Payments</p>
           <h3 style={{ fontSize: '1.8rem', color: '#F7931A' }}>{stats.crypto}</h3>
         </div>
+        <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--primary)' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>EVC Plus Payments</p>
+          <h3 style={{ fontSize: '1.8rem', color: 'var(--primary)' }}>{stats.evc}</h3>
+        </div>
         <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--success)', cursor: 'pointer' }} onClick={() => setStatusFilter('approved')}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Approved Payments</p>
           <h3 style={{ fontSize: '1.8rem', color: 'var(--success)' }}>{stats.approved}</h3>
