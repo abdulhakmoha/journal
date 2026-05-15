@@ -17,7 +17,10 @@ const Dashboard = ({ trades, accounts }) => {
       if (t.status === 'Win') {
         totalPL += isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0);
       } else if (t.status === 'Loss') {
-        totalPL -= isPips ? riskPercent : parseFloat(t.risk || 0);
+        // If not pips, use the reward field directly (user enters negative loss there)
+        totalPL += isPips ? -riskPercent : parseFloat(t.reward || 0);
+      } else if (t.status === 'BE') {
+        totalPL += 0;
       }
     });
     
@@ -49,7 +52,8 @@ const Dashboard = ({ trades, accounts }) => {
       if (t.status === 'Win') {
         cumulativePL += isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0);
       } else if (t.status === 'Loss') {
-        cumulativePL -= isPips ? riskPercent : parseFloat(t.risk || 0);
+        // If not pips, use the reward field directly (user enters negative loss there)
+        cumulativePL += isPips ? -riskPercent : parseFloat(t.reward || 0);
       }
       data.push({
         name: `T${i + 1}`,
