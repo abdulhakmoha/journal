@@ -62,6 +62,21 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     };
   });
 
+  // Sync with initialData when it changes (Crucial for Edit functionality)
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        ...initialData,
+        date: initialData.date ? new Date(initialData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        // Ensure rules are initialized correctly if they don't exist
+        rules: initialData.rules || customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {})
+      });
+    } else {
+      // If initialData is null, we can reset to default or keep draft
+      // For now, let's only reset if it was previously editing
+    }
+  }, [initialData, customRules]);
+
   // 2. Save to localStorage whenever formData changes
   useEffect(() => {
     localStorage.setItem('zentrader_form_draft', JSON.stringify(formData));
