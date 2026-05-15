@@ -15,12 +15,13 @@ const getImageUrl = (url) => {
 };
 
 const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) => {
-  const [formData, setFormData] = useState(() => {
+  const getInitialState = () => {
     // 1. Priority: If editing an existing trade, use that data
     if (initialData) {
       return {
         ...initialData,
-        date: initialData.date ? new Date(initialData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
+        date: initialData.date ? new Date(initialData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        rules: initialData.rules || customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {})
       };
     }
 
@@ -58,9 +59,11 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       pips: '',
       date: new Date().toISOString().split('T')[0],
       rules: customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {}),
-      ...dynamicData // Merge custom categories
+      ...dynamicData
     };
-  });
+  };
+
+  const [formData, setFormData] = useState(getInitialState);
 
   // Sync with initialData OR customRules changes
   useEffect(() => {
@@ -85,10 +88,28 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     }
   }, [initialData, customRules]);
 
-  const resetForm = () => {
-    if (window.confirm('Ma hubtaa inaad tirtirto xogtaan qabyada ah (Draft)?')) {
+  const resetForm = (showConfirm = true) => {
+    if (!showConfirm || window.confirm('Ma hubtaa inaad tirtirto xogtaan?')) {
       localStorage.removeItem('zentrader_form_draft');
-      window.location.reload(); // Simplest way to re-initialize everything
+      // Force a fresh state without reload
+      setFormData({
+        account: accounts[0]?.name || 'Personal Account',
+        type: 'Long',
+        risk: '',
+        reward: '',
+        riskPercent: 1,
+        rr: 0,
+        beforeChart: '',
+        afterChart: '',
+        preMindset: '',
+        postMindset: '',
+        status: 'Active',
+        isMistake: false,
+        isCompleted: false,
+        pips: '',
+        date: new Date().toISOString().split('T')[0],
+        rules: customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {})
+      });
     }
   };
 
@@ -209,9 +230,14 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     if (sanitizedTrade.reward === '') delete sanitizedTrade.reward;
     if (sanitizedTrade.rr === '') delete sanitizedTrade.rr;
 
-    // Clear draft after saving
+    // Clear draft and call save
     localStorage.removeItem('zentrader_form_draft');
     onSave(sanitizedTrade);
+    
+    // If it was a completed trade, clear the form for the next one
+    if (completed) {
+      resetForm(false);
+    }
   };
 
   return (
