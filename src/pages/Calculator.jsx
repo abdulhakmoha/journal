@@ -27,15 +27,36 @@ const Calculator = ({ accounts, onAddAccount }) => {
   useEffect(() => {
     const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
     if (balance > 0) {
+      // If riskAmount was manually set, we use it. Otherwise calculate from percent.
+      // But for the initial load and balance changes, we prioritize percent.
       const risk = (balance * (riskPercent / 100));
-      setRiskAmount(risk);
-      
-      if (stopLossPips > 0) {
-        const calculatedLotSize = risk / (stopLossPips * pipValue);
-        setLotSize(calculatedLotSize.toFixed(2));
-      }
+      setRiskAmount(risk.toFixed(2));
     }
-  }, [selectedAccount, isCustom, customBalance, riskPercent, stopLossPips, pipValue]);
+  }, [selectedAccount, isCustom, customBalance]);
+
+  useEffect(() => {
+    const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
+    if (balance > 0 && stopLossPips > 0) {
+      const calculatedLotSize = parseFloat(riskAmount) / (stopLossPips * pipValue);
+      setLotSize(calculatedLotSize.toFixed(2));
+    }
+  }, [riskAmount, stopLossPips, pipValue, selectedAccount, isCustom, customBalance]);
+
+  const handleRiskPercentChange = (val) => {
+    setRiskPercent(val);
+    const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
+    if (balance > 0) {
+      setRiskAmount((balance * (val / 100)).toFixed(2));
+    }
+  };
+
+  const handleRiskAmountChange = (val) => {
+    setRiskAmount(val);
+    const balance = isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0);
+    if (balance > 0) {
+      setRiskPercent(((val / balance) * 100).toFixed(2));
+    }
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
@@ -104,8 +125,21 @@ const Calculator = ({ accounts, onAddAccount }) => {
               <input 
                 type="number" 
                 value={riskPercent} 
-                onChange={(e) => setRiskPercent(e.target.value)} 
+                onChange={(e) => handleRiskPercentChange(e.target.value)} 
                 step="0.1"
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div className="input-group">
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <DollarSign size={16} color="var(--success)" /> Risk Amount ($)
+              </label>
+              <input 
+                type="number" 
+                value={riskAmount} 
+                onChange={(e) => handleRiskAmountChange(e.target.value)} 
+                step="0.01"
                 style={{ width: '100%' }}
               />
             </div>
