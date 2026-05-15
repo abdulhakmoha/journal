@@ -780,10 +780,12 @@ const Backtest = ({ backtestFields, accounts }) => {
                      <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>R:R</label>
                      <input type="number" step="0.1" value={tradeForm.rr} onChange={(e) => setTradeForm({...tradeForm, rr: e.target.value})} />
                    </div>
-                   <div>
-                     <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Pips Gained/Lost</label>
-                     <input type="number" step="any" placeholder="+50" style={{ border: '1px solid var(--primary)', background: 'rgba(56, 189, 248, 0.05)' }} value={tradeForm.pips} onChange={(e) => setTradeForm({...tradeForm, pips: e.target.value})} />
-                   </div>
+                   {tradeForm.riskUnit === 'Pips' && (
+                     <div>
+                       <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Pips Gained/Lost</label>
+                       <input type="number" step="any" placeholder="+50" style={{ border: '1px solid var(--primary)', background: 'rgba(56, 189, 248, 0.05)' }} value={tradeForm.pips} onChange={(e) => setTradeForm({...tradeForm, pips: e.target.value})} />
+                     </div>
+                   )}
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>

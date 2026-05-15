@@ -298,12 +298,14 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
                   </label>
                   <input type="number" step="any" placeholder={formData.riskUnit === 'Pips' ? 'e.g. 30' : 'e.g. 3'} style={{ width: '100%' }} value={formData.reward} onChange={(e) => setFormData({...formData, reward: e.target.value})} required />
                 </div>
-                <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                    Pips Gained/Lost
-                  </label>
-                  <input type="number" step="any" placeholder="e.g. +50 or -20" style={{ width: '100%', border: '1px solid var(--primary)', background: 'rgba(56, 189, 248, 0.05)' }} value={formData.pips} onChange={(e) => setFormData({...formData, pips: e.target.value})} />
-                </div>
+                {formData.riskUnit === 'Pips' && (
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                      Pips Gained/Lost
+                    </label>
+                    <input type="number" step="any" placeholder="e.g. +50" style={{ width: '100%', border: '1px solid var(--primary)', background: 'rgba(56, 189, 248, 0.05)' }} value={formData.pips} onChange={(e) => setFormData({...formData, pips: e.target.value})} />
+                  </div>
+                )}
              </div>
 
              <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '20px' }}>
