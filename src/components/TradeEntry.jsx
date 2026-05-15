@@ -62,20 +62,35 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     };
   });
 
-  // Sync with initialData when it changes (Crucial for Edit functionality)
+  // Sync with initialData OR customRules changes
   useEffect(() => {
     if (initialData) {
       setFormData({
         ...initialData,
         date: initialData.date ? new Date(initialData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-        // Ensure rules are initialized correctly if they don't exist
         rules: initialData.rules || customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {})
       });
     } else {
-      // If initialData is null, we can reset to default or keep draft
-      // For now, let's only reset if it was previously editing
+      // For New Trades: Check if rules in state match user settings
+      // This prevents old drafts from overriding new settings rules
+      const currentRuleKeys = Object.keys(formData.rules).sort().join(',');
+      const settingsRuleKeys = [...customRules].sort().join(',');
+      
+      if (currentRuleKeys !== settingsRuleKeys && customRules.length > 0) {
+        setFormData(prev => ({
+          ...prev,
+          rules: customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {})
+        }));
+      }
     }
   }, [initialData, customRules]);
+
+  const resetForm = () => {
+    if (window.confirm('Ma hubtaa inaad tirtirto xogtaan qabyada ah (Draft)?')) {
+      localStorage.removeItem('zentrader_form_draft');
+      window.location.reload(); // Simplest way to re-initialize everything
+    }
+  };
 
   // 2. Save to localStorage whenever formData changes
   useEffect(() => {
@@ -372,10 +387,15 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
         </div>
 
         <div style={{ display: 'flex', gap: '15px' }}>
+          {!initialData && (
+            <button type="button" className="btn-outline" style={{ padding: '15px', color: 'var(--danger)', borderColor: 'rgba(239,68,68,0.2)' }} onClick={resetForm}>
+              Reset Form
+            </button>
+          )}
           <button type="button" className="btn-outline" style={{ flex: 1, padding: '15px' }} onClick={(e) => handleSubmit(e, false)}>Save Draft</button>
           <button type="submit" className="btn-primary" style={{ flex: 1, padding: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }} onClick={(e) => handleSubmit(e, true)}>
             <Save size={20} />
-            Complete Trade Execution
+            {initialData ? 'Update Trade Record' : 'Complete Trade Execution'}
           </button>
         </div>
       </form>
