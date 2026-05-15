@@ -386,7 +386,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>STRATEGY</th>
                   {visibleColumns.pips && <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>PIPS</th>}
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>P/L (%)</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>VISUALS</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>ACCOUNT</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>STATUS</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>ACTIONS</th>
                 </tr>
@@ -431,13 +431,15 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                         {visibleColumns.rr && (
                           <td style={{ padding: '15px' }}>
                             <span style={{ 
-                              color: trade.status?.startsWith('Win') ? 'var(--success)' : trade.status?.startsWith('Loss') ? 'var(--danger)' : 'var(--text-muted)',
+                              color: trade.status?.toLowerCase().includes('win') ? 'var(--success)' : trade.status?.toLowerCase().includes('loss') ? 'var(--danger)' : 'var(--text-muted)',
                               fontWeight: 'bold'
                             }}>
-                              {trade.status?.startsWith('BE') ? '0.00%' : (
-                                trade.status?.startsWith('Win') 
-                                  ? `+${trade.riskUnit === 'Pips' ? Math.abs((parseFloat(trade.rr) || 0) * (parseFloat(trade.riskPercent) || 1)).toFixed(2) : (trade.reward || 0)}%`
-                                  : `-${trade.riskUnit === 'Pips' ? Math.abs(parseFloat(trade.riskPercent) || 1).toFixed(2) : (trade.risk || 0)}%`
+                              {trade.status?.toLowerCase().includes('be') ? '0.00%' : (
+                                trade.riskUnit === 'Pips'
+                                  ? (trade.status?.toLowerCase().includes('win') 
+                                      ? `+${((parseFloat(trade.rr) || 0) * (parseFloat(trade.riskPercent) || 1)).toFixed(2)}%`
+                                      : `-${(parseFloat(trade.riskPercent) || 1).toFixed(2)}%`)
+                                  : `${(parseFloat(trade.reward) || 0) >= 0 && trade.status?.toLowerCase().includes('win') ? '+' : ''}${trade.reward || 0}%`
                               )}
                             </span>
                           </td>
@@ -454,7 +456,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
 
                         {visibleColumns.status && (
                           <td style={{ padding: '15px' }}>
-                            <span className={`status-badge status-${trade.status?.startsWith('Win') ? 'win' : trade.status?.startsWith('Loss') ? 'loss' : trade.status?.startsWith('BE') ? 'be' : 'active'}`}>
+                            <span className={`status-badge status-${trade.status?.toLowerCase().includes('win') ? 'win' : trade.status?.toLowerCase().includes('loss') ? 'loss' : trade.status?.toLowerCase().includes('be') ? 'be' : 'active'}`}>
                               {trade.status}
                             </span>
                           </td>
