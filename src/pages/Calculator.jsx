@@ -126,13 +126,14 @@ const Calculator = ({ accounts, onAddAccount }) => {
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                 <DollarSign size={16} color="var(--success)" /> Pip Value (per Lot)
               </label>
-              <select value={pipValue} onChange={(e) => setPipValue(e.target.value)} style={{ width: '100%' }}>
-                <option value={10}>Standard ($10/pip - e.g. EURUSD)</option>
-                <option value={1}>Mini ($1/pip)</option>
-                <option value={100}>Gold ($100/point - e.g. XAUUSD)</option>
-                <option value={0.1}>Micro ($0.10/pip)</option>
-              </select>
-              <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '8px' }}>Standard: 1.00 lot = $10 per pip on most pairs.</p>
+              <input 
+                type="number" 
+                value={pipValue} 
+                onChange={(e) => setPipValue(parseFloat(e.target.value) || 0)} 
+                step="0.01"
+                style={{ width: '100%' }}
+              />
+              <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '8px' }}>Standard: 10 (EURUSD), 100 (Gold), 1 (Mini).</p>
             </div>
 
           </div>
