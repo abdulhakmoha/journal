@@ -98,18 +98,25 @@ const Review = ({ trades, accounts }) => {
   const wins = filteredTrades.filter(t => t.status === 'Win');
   const losses = filteredTrades.filter(t => t.status === 'Loss');
   const mistakes = filteredTrades.filter(t => t.isMistake).length;
-  const winRate = filteredTrades.length === 0 ? 0 : Math.round((wins.length / filteredTrades.length) * 100);
-
-  // Net R-Multiple
-  const netR = filteredTrades.reduce((acc, t) => {
-    if (t.status === 'Win') return acc + (parseFloat(t.rr) || 1);
-    if (t.status === 'Loss') return acc - 1;
+  const winRate = filteredTrades.length === 0 ? 0 : Math.round((wins.length / filteredTrades.length) * 100);  // Profit Factor & Net Profit (using Reward field)
+  const netProfit = filteredTrades.reduce((acc, t) => {
+    const isPips = t.riskUnit === 'Pips';
+    const riskPercent = parseFloat(t.riskPercent) || 1;
+    if (t.status?.toLowerCase().includes('win')) return acc + (isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0));
+    if (t.status?.toLowerCase().includes('loss')) return acc + (isPips ? -riskPercent : parseFloat(t.reward || 0));
     return acc;
   }, 0).toFixed(2);
 
-  // Profit Factor
-  const grossProfit = wins.reduce((acc, t) => acc + (parseFloat(t.rr) || 1), 0);
-  const grossLoss = losses.length;
+  const grossProfit = wins.reduce((acc, t) => {
+    const isPips = t.riskUnit === 'Pips';
+    return acc + (isPips ? (parseFloat(t.rr || 0) * (parseFloat(t.riskPercent) || 1)) : parseFloat(t.reward || 0));
+  }, 0);
+  
+  const grossLoss = Math.abs(losses.reduce((acc, t) => {
+    const isPips = t.riskUnit === 'Pips';
+    return acc + (isPips ? (parseFloat(t.riskPercent) || 1) : Math.abs(parseFloat(t.reward || t.risk || 0)));
+  }, 0));
+
   const profitFactor = grossLoss === 0 ? grossProfit.toFixed(2) : (grossProfit / grossLoss).toFixed(2);
 
   // Grade Stats
@@ -203,7 +210,7 @@ const Review = ({ trades, accounts }) => {
         {[
           { label: 'Total Trades', value: filteredTrades.length, color: 'var(--primary)' },
           { label: 'Win Rate', value: `${winRate}%`, color: winRate >= 55 ? 'var(--success)' : 'var(--danger)' },
-          { label: 'Net R-Multiple', value: `${netR}R`, color: parseFloat(netR) >= 0 ? 'var(--success)' : 'var(--danger)' },
+          { label: 'Net Profit', value: `${netProfit}%`, color: parseFloat(netProfit) >= 0 ? 'var(--success)' : 'var(--danger)' },
           { label: 'Profit Factor', value: profitFactor, color: parseFloat(profitFactor) >= 1.5 ? 'var(--success)' : 'var(--warning)' },
           { label: 'Mistakes', value: mistakes, color: mistakes > 2 ? 'var(--danger)' : 'var(--success)' },
         ].map((stat, i) => (
