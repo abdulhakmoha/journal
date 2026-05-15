@@ -895,6 +895,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>PAIR</th>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>TYPE</th>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>STATUS</th>
+                      <th style={{ padding: '15px 15px', textAlign: 'left' }}>PIPS</th>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>R:R</th>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>MISTAKE</th>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>NOTES</th>
@@ -928,8 +929,11 @@ const Backtest = ({ backtestFields, accounts }) => {
                             {trade.status}
                           </span>
                         </td>
-                        <td style={{ padding: '15px 15px', color: parseFloat(trade.rr) > 0 ? 'var(--success)' : parseFloat(trade.rr) < 0 ? 'var(--danger)' : 'var(--text-muted)' }}>
-                          {parseFloat(trade.rr) > 0 ? '+' : ''}{trade.rr}R
+                        <td style={{ padding: '15px 15px', fontWeight: 'bold', color: (parseFloat(trade.pips) || 0) >= 0 ? 'var(--success)' : 'var(--danger)' }}>
+                           {trade.pips ? `${(parseFloat(trade.pips) || 0) > 0 ? '+' : ''}${trade.pips}` : '—'}
+                        </td>
+                        <td style={{ padding: '15px 15px', fontWeight: 'bold', color: trade.status === 'Win' ? 'var(--success)' : trade.status === 'Loss' ? 'var(--danger)' : 'var(--text-muted)' }}>
+                          {trade.status === 'Win' ? `+${trade.rr}` : trade.status === 'Loss' ? `-${trade.rr}` : '0.00'}R
                         </td>
                         <td style={{ padding: '15px 15px' }}>{trade.isMistake ? '🔴 Yes' : '🟢 No'}</td>
                         <td style={{ padding: '15px 15px' }}>
