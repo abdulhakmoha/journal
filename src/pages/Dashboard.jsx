@@ -29,7 +29,7 @@ const Dashboard = ({ trades, accounts }) => {
 
     return {
       ...acc,
-      currentPL: totalPL.toFixed(1),
+      currentPL: totalPL.toFixed(2), // Increased precision to 2 decimals
       isBlown,
       isPassed,
       tradeCount: accTrades.length
