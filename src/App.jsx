@@ -37,7 +37,7 @@ function App() {
 
   // Theme Initialization
   useEffect(() => {
-    const savedTheme = localStorage.getItem('zentrader_theme');
+    const savedTheme = localStorage.getItem('somtrader_theme');
     if (savedTheme) {
       try {
         const theme = JSON.parse(savedTheme);

@@ -43,7 +43,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
   const [expandedTrade, setExpandedTrade] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [visibleColumns, setVisibleColumns] = useState(() => {
-    const saved = localStorage.getItem('zentrader_visible_columns');
+    const saved = localStorage.getItem('somtrader_visible_columns');
     return saved ? JSON.parse(saved) : {
       date: true,
       symbol: true,
@@ -58,7 +58,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
   const [showColumnPicker, setShowColumnPicker] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('zentrader_visible_columns', JSON.stringify(visibleColumns));
+    localStorage.setItem('somtrader_visible_columns', JSON.stringify(visibleColumns));
   }, [visibleColumns]);
 
   const filteredTrades = trades.filter(t => {

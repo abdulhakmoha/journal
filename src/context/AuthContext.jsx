@@ -6,7 +6,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(localStorage.getItem('zentrader_token'));
+  const [token, setToken] = useState(localStorage.getItem('somtrader_token'));
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log('Attempting login...');
       const res = await api.post('/api/auth/login', { email, password });
-      localStorage.setItem('zentrader_token', res.data.token);
+      localStorage.setItem('somtrader_token', res.data.token);
       setToken(res.data.token);
       setUser(res.data.user);
       return { success: true };
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log('Attempting registration...');
       const res = await api.post('/api/auth/register', { name, email, password, regCode });
-      localStorage.setItem('zentrader_token', res.data.token);
+      localStorage.setItem('somtrader_token', res.data.token);
       setToken(res.data.token);
       setUser(res.data.user);
       return { success: true };
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     console.log('Logging out...');
-    localStorage.removeItem('zentrader_token');
+    localStorage.removeItem('somtrader_token');
     setToken(null);
     setUser(null);
   };

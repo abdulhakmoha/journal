@@ -140,7 +140,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
               onClick={() => {
                 document.documentElement.style.setProperty('--primary', theme.color);
                 document.documentElement.style.setProperty('--primary-glow', theme.glow);
-                localStorage.setItem('zentrader_theme', JSON.stringify(theme));
+                localStorage.setItem('somtrader_theme', JSON.stringify(theme));
               }}
               style={{
                 padding: '12px',

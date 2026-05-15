@@ -27,7 +27,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
 
     // 2. Priority: Try to load saved draft from localStorage for new trades
     let baseData = {};
-    const savedDraft = localStorage.getItem('zentrader_form_draft');
+    const savedDraft = localStorage.getItem('somtrader_form_draft');
     if (savedDraft) {
       try {
         const parsed = JSON.parse(savedDraft);
@@ -104,7 +104,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
 
   const resetForm = (showConfirm = true) => {
     if (!showConfirm || window.confirm('Ma hubtaa inaad tirtirto xogtaan?')) {
-      localStorage.removeItem('zentrader_form_draft');
+      localStorage.removeItem('somtrader_form_draft');
       // Force a fresh state without reload
       setFormData({
         account: accounts[0]?.name || 'Personal Account',
@@ -129,7 +129,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
 
   // 2. Save to localStorage whenever formData changes
   useEffect(() => {
-    localStorage.setItem('zentrader_form_draft', JSON.stringify(formData));
+    localStorage.setItem('somtrader_form_draft', JSON.stringify(formData));
   }, [formData]);
 
   const [uploading, setUploading] = useState({ before: false, after: false });
@@ -251,7 +251,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     if (sanitizedTrade.rr === '') delete sanitizedTrade.rr;
 
     // Clear draft and call save
-    localStorage.removeItem('zentrader_form_draft');
+    localStorage.removeItem('somtrader_form_draft');
     onSave(sanitizedTrade);
     
     // If it was a completed trade, clear the form for the next one
