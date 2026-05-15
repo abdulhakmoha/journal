@@ -436,8 +436,8 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                             }}>
                               {trade.status === 'BE' ? '0.00%' : (
                                 trade.status === 'Win' 
-                                  ? `+${trade.riskUnit === 'Pips' ? ((parseFloat(trade.rr) || 0) * (parseFloat(trade.riskPercent) || 1)).toFixed(2) : (trade.reward || 0)}%`
-                                  : `-${trade.riskUnit === 'Pips' ? (parseFloat(trade.riskPercent) || 1).toFixed(2) : (trade.risk || 0)}%`
+                                  ? `+${trade.riskUnit === 'Pips' ? Math.abs((parseFloat(trade.rr) || 0) * (parseFloat(trade.riskPercent) || 1)).toFixed(2) : Math.abs(parseFloat(trade.reward) || 0).toFixed(2)}%`
+                                  : `-${trade.riskUnit === 'Pips' ? Math.abs(parseFloat(trade.riskPercent) || 1).toFixed(2) : Math.abs(parseFloat(trade.risk) || 0).toFixed(2)}%`
                               )}
                             </span>
                           </td>
@@ -454,7 +454,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
 
                         {visibleColumns.status && (
                           <td style={{ padding: '15px' }}>
-                            <span className={`status-badge status-${trade.status?.toLowerCase()}`}>
+                            <span className={`status-badge status-${trade.status?.split(' ')[0].toLowerCase()}`}>
                               {trade.status}
                             </span>
                           </td>

@@ -190,16 +190,16 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       grade, 
       isCompleted: completed,
       status: completed ? formData.status : 'Active',
+      symbol: symbol || 'Unknown',
       timestamp: (() => {
         const [year, month, day] = formData.date.split('-').map(Number);
         const now = new Date();
         return new Date(year, month - 1, day, now.getHours(), now.getMinutes(), now.getSeconds()).toISOString();
       })(),
       // Backward compatibility for known fields if they exist in custom form
-      symbol: formData['Pair'] || formData['Asset'] || 'Unknown',
-      strategy: formData['Strategy'] || 'Standard',
-      timeframe: formData['Timeframe'] || '15m',
-      session: formData['Trading Session'] || 'London'
+      strategy: formData['Strategy'] || findDynamicValue(['strategy', 'setup']) || 'Standard',
+      timeframe: formData['Timeframe'] || findDynamicValue(['timeframe', 'tf']) || '15m',
+      session: formData['Trading Session'] || findDynamicValue(['session', 'trading session']) || 'London'
     };
 
     // Sanitize numeric fields to avoid empty string errors
