@@ -6,6 +6,7 @@ const AdminPayments = () => {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all'); // all, pending, approved
 
   const fetchPayments = async () => {
     setLoading(true);
@@ -34,17 +35,20 @@ const AdminPayments = () => {
     }
   };
 
-  const filteredPayments = payments.filter(p => 
-    p.user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.transactionId.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredPayments = payments.filter(p => {
+    const matchesSearch = p.user?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.user?.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.transactionId.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || p.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   const stats = {
     crypto: payments.filter(p => p.method === 'Crypto').length,
     evc: payments.filter(p => p.method === 'EVC Plus' || p.method === 'Mobile Money').length,
     total: payments.length,
-    pending: payments.filter(p => p.status === 'pending').length
+    pending: payments.filter(p => p.status === 'pending').length,
+    approved: payments.filter(p => p.status === 'approved').length
   };
 
   return (
@@ -69,18 +73,18 @@ const AdminPayments = () => {
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Crypto Payments</p>
           <h3 style={{ fontSize: '1.8rem', color: '#F7931A' }}>{stats.crypto}</h3>
         </div>
-        <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--success)' }}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>EVC Plus Payments</p>
-          <h3 style={{ fontSize: '1.8rem', color: 'var(--success)' }}>{stats.evc}</h3>
+        <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--success)', cursor: 'pointer' }} onClick={() => setStatusFilter('approved')}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Approved Payments</p>
+          <h3 style={{ fontSize: '1.8rem', color: 'var(--success)' }}>{stats.approved}</h3>
         </div>
-        <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--warning)' }}>
+        <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--warning)', cursor: 'pointer' }} onClick={() => setStatusFilter('pending')}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Pending Approval</p>
           <h3 style={{ fontSize: '1.8rem', color: 'var(--warning)' }}>{stats.pending}</h3>
         </div>
       </div>
 
       <div className="glass-card" style={{ padding: '0', overflow: 'hidden' }}>
-        <div style={{ padding: '20px', borderBottom: '1px solid var(--border)', display: 'flex', gap: '15px' }}>
+        <div style={{ padding: '20px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '15px' }}>
           <div style={{ flex: 1, position: 'relative' }}>
             <Search size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
             <input 
@@ -90,6 +94,28 @@ const AdminPayments = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+          </div>
+          
+          <div style={{ display: 'flex', gap: '5px', background: 'rgba(0,0,0,0.2)', padding: '4px', borderRadius: '8px' }}>
+            {['all', 'pending', 'approved'].map(s => (
+              <button 
+                key={s}
+                onClick={() => setStatusFilter(s)}
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  fontSize: '0.75rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  background: statusFilter === s ? 'var(--primary)' : 'transparent',
+                  color: statusFilter === s ? 'white' : 'var(--text-muted)',
+                  transition: 'all 0.2s'
+                }}
+              >
+                {s.toUpperCase()}
+              </button>
+            ))}
           </div>
         </div>
 
