@@ -54,6 +54,9 @@ const Backtest = ({ backtestFields, accounts }) => {
     symbol: '',
     type: 'Long',
     status: 'Win',
+    riskUnit: '%',
+    riskPercent: 1,
+    pips: '',
     rr: 1,
     notes: '',
     isMistake: false,
@@ -155,6 +158,9 @@ const Backtest = ({ backtestFields, accounts }) => {
         symbol: activeSession.pair || '', 
         type: 'Long', 
         status: 'Win', 
+        riskUnit: '%',
+        riskPercent: 1,
+        pips: '',
         rr: 1, 
         notes: '',
         isMistake: false,
@@ -211,12 +217,14 @@ const Backtest = ({ backtestFields, accounts }) => {
       bestHour: { name: 'N/A', rate: 0 },
       maxWinStreak: 0,
       maxLossStreak: 0,
-      recoveryFactor: 0
+      recoveryFactor: 0,
+      totalPips: 0
     };
     
     const wins = trades.filter(t => t.status === 'Win');
     const losses = trades.filter(t => t.status === 'Loss');
     const mistakes = trades.filter(t => t.isMistake).length;
+    const totalPips = trades.reduce((acc, t) => acc + (parseFloat(t.pips) || 0), 0);
 
     let equityPoints = [0];
     let currentEquity = 0;
@@ -336,7 +344,8 @@ const Backtest = ({ backtestFields, accounts }) => {
       bestHour,
       maxWinStreak,
       maxLossStreak,
-      recoveryFactor
+      recoveryFactor,
+      totalPips
     };
   };
 
@@ -692,6 +701,16 @@ const Backtest = ({ backtestFields, accounts }) => {
                   Net Profit ÷ Max DD. <span style={{ color: 'var(--primary)' }}>Above 2.0 = Excellent</span>
                 </p>
              </div>
+
+             <div className="glass-card" style={{ padding: '20px' }}>
+                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Total Pips Gained</p>
+                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: calculateStats(activeSession.trades).totalPips >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '6px' }}>
+                  {calculateStats(activeSession.trades).totalPips > 0 ? '+' : ''}{calculateStats(activeSession.trades).totalPips}
+                </p>
+                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                  Cumulative pips captured. <span style={{ color: 'var(--primary)' }}>Tracking growth in distance.</span>
+                </p>
+             </div>
           </div>
 
           {/* Equity Chart & Session Conclusion Row Removed From Here */}
@@ -735,7 +754,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                    ))}
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '15px' }}>
                    <div>
                      <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Status</label>
                      <select value={tradeForm.status} onChange={(e) => setTradeForm({...tradeForm, status: e.target.value})}>
@@ -745,8 +764,25 @@ const Backtest = ({ backtestFields, accounts }) => {
                      </select>
                    </div>
                    <div>
+                      <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Unit</label>
+                      <select value={tradeForm.riskUnit} onChange={(e) => setTradeForm({...tradeForm, riskUnit: e.target.value})}>
+                        <option value="%">% (Percent)</option>
+                        <option value="Pips">Pips</option>
+                      </select>
+                   </div>
+                   {tradeForm.riskUnit === 'Pips' && (
+                     <div>
+                       <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Risk %</label>
+                       <input type="number" step="0.1" value={tradeForm.riskPercent} onChange={(e) => setTradeForm({...tradeForm, riskPercent: e.target.value})} />
+                     </div>
+                   )}
+                   <div>
                      <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>R:R</label>
                      <input type="number" step="0.1" value={tradeForm.rr} onChange={(e) => setTradeForm({...tradeForm, rr: e.target.value})} />
+                   </div>
+                   <div>
+                     <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Pips Gained/Lost</label>
+                     <input type="number" step="any" placeholder="+50" style={{ border: '1px solid var(--primary)', background: 'rgba(56, 189, 248, 0.05)' }} value={tradeForm.pips} onChange={(e) => setTradeForm({...tradeForm, pips: e.target.value})} />
                    </div>
                 </div>
 
