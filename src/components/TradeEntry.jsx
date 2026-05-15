@@ -182,19 +182,25 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
 
     // Validation
     const findDynamicValue = (labels) => {
-      const foundLabel = Object.keys(formData).find(k => labels.includes(k.toLowerCase().trim()));
+      const foundLabel = Object.keys(formData).find(k => {
+        const lowerK = k.toLowerCase().trim();
+        return labels.some(l => lowerK === l || lowerK.includes(l));
+      });
       return foundLabel ? formData[foundLabel] : null;
     };
 
-    const symbol = findDynamicValue(['pair', 'asset', 'symbol', 'instrument', 'pair ']);
+    const symbol = findDynamicValue(['pair', 'asset', 'symbol', 'instrument']);
     
     // Strict validation ONLY for completed trades
     if (completed) {
-      const isRiskEmpty = formData.risk === '' || formData.risk === undefined;
-      const isRewardEmpty = formData.reward === '' || formData.reward === undefined;
+      const missingFields = [];
+      if (!formData.account) missingFields.push('Account');
+      if (!symbol) missingFields.push('Pair/Symbol');
+      if (formData.risk === '' || formData.risk === undefined) missingFields.push('Risk');
+      if (formData.reward === '' || formData.reward === undefined) missingFields.push('Reward');
 
-      if (!formData.account || !symbol || isRiskEmpty || isRewardEmpty) {
-        alert('Fadlan buuxi meelaha banaan (Account, Pair, Risk, iyo Reward) si aad trade-ka u dhameystirto.');
+      if (missingFields.length > 0) {
+        alert(`Fadlan buuxi meelaha banaan: ${missingFields.join(', ')}`);
         return;
       }
     } else {
