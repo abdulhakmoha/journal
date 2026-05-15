@@ -160,11 +160,19 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     e.preventDefault();
 
     // Validation
-    const symbol = formData['Pair'] || formData['Asset'];
+    const findDynamicValue = (labels) => {
+      const foundLabel = Object.keys(formData).find(k => labels.includes(k.toLowerCase().trim()));
+      return foundLabel ? formData[foundLabel] : null;
+    };
+
+    const symbol = findDynamicValue(['pair', 'asset', 'symbol', 'instrument', 'pair ']);
     
     // Strict validation ONLY for completed trades
     if (completed) {
-      if (!formData.account || !symbol || !formData.risk || !formData.reward) {
+      const isRiskEmpty = formData.risk === '' || formData.risk === undefined;
+      const isRewardEmpty = formData.reward === '' || formData.reward === undefined;
+
+      if (!formData.account || !symbol || isRiskEmpty || isRewardEmpty) {
         alert('Fadlan buuxi meelaha banaan (Account, Pair, Risk, iyo Reward) si aad trade-ka u dhameystirto.');
         return;
       }
