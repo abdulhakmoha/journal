@@ -21,6 +21,7 @@ const tradeSchema = new mongoose.Schema({
   isMistake: { type: Boolean, default: false },
   isCompleted: { type: Boolean, default: false },
   grade: { type: String },
+  pips: { type: Number },
   rules: { type: Map, of: Boolean },
   customData: { type: Map, of: String },
   date: { type: Date, default: Date.now },

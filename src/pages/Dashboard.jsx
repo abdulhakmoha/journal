@@ -64,6 +64,7 @@ const Dashboard = ({ trades, accounts }) => {
 
   const equityData = getEquityData();
   const currentPL = equityData[equityData.length - 1]?.pl || 0;
+  const totalPips = trades.reduce((acc, t) => acc + (parseFloat(t.pips) || 0), 0);
 
   const calculateDisciplineScore = () => {
     if (trades.length === 0) return 0;
@@ -91,6 +92,12 @@ const Dashboard = ({ trades, accounts }) => {
         <div className="glass-card" style={{ padding: '20px' }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Discipline Score</p>
           <h2 style={{ fontSize: '1.8rem', color: 'var(--warning)' }}>{disciplineScore}%</h2>
+        </div>
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Total Pips Gained</p>
+          <h2 style={{ fontSize: '1.8rem', color: totalPips >= 0 ? 'var(--success)' : 'var(--danger)' }}>
+            {totalPips > 0 ? '+' : ''}{totalPips}
+          </h2>
         </div>
         <div className="glass-card" style={{ padding: '20px' }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Total Trades</p>

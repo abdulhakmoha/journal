@@ -50,6 +50,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
       type: true,
       strategy: true,
       rr: true,
+      pips: true,
       account: true,
       status: true
     };
@@ -70,11 +71,11 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
   });
 
   const exportToCSV = () => {
-    const headers = ['Date', 'Symbol', 'Type', 'Strategy', 'Status', 'Risk%', 'Reward%', 'R:R', 'Grade', 'Account', 'Notes'];
+    const headers = ['Date', 'Symbol', 'Type', 'Strategy', 'Status', 'Risk%', 'Reward%', 'R:R', 'Pips', 'Grade', 'Account', 'Notes'];
     const rows = filteredTrades.map(t => [
       new Date(t.timestamp).toLocaleDateString(),
       t.symbol, t.type, t.strategy || '', t.status,
-      t.risk || '', t.reward || '', t.rr || '',
+      t.risk || '', t.reward || '', t.rr || '', t.pips || '',
       t.grade || '', t.account || '', (t.notes || '').replace(/,/g, ';')
     ]);
     const csvContent = [headers, ...rows].map(r => r.join(',')).join('\n');
@@ -383,6 +384,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>SYMBOL</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>TYPE</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>STRATEGY</th>
+                  {visibleColumns.pips && <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>PIPS</th>}
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>P/L (%)</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>VISUALS</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>STATUS</th>
@@ -415,6 +417,17 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                           </td>
                         )}
                         {visibleColumns.strategy && <td style={{ padding: '15px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{trade.strategy || 'Price Action'}</td>}
+                        {visibleColumns.pips && (
+                          <td style={{ padding: '15px' }}>
+                            <span style={{ 
+                              color: trade.pips > 0 ? 'var(--success)' : trade.pips < 0 ? 'var(--danger)' : 'var(--text-muted)',
+                              fontWeight: '500',
+                              fontSize: '0.85rem'
+                            }}>
+                              {trade.pips > 0 ? `+${trade.pips}` : trade.pips || '0'}
+                            </span>
+                          </td>
+                        )}
                         {visibleColumns.rr && (
                           <td style={{ padding: '15px' }}>
                             <span style={{ 
