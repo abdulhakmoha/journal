@@ -186,23 +186,7 @@ const Calculator = ({ accounts, onAddAccount }) => {
                 <option value="BTCUSD">BTCUSD / Crypto ($1)</option>
                 <option value="Custom">Custom Value</option>
               </select>
-            </div>
-
-            <div className="input-group">
-              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-                <DollarSign size={16} color="var(--success)" /> Pip Value (per Lot)
-              </label>
-              <input 
-                type="number" 
-                value={pipValue} 
-                onChange={(e) => {
-                  setPipValue(parseFloat(e.target.value) || 0);
-                  setSelectedAsset('Custom');
-                }} 
-                step="0.01"
-                style={{ width: '100%' }}
-              />
-              <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '8px' }}>Standard: 10 (EURUSD), 100 (Gold), 1 (US30).</p>
+              <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '8px' }}>Asset selection automatically adjusts the calculation logic.</p>
             </div>
 
           </div>
