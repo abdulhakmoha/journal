@@ -12,7 +12,7 @@ const News = () => {
       "width": "100%",
       "height": "100%",
       "locale": "en",
-      "importanceFilter": "-1,0,1",
+      "importanceFilter": "-1",
       "currencyFilter": "USD,EUR,GBP,JPY,AUD,CAD,CHF,NZD"
     });
     
@@ -28,7 +28,7 @@ const News = () => {
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h2 className="text-gradient">Market Intelligence</h2>
-          <p style={{ color: 'var(--text-muted)' }}>Professional economic calendar with high-impact event tracking.</p>
+          <p style={{ color: 'var(--text-muted)' }}>High-Impact (Red Folder) Economic Events Only.</p>
         </div>
         <div style={{ display: 'flex', gap: '15px' }}>
            <div className="glass" style={{ padding: '8px 15px', borderRadius: '10px', borderLeft: '4px solid #ef4444' }}>

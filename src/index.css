@@ -229,3 +229,18 @@ input:focus, select:focus, textarea:focus {
 .grading-B { color: #3b82f6; }
 .grading-C { color: #f59e0b; }
 .grading-D { color: #ef4444; }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+}
