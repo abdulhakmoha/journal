@@ -46,8 +46,10 @@ router.put('/admin/approve/:id', auth, async (req, res) => {
     const user = await User.findById(req.user);
     if (!user.isAdmin) return res.status(403).json({ message: 'Access denied' });
 
-    const payment = await Payment.findById(req.id || req.params.id);
+    const payment = await Payment.findById(req.params.id);
     if (!payment) return res.status(404).json({ message: 'Payment not found' });
+
+    if (payment.status === 'approved') return res.status(400).json({ message: 'Payment already approved' });
 
     payment.status = 'approved';
     await payment.save();

@@ -35,7 +35,11 @@ router.post('/', auth, async (req, res) => {
     const user = await User.findById(req.user);
     const tradeCount = await Trade.countDocuments({ user: req.user });
 
-    if (user.subscription.plan !== 'Premium' && !user.isAdmin && tradeCount >= 5) {
+    // Subscription Check Logic
+    const isExpired = user.subscription?.endDate && new Date() > new Date(user.subscription.endDate);
+    const currentPlan = isExpired ? 'Free' : user.subscription.plan;
+
+    if (currentPlan !== 'Premium' && !user.isAdmin && tradeCount >= 5) {
       return res.status(403).json({ 
         message: 'Tijaabadii 5-ta Trade way dhammaatay! Fadlan u cusboonaysii Premium si aad u sii waddo journaling-ka.' 
       });
