@@ -2,31 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { Calculator as CalcIcon, DollarSign, Percent, ArrowRight, Target, AlertCircle, ShieldCheck, Activity, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Calculator = ({ accounts, onAddAccount }) => {
+const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
+  const defaultPresets = [
+    { name: 'EURUSD', pipValue: 10 },
+    { name: 'XAUUSD', pipValue: 100 },
+    { name: 'US30', pipValue: 1 },
+    { name: 'NAS100', pipValue: 1 },
+    { name: 'BTCUSD', pipValue: 1 }
+  ];
+
+  const assets = user?.calculatorAssets?.length > 0 ? user.calculatorAssets : defaultPresets;
+
   const [selectedAccount, setSelectedAccount] = useState(accounts[0] || { name: 'Custom', initialBalance: 10000 });
   const [customBalance, setCustomBalance] = useState(10000);
   const [isCustom, setIsCustom] = useState(accounts.length === 0);
   const [riskPercent, setRiskPercent] = useState(1);
   const [stopLossPips, setStopLossPips] = useState(10);
-  const [pipValue, setPipValue] = useState(10); 
-  const [selectedAsset, setSelectedAsset] = useState('EURUSD');
+  const [pipValue, setPipValue] = useState(assets[0].pipValue); 
+  const [selectedAsset, setSelectedAsset] = useState(assets[0].name);
   const [lotSize, setLotSize] = useState(0);
   const [riskAmount, setRiskAmount] = useState(0);
 
-  const assetPresets = {
-    'EURUSD': 10,
-    'GBPUSD': 10,
-    'XAUUSD': 10, // 10 Pips = $1.00 move = $100 for 1 lot
-    'US30': 1,
-    'NAS100': 1,
-    'BTCUSD': 1,
-    'Custom': 10
-  };
-
-  const handleAssetChange = (asset) => {
-    setSelectedAsset(asset);
-    if (asset !== 'Custom') {
-      setPipValue(assetPresets[asset]);
+  const handleAssetChange = (assetName) => {
+    setSelectedAsset(assetName);
+    const asset = assets.find(a => a.name === assetName);
+    if (asset) {
+      setPipValue(asset.pipValue);
     }
   };
   
@@ -34,12 +35,33 @@ const Calculator = ({ accounts, onAddAccount }) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [newAccountForm, setNewAccountForm] = useState({ name: '', initialBalance: '', type: 'Personal', target: 0 });
 
+  // New Pair Modal State
+  const [showPairModal, setShowPairModal] = useState(false);
+  const [newPairForm, setNewPairForm] = useState({ name: '', pipValue: '' });
+
   const handleCreateAccount = async (e) => {
     e.preventDefault();
     if (!newAccountForm.name || !newAccountForm.initialBalance) return alert('Fadlan buuxi meelaha bannaan');
     await onAddAccount(newAccountForm);
     setShowAddModal(false);
     setNewAccountForm({ name: '', initialBalance: '', type: 'Personal', target: 0 });
+  };
+
+  const handleAddPair = async (e) => {
+    e.preventDefault();
+    if (!newPairForm.name || !newPairForm.pipValue) return alert('Fadlan buuxi meelaha bannaan');
+    
+    const updatedAssets = [...assets, { name: newPairForm.name, pipValue: parseFloat(newPairForm.pipValue) }];
+    
+    try {
+      await onUpdateProfile({ ...user, calculatorAssets: updatedAssets });
+      setShowPairModal(false);
+      setNewPairForm({ name: '', pipValue: '' });
+      setSelectedAsset(newPairForm.name);
+      setPipValue(parseFloat(newPairForm.pipValue));
+    } catch (err) {
+      alert('Error saving custom pair');
+    }
   };
 
   // Centralized Calculation Logic
@@ -175,27 +197,21 @@ const Calculator = ({ accounts, onAddAccount }) => {
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                 <Activity size={16} color="var(--primary)" /> Asset / Pair
               </label>
-              <select value={selectedAsset} onChange={(e) => handleAssetChange(e.target.value)} style={{ width: '100%' }}>
-                <option value="EURUSD">EURUSD / Majors ($10)</option>
-                <option value="XAUUSD">XAUUSD / Gold ($100)</option>
-                <option value="US30">US30 / Dow Jones ($1)</option>
-                <option value="NAS100">NAS100 / Nasdaq ($1)</option>
-                <option value="BTCUSD">BTCUSD / Crypto ($1)</option>
-                <option value="Custom">Custom Value</option>
-              </select>
-              
-              {selectedAsset === 'Custom' && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} style={{ marginTop: '15px' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.8rem', color: 'var(--primary)' }}>Custom Pip Value ($)</label>
-                  <input 
-                    type="number" 
-                    value={pipValue} 
-                    onChange={(e) => setPipValue(e.target.value)} 
-                    placeholder="e.g. 10"
-                    style={{ width: '100%', borderColor: 'var(--primary)', background: 'rgba(56, 189, 248, 0.05)' }}
-                  />
-                </motion.div>
-              )}
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <select value={selectedAsset} onChange={(e) => handleAssetChange(e.target.value)} style={{ flex: 1 }}>
+                  {assets.map((asset, idx) => (
+                    <option key={idx} value={asset.name}>{asset.name} (${asset.pipValue})</option>
+                  ))}
+                </select>
+                <button 
+                  onClick={() => setShowPairModal(true)}
+                  className="btn-primary" 
+                  style={{ padding: '0 15px', borderRadius: '8px' }}
+                  title="Add Custom Pair"
+                >
+                  <Plus size={20} />
+                </button>
+              </div>
               <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '8px' }}>Asset selection automatically adjusts the calculation logic.</p>
             </div>
 
@@ -209,7 +225,7 @@ const Calculator = ({ accounts, onAddAccount }) => {
             <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginTop: '20px' }}>
                <div>
                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>TOTAL RISK</p>
-                 <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--danger)' }}>${riskAmount.toLocaleString()}</p>
+                 <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--danger)' }}>${parseFloat(riskAmount).toLocaleString()}</p>
                </div>
                <div style={{ width: '1px', height: '40px', background: 'var(--border)' }}></div>
                <div>
@@ -291,6 +307,50 @@ const Calculator = ({ accounts, onAddAccount }) => {
                 <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                   <button type="button" onClick={() => setShowAddModal(false)} className="btn-secondary" style={{ flex: 1 }}>Cancel</button>
                   <button type="submit" className="btn-primary" style={{ flex: 1 }}>Create Account</button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Add Pair Modal */}
+      <AnimatePresence>
+        {showPairModal && (
+          <div className="modal-overlay">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="glass-card" 
+              style={{ width: '100%', maxWidth: '400px', padding: '30px' }}
+            >
+              <h3 style={{ marginBottom: '10px' }}>Add Custom Pair / Asset</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginBottom: '20px' }}>Define a new instrument and its pip value for calculations.</p>
+              
+              <form onSubmit={handleAddPair} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div className="input-group">
+                  <label>Pair Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. GBPJPY" 
+                    value={newPairForm.name}
+                    onChange={(e) => setNewPairForm({...newPairForm, name: e.target.value})}
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Pip Value ($) for 1 Lot</label>
+                  <input 
+                    type="number" 
+                    placeholder="e.g. 10" 
+                    value={newPairForm.pipValue}
+                    onChange={(e) => setNewPairForm({...newPairForm, pipValue: e.target.value})}
+                  />
+                  <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '5px' }}>Majors ($10), Indices ($1), Gold ($100).</p>
+                </div>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                  <button type="button" onClick={() => setShowPairModal(false)} className="btn-secondary" style={{ flex: 1 }}>Cancel</button>
+                  <button type="submit" className="btn-primary" style={{ flex: 1 }}>Add Asset</button>
                 </div>
               </form>
             </motion.div>

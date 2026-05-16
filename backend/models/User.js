@@ -45,6 +45,19 @@ const userSchema = new mongoose.Schema({
     startDate: { type: Date, default: Date.now },
     endDate: { type: Date }
   },
+  calculatorAssets: {
+    type: [{
+      name: String,
+      pipValue: Number
+    }],
+    default: [
+      { name: 'EURUSD', pipValue: 10 },
+      { name: 'XAUUSD', pipValue: 100 },
+      { name: 'US30', pipValue: 1 },
+      { name: 'NAS100', pipValue: 1 },
+      { name: 'BTCUSD', pipValue: 1 }
+    ]
+  },
   isAdmin: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });

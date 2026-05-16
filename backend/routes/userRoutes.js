@@ -30,10 +30,10 @@ router.get('/profile', auth, async (req, res) => {
 // @route   PUT api/user/profile
 router.put('/profile', auth, async (req, res) => {
   try {
-    const { name, customRules, formFields, backtestFields } = req.body;
+    const { name, customRules, formFields, backtestFields, calculatorAssets } = req.body;
     const user = await User.findByIdAndUpdate(
       req.user,
-      { $set: { name, customRules, formFields, backtestFields } },
+      { $set: { name, customRules, formFields, backtestFields, calculatorAssets } },
       { new: true }
     ).select('-password');
     res.json(user);

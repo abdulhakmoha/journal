@@ -166,7 +166,7 @@ function App() {
       case 'mindset': return <MindsetMirror />;
       case 'review': return <Review trades={trades} accounts={liveAccounts} />;
       case 'backtest': return <Backtest backtestFields={user?.backtestFields || []} accounts={backtestAccounts} />;
-      case 'calculator': return <Calculator accounts={liveAccounts} onAddAccount={handleAddAccount} />;
+      case 'calculator': return <Calculator accounts={liveAccounts} onAddAccount={handleAddAccount} user={user} onUpdateProfile={handleUpdateProfile} />;
       case 'settings': return (
         <Settings 
           user={user}
