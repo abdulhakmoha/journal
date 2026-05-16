@@ -27,7 +27,7 @@ const News = () => {
             padding: '10px'
           }}>
             <iframe 
-              src="https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&importance=3&features=datepicker,timezone&countries=25,32,6,37,7,5,22,11,35,43,12,4,41,42,10,36,26,9,1&calType=day&timeZone=15&lang=1" 
+              src="https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&importance=3&features=datepicker,timezone&countries=25,32,6,37,7,5,22,11,35,43,12,4,41,42,10,36,26,9,1&calType=week&timeZone=15&lang=1" 
               width="100%" 
               height="100%" 
               frameBorder="0" 
