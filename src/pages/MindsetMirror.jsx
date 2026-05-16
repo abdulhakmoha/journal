@@ -3,8 +3,10 @@ import { Brain, Heart, Target, Zap, MessageSquare, Save, CheckCircle, Trash2, Bo
 import { motion, AnimatePresence } from 'framer-motion';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
 import api from '../services/api';
+import { useNotification } from '../context/NotificationContext';
 
 const MindsetMirror = () => {
+  const { showNotification } = useNotification();
   const [reflection, setReflection] = useState('');
   const [mood, setMood] = useState('Neutral');
   const [showSuccess, setShowSuccess] = useState(false);
@@ -37,7 +39,7 @@ const MindsetMirror = () => {
       fetchHistory();
       setTimeout(() => setShowSuccess(false), 3000);
     } catch (err) {
-      alert('Error saving reflection');
+      showNotification('Error saving reflection', 'error');
     }
   };
 
@@ -46,8 +48,9 @@ const MindsetMirror = () => {
     try {
       await api.delete(`/api/mindset/${id}`);
       fetchHistory();
+      showNotification('Reflection waa la tirtiray', 'success');
     } catch (err) {
-      alert('Error deleting reflection');
+      showNotification('Error deleting reflection', 'error');
     }
   };
 

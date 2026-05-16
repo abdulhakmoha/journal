@@ -14,7 +14,10 @@ const getImageUrl = (url) => {
   return `${BACKEND_URL}${url}`;
 };
 
+import { useNotification } from '../context/NotificationContext';
+
 const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) => {
+  const { showNotification } = useNotification();
   const getInitialState = () => {
     // 1. Priority: If editing an existing trade, use that data
     if (initialData) {
@@ -178,7 +181,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
         throw new Error('Upload failed');
       }
     } catch (err) {
-      alert('Upload failed: ' + err.message);
+      showNotification('Upload failed: ' + err.message, 'error');
     } finally {
       setUploading({ ...uploading, [type]: false });
     }

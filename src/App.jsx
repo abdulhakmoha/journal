@@ -25,11 +25,13 @@ import Backtest from './pages/Backtest';
 import Calculator from './pages/Calculator';
 import Login from './pages/Login';
 import { useAuth } from './context/AuthContext';
+import { useNotification } from './context/NotificationContext';
 import api from './services/api';
 import './App.css';
 
 function App() {
   const { token, loading, user, setUser } = useAuth();
+  const { showNotification } = useNotification();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [trades, setTrades] = useState([]);
   const [accounts, setAccounts] = useState([]);
@@ -88,7 +90,7 @@ function App() {
       }
       setActiveTab('journal');
     } catch (err) {
-      alert('Error saving trade');
+      showNotification('Error saving trade', 'error');
     }
   };
 
@@ -102,8 +104,9 @@ function App() {
       try {
         await api.delete(`/api/trades/${id}`);
         setTrades(trades.filter(t => t._id !== id));
+        showNotification('Trade-kii waa la tirtiray', 'success');
       } catch (err) {
-        alert('Error deleting trade');
+        showNotification('Error deleting trade', 'error');
       }
     }
   };
@@ -112,8 +115,9 @@ function App() {
     try {
       const res = await api.post('/api/accounts', acc);
       setAccounts([...accounts, res.data]);
+      showNotification('Account cusub waa lagu daray!', 'success');
     } catch (err) {
-      alert('Error adding account');
+      showNotification('Error adding account', 'error');
     }
   };
 
@@ -121,8 +125,9 @@ function App() {
     try {
       await api.delete(`/api/accounts/${id}`);
       setAccounts(accounts.filter(a => a._id !== id));
+      showNotification('Account-kii waa la tirtiray', 'success');
     } catch (err) {
-      alert('Error deleting account');
+      showNotification('Error deleting account', 'error');
     }
   };
 
@@ -130,8 +135,9 @@ function App() {
     try {
       const res = await api.put(`/api/accounts/${id}`, updatedAcc);
       setAccounts(accounts.map(a => a._id === id ? res.data : a));
+      showNotification('Account-ka waa la cusboonaysiiyay!', 'success');
     } catch (err) {
-      alert('Error updating account');
+      showNotification('Error updating account', 'error');
     }
   };
 
@@ -139,10 +145,10 @@ function App() {
     try {
       const res = await api.put('/api/user/profile', profileData);
       setUser(res.data);
-      alert('System Config Updated!');
+      showNotification('System Config Updated!', 'success');
     } catch (err) {
       console.error('Profile update error:', err);
-      alert('Error updating profile: ' + (err.response?.data?.message || err.message));
+      showNotification('Error updating profile: ' + (err.response?.data?.message || err.message), 'error');
     }
   };
 

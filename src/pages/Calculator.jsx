@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Calculator as CalcIcon, DollarSign, Percent, ArrowRight, Target, AlertCircle, ShieldCheck, Activity, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { useNotification } from '../context/NotificationContext';
+
 const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
+  const { showNotification } = useNotification();
   const defaultPresets = [
     { name: 'EURUSD', pipValue: 10 },
     { name: 'XAUUSD', pipValue: 100 },
@@ -41,7 +44,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
 
   const handleCreateAccount = async (e) => {
     e.preventDefault();
-    if (!newAccountForm.name || !newAccountForm.initialBalance) return alert('Fadlan buuxi meelaha bannaan');
+    if (!newAccountForm.name || !newAccountForm.initialBalance) return showNotification('Fadlan buuxi meelaha bannaan', 'error');
     await onAddAccount(newAccountForm);
     setShowAddModal(false);
     setNewAccountForm({ name: '', initialBalance: '', type: 'Personal', target: 0 });
@@ -49,7 +52,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
 
   const handleAddPair = async (e) => {
     e.preventDefault();
-    if (!newPairForm.name) return alert('Fadlan qor magaca Pair-ka');
+    if (!newPairForm.name) return showNotification('Fadlan qor magaca Pair-ka', 'error');
     
     const updatedAssets = [...assets, { name: newPairForm.name, pipValue: 10 }];
     

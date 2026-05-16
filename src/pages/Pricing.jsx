@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Check, Zap, Award, Crown, ShieldCheck, CreditCard, Bitcoin, Smartphone, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../services/api';
+import { useNotification } from '../context/NotificationContext';
 
 const Pricing = () => {
+  const { showNotification } = useNotification();
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [transactionId, setTransactionId] = useState('');
@@ -22,7 +24,7 @@ const Pricing = () => {
   ];
 
   const handlePaymentSubmit = async () => {
-    if (!transactionId) return alert('Fadlan geli Transaction ID ama Hash ID');
+    if (!transactionId) return showNotification('Fadlan geli Transaction ID ama Hash ID', 'error');
     
     setIsSubmitting(true);
     try {
@@ -33,8 +35,9 @@ const Pricing = () => {
         transactionId
       });
       setSuccess(true);
+      showNotification('Codsigaaga waa la diray!', 'success');
     } catch (err) {
-      alert('Error submitting payment request');
+      showNotification('Error submitting payment request', 'error');
     } finally {
       setIsSubmitting(false);
     }

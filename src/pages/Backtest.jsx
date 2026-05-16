@@ -31,6 +31,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useNotification } from '../context/NotificationContext';
 
 const BACKEND_URL = 'https://journal-production-6346.up.railway.app';
 
@@ -45,6 +46,7 @@ const getImageUrl = (url) => {
 
 const Backtest = ({ backtestFields, accounts }) => {
   const { token, user } = useAuth();
+  const { showNotification } = useNotification();
   const [sessions, setSessions] = useState([]);
   const [activeSession, setActiveSession] = useState(null);
   const [showNewSessionModal, setShowNewSessionModal] = useState(false);
@@ -125,7 +127,7 @@ const Backtest = ({ backtestFields, accounts }) => {
         throw new Error('Upload failed');
       }
     } catch (err) {
-      alert('Upload failed: ' + err.message);
+      showNotification('Upload failed: ' + err.message, 'error');
     } finally {
       setUploading({ ...uploading, [type]: false });
     }
@@ -137,8 +139,9 @@ const Backtest = ({ backtestFields, accounts }) => {
       setSessions([res.data, ...sessions]);
       setShowNewSessionModal(false);
       setNewSessionForm({ name: '', strategy: '', pair: '', account: accounts[0]?.name || '' });
+      showNotification('Session cusub waa la abuuray!', 'success');
     } catch (err) {
-      alert('Error creating session');
+      showNotification('Error creating session', 'error');
     }
   };
 
@@ -177,8 +180,9 @@ const Backtest = ({ backtestFields, accounts }) => {
         customData: resetCustomData
       });
       fetchSessions(); 
+      showNotification('Trade-ka waa la diwaangeliyay!', 'success');
     } catch (err) {
-      alert('Error logging trade');
+      showNotification('Error logging trade', 'error');
     }
   };
 
@@ -188,8 +192,9 @@ const Backtest = ({ backtestFields, accounts }) => {
       const res = await api.delete(`/api/backtest/${activeSession._id}/trades/${tradeId}`);
       setActiveSession(res.data);
       fetchSessions();
+      showNotification('Trade-kii waa la tirtiray', 'info');
     } catch (err) {
-      alert('Error deleting trade');
+      showNotification('Error deleting trade', 'error');
     }
   };
 
@@ -200,8 +205,9 @@ const Backtest = ({ backtestFields, accounts }) => {
         await api.delete(`/api/backtest/${id}`);
         setSessions(sessions.filter(s => s._id !== id));
         if (activeSession?._id === id) setActiveSession(null);
+        showNotification('Session-kii waa la tirtiray', 'info');
       } catch (err) {
-        alert('Error deleting session');
+        showNotification('Error deleting session', 'error');
       }
     }
   };
