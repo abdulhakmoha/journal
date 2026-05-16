@@ -49,9 +49,9 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
 
   const handleAddPair = async (e) => {
     e.preventDefault();
-    if (!newPairForm.name || !newPairForm.pipValue) return alert('Fadlan buuxi meelaha bannaan');
+    if (!newPairForm.name) return alert('Fadlan qor magaca Pair-ka');
     
-    const updatedAssets = [...assets, { name: newPairForm.name, pipValue: parseFloat(newPairForm.pipValue) }];
+    const updatedAssets = [...assets, { name: newPairForm.name, pipValue: 10 }];
     
     try {
       await onUpdateProfile({ ...user, calculatorAssets: updatedAssets });
@@ -337,16 +337,6 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
                     value={newPairForm.name}
                     onChange={(e) => setNewPairForm({...newPairForm, name: e.target.value})}
                   />
-                </div>
-                <div className="input-group">
-                  <label>Pip Value ($) for 1 Lot</label>
-                  <input 
-                    type="number" 
-                    placeholder="e.g. 10" 
-                    value={newPairForm.pipValue}
-                    onChange={(e) => setNewPairForm({...newPairForm, pipValue: e.target.value})}
-                  />
-                  <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '5px' }}>Majors ($10), Indices ($1), Gold ($100).</p>
                 </div>
                 <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                   <button type="button" onClick={() => setShowPairModal(false)} className="btn-secondary" style={{ flex: 1 }}>Cancel</button>
