@@ -62,6 +62,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       isCompleted: baseData.isCompleted || false,
       pips: baseData.pips || '',
       date: baseData.date || new Date().toISOString().split('T')[0],
+      time: baseData.time || new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
       rules: baseData.rules || customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {}),
       ...baseData,
       ...dynamicData
@@ -125,6 +126,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
         isCompleted: false,
         pips: '',
         date: new Date().toISOString().split('T')[0],
+        time: new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
         rules: customRules.reduce((acc, rule) => ({ ...acc, [rule]: false }), {})
       });
     }
@@ -238,8 +240,8 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
       pips: formData.pips ? parseFloat(formData.pips) : 0, // Ensure Number
       timestamp: (() => {
         const [year, month, day] = formData.date.split('-').map(Number);
-        const now = new Date();
-        return new Date(year, month - 1, day, now.getHours(), now.getMinutes(), now.getSeconds()).toISOString();
+        const [hour, minute] = (formData.time || '12:00').split(':').map(Number);
+        return new Date(year, month - 1, day, hour, minute).toISOString();
       })(),
       // Backward compatibility for known fields if they exist in custom form
       strategy: formData['Strategy'] || findDynamicValue(['strategy', 'setup']) || 'Standard',
@@ -286,10 +288,14 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
           
           {/* DYNAMIC FIELDS SECTION */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '15px' }}>
                 <div style={{ flex: 1 }}>
                   <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Trading Date</label>
                   <input type="date" style={{ width: '100%' }} value={formData.date} onChange={(e) => setFormData({...formData, date: e.target.value})} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Trading Time</label>
+                  <input type="time" style={{ width: '100%' }} value={formData.time} onChange={(e) => setFormData({...formData, time: e.target.value})} />
                 </div>
                 <div style={{ flex: 1 }}>
                   <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Account</label>
