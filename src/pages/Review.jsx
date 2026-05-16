@@ -98,7 +98,7 @@ const Review = ({ trades, accounts }) => {
   const wins = filteredTrades.filter(t => t.status === 'Win');
   const losses = filteredTrades.filter(t => t.status === 'Loss');
   const mistakes = filteredTrades.filter(t => t.isMistake).length;
-  const winRate = filteredTrades.length === 0 ? 0 : Math.round((wins.length / filteredTrades.length) * 100);  // Profit Factor & Net Profit (using Reward field)
+  const winRate = filteredTrades.length === 0 ? 0 : Math.round((wins.length / filteredTrades.length) * 100);
   const netProfit = filteredTrades.reduce((acc, t) => {
     const isPips = t.riskUnit === 'Pips';
     const riskPercent = parseFloat(t.riskPercent) || 1;
@@ -211,7 +211,7 @@ const Review = ({ trades, accounts }) => {
           { label: 'Total Trades', value: filteredTrades.length, color: 'var(--primary)' },
           { label: 'Win Rate', value: `${winRate}%`, color: winRate >= 55 ? 'var(--success)' : 'var(--danger)' },
           { label: 'Net Profit', value: `${netProfit}%`, color: parseFloat(netProfit) >= 0 ? 'var(--success)' : 'var(--danger)' },
-          { label: 'Profit Factor', value: profitFactor, color: parseFloat(profitFactor) >= 1.5 ? 'var(--success)' : 'var(--warning)' },
+          { label: 'Profit Ratio', value: profitFactor, color: parseFloat(profitFactor) >= 1.5 ? 'var(--success)' : 'var(--warning)' },
           { label: 'Mistakes', value: mistakes, color: mistakes > 2 ? 'var(--danger)' : 'var(--success)' },
         ].map((stat, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className="glass-card" style={{ padding: '25px', textAlign: 'center' }}>

@@ -163,11 +163,11 @@ const Performance = ({ trades, accounts }) => {
           </p>
         </div>
 
-        {/* Profit Factor */}
+        {/* Profit Ratio */}
         <div className="glass-card" style={{ padding: '25px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
             <Target size={18} color="var(--warning)" />
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Win : Loss Ratio</p>
+            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Profit Ratio</p>
           </div>
           <h3 style={{ fontSize: '1.8rem', fontWeight: '900', color: parseFloat(metrics.profitFactor) >= 1.5 ? 'var(--success)' : 'var(--danger)', marginBottom: '8px' }}>
             {metrics.profitFactor}

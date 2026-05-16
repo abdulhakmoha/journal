@@ -116,14 +116,6 @@ const Calculator = ({ accounts, onAddAccount }) => {
                     ))}
                     <option value="custom">✍️ Custom Balance (Manual Entry)</option>
                   </select>
-                  <button 
-                    onClick={() => setShowAddModal(true)}
-                    className="btn-secondary" 
-                    style={{ padding: '0 15px', borderRadius: '12px' }}
-                    title="Add New Account"
-                  >
-                    <Plus size={20} />
-                  </button>
                 </div>
                 
                 {isCustom && (
