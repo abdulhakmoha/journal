@@ -588,26 +588,58 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                     </span>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    {dayTrades.map(t => (
+                    {dayTrades.map(t => {
+                      const session = t.session || t.customData?.['Trading Session'] || t.customData?.Session || '';
+                      
+                      // Calculate % exactly like the List view
+                      let percentStr = '';
+                      if (t.status?.toLowerCase().includes('be')) {
+                        percentStr = '0.00%';
+                      } else if (t.riskUnit === 'Pips') {
+                        percentStr = t.status?.toLowerCase().includes('win') 
+                          ? `+${((parseFloat(t.rr) || 0) * (parseFloat(t.riskPercent) || 1)).toFixed(2)}%`
+                          : `-${(parseFloat(t.riskPercent) || 1).toFixed(2)}%`;
+                      } else {
+                        percentStr = `${(parseFloat(t.reward) || 0) >= 0 && t.status?.toLowerCase().includes('win') ? '+' : ''}${t.reward || 0}%`;
+                      }
+
+                      return (
                       <div 
                         key={t._id}
                         onClick={() => toggleExpand(t._id)}
                         style={{ 
                           fontSize: '0.7rem', 
-                          padding: '4px 6px', 
-                          borderRadius: '4px', 
-                          background: t.status === 'Win' ? 'rgba(16, 185, 129, 0.1)' : t.status === 'Loss' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(255,255,255,0.05)',
-                          color: t.status === 'Win' ? 'var(--success)' : t.status === 'Loss' ? 'var(--danger)' : 'var(--text-muted)',
-                          borderLeft: `3px solid ${t.status === 'Win' ? 'var(--success)' : t.status === 'Loss' ? 'var(--danger)' : 'var(--text-muted)'}`,
+                          padding: '6px 8px', 
+                          borderRadius: '6px', 
+                          background: t.status === 'Win' ? 'linear-gradient(to right, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05))' : t.status === 'Loss' ? 'linear-gradient(to right, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05))' : 'rgba(255,255,255,0.05)',
+                          borderLeft: `3px solid ${t.status === 'Win' ? '#10b981' : t.status === 'Loss' ? '#ef4444' : 'var(--text-muted)'}`,
                           cursor: 'pointer',
                           display: 'flex',
-                          justifyContent: 'space-between'
+                          flexDirection: 'column',
+                          gap: '4px',
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                         }}
                       >
-                        <span>{t.symbol}</span>
-                        <span>{t.status === 'Win' ? '+' : '-'}{t.reward}%</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ 
+                            fontWeight: 'bold', 
+                            color: t.status === 'Win' ? '#10b981' : t.status === 'Loss' ? '#ef4444' : 'var(--text-muted)' 
+                          }}>
+                            {t.status.toUpperCase()}
+                          </span>
+                          <span style={{ 
+                            fontWeight: 'bold',
+                            color: t.status === 'Win' ? '#10b981' : t.status === 'Loss' ? '#ef4444' : 'var(--text-muted)'
+                          }}>
+                            {t.status === 'Loss' && !percentStr.includes('-') ? '-' : ''}{percentStr}
+                          </span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                          <span>{session || t.symbol}</span>
+                          {session && <span>{t.symbol}</span>}
+                        </div>
                       </div>
-                    ))}
+                    )})}
                   </div>
                 </div>
               );
