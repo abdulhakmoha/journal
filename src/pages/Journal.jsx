@@ -634,9 +634,13 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                             {t.status === 'Loss' && !percentStr.includes('-') ? '-' : ''}{percentStr}
                           </span>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: 'var(--text-muted)' }}>
-                          <span>{session || t.symbol}</span>
-                          {session && <span>{t.symbol}</span>}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                          <span style={{ fontWeight: 'bold', color: 'var(--text-main)' }}>{t.symbol}</span>
+                          {session && (
+                            <span style={{ opacity: 0.7, textTransform: 'uppercase' }}>
+                              {session.replace('New York', 'NY').replace('London', 'LON').replace('Asian', 'ASN')}
+                            </span>
+                          )}
                         </div>
                       </div>
                     )})}
