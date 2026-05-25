@@ -484,7 +484,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
 
                         <td style={{ padding: '15px 20px', textAlign: 'right' }} onClick={(e) => e.stopPropagation()}>
                           <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-                            <button onClick={() => onEdit(trade, idx)} className="icon-btn"><Edit3 size={16} /></button>
+                            <button onClick={() => onEdit(trade)} className="icon-btn"><Edit3 size={16} /></button>
                             <button onClick={() => onDelete(trade._id)} className="icon-btn delete"><Trash2 size={16} /></button>
                           </div>
                         </td>

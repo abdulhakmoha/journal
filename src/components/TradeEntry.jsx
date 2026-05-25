@@ -237,11 +237,12 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     }
     
     // Map dynamic fields to specific properties for compatibility
+    const isActuallyCompleted = completed || (formData.status !== 'Active');
     const finalTrade = { 
       ...formData, 
       grade, 
-      isCompleted: completed,
-      status: completed ? formData.status.split(' ')[0] : 'Active', // Clean emoji
+      isCompleted: isActuallyCompleted,
+      status: isActuallyCompleted ? formData.status.split(' ')[0] : 'Active', // Clean emoji
       symbol: symbol || 'Unknown',
       pips: formData.pips ? parseFloat(formData.pips) : 0, // Ensure Number
       timestamp: (() => {

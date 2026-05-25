@@ -102,9 +102,7 @@ function App() {
     try {
       if (editingTrade !== null) {
         const res = await api.put(`/api/trades/${newTrade._id}`, newTrade);
-        const updatedTrades = [...trades];
-        updatedTrades[editingTrade.index] = res.data;
-        setTrades(updatedTrades);
+        setTrades(prevTrades => prevTrades.map(t => t._id === newTrade._id ? res.data : t));
         setEditingTrade(null);
       } else {
         const res = await api.post('/api/trades', newTrade);
@@ -116,8 +114,8 @@ function App() {
     }
   };
 
-  const handleEdit = (trade, index) => {
-    setEditingTrade({ ...trade, index });
+  const handleEdit = (trade) => {
+    setEditingTrade(trade);
     setActiveTab('new-trade');
   };
 
