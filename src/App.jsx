@@ -45,6 +45,11 @@ function App() {
         const theme = JSON.parse(savedTheme);
         document.documentElement.style.setProperty('--primary', theme.color);
         document.documentElement.style.setProperty('--primary-glow', theme.glow);
+        if (theme.accent) document.documentElement.style.setProperty('--accent', theme.accent);
+        if (theme.bg) document.documentElement.style.setProperty('--bg-dark', theme.bg);
+        if (theme.card) document.documentElement.style.setProperty('--bg-card', theme.card);
+        if (theme.border) document.documentElement.style.setProperty('--border', theme.border);
+        if (theme.btnText) document.documentElement.style.setProperty('--btn-text', theme.btnText);
       } catch (e) {
         console.error('Failed to apply theme');
       }
@@ -57,6 +62,23 @@ function App() {
       fetchData();
     }
   }, [token]);
+
+  // Interactive Hover Spotlight Effect for Cards
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const cards = document.querySelectorAll('.glass-card, .glass');
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [activeTab]);
 
   const fetchData = async () => {
     try {
@@ -218,6 +240,11 @@ function App() {
 
   return (
     <div className="app-container">
+      {/* Premium Dynamic Background Effects */}
+      <div className="aurora-blob blob-1"></div>
+      <div className="aurora-blob blob-2"></div>
+      <div className="aurora-grid"></div>
+
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} disciplineScore={disciplineScore} tradesCount={trades.length} />
       <main className="main-content">
         <header style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

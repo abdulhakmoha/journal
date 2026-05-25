@@ -14,9 +14,11 @@ import {
   Image as ImageIcon, 
   Maximize2, 
   X,
-  LayoutList
+  LayoutList,
+  AlertTriangle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 import api from '../services/api';
 
@@ -35,6 +37,7 @@ const getImageUrl = (url) => {
 };
 
 const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
+  const { t } = useLanguage();
   const [view, setView] = useState('list');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [searchTerm, setSearchTerm] = useState('');
@@ -219,7 +222,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h2 className="text-gradient">Trading Journal</h2>
+          <h2 className="text-gradient">{t('tradeJournal')}</h2>
           <p style={{ color: 'var(--text-muted)' }}>Review and manage your execution history.</p>
         </div>
 
@@ -285,7 +288,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
           </div>
           <button className="btn-primary" style={{ padding: '10px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px' }} onClick={onAdd}>
             <Plus size={20} />
-            New Trade
+            {t('newTrade')}
           </button>
         </div>
       </header>
@@ -380,13 +383,13 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                 <tr>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>DATE / TIME</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{t('tradingDate').toUpperCase()} / {t('tradingTime').toUpperCase()}</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>SYMBOL</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>TYPE</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>STATUS</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{t('type').toUpperCase()}</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{t('status').toUpperCase()}</th>
                   {visibleColumns.pips && <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>PIPS</th>}
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>P/L (%)</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>ACCOUNT</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{t('account').toUpperCase()}</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>CHARTS</th>
                   <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'right' }}>ACTIONS</th>
                 </tr>
@@ -410,7 +413,16 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                             </div>
                           </td>
                         )}
-                        {visibleColumns.symbol && <td style={{ padding: '15px', fontWeight: 'bold' }}>{trade.symbol}</td>}
+                        {visibleColumns.symbol && (
+                          <td style={{ padding: '15px', fontWeight: 'bold' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              {trade.symbol}
+                              {trade.newsConflict && (
+                                <span title={trade.newsEvent ? `${trade.newsEvent} (${t('newsConflictDesc')})` : t('newsConflictDesc')} style={{ cursor: 'help' }}>⚠️</span>
+                              )}
+                            </div>
+                          </td>
+                        )}
                         {visibleColumns.type && (
                           <td style={{ padding: '15px' }}>
                             <span style={{ color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)', fontSize: '0.85rem' }}>{trade.type}</span>
@@ -518,13 +530,60 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                                 </div>
                                 <div style={{ gridColumn: 'span 2' }}>
                                    <h5 style={{ fontSize: '0.9rem', marginBottom: '10px', color: 'var(--primary)' }}>Trade Mindset & Rules</h5>
+
+                                   {trade.newsConflict && (
+                                     <div style={{
+                                       marginBottom: '15px',
+                                       padding: '10px 15px',
+                                       borderRadius: '8px',
+                                       background: 'rgba(239, 68, 68, 0.1)',
+                                       border: '1px solid rgba(239, 68, 68, 0.2)',
+                                       color: '#f87171',
+                                       fontSize: '0.85rem',
+                                       display: 'flex',
+                                       alignItems: 'center',
+                                       gap: '8px'
+                                     }}>
+                                       <AlertTriangle size={16} />
+                                       <span>
+                                         <strong>{t('newsConflict')}</strong>: {trade.newsEvent ? `${trade.newsEvent} (${t('newsConflictDesc')})` : t('newsConflictDesc')}
+                                       </span>
+                                     </div>
+                                   )}
+
                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                                       <div className="glass" style={{ padding: '15px', borderRadius: '8px' }}>
-                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>Pre-Trade Thoughts</p>
+                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('preMood')}</p>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                                          <span style={{
+                                            padding: '4px 10px',
+                                            borderRadius: '12px',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 'bold',
+                                            background: 'rgba(56, 189, 248, 0.15)',
+                                            color: 'var(--primary)'
+                                          }}>
+                                            {t(trade.preMood?.toLowerCase()) || trade.preMood}
+                                          </span>
+                                        </div>
+                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('preThoughts')}</p>
                                         <p style={{ fontSize: '0.85rem' }}>{trade.preMindset || 'No notes.'}</p>
                                       </div>
                                       <div className="glass" style={{ padding: '15px', borderRadius: '8px' }}>
-                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>Post-Trade Reflection</p>
+                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('postMood')}</p>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                                          <span style={{
+                                            padding: '4px 10px',
+                                            borderRadius: '12px',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 'bold',
+                                            background: 'rgba(16, 185, 129, 0.15)',
+                                            color: 'var(--success)'
+                                          }}>
+                                            {t(trade.postMood?.toLowerCase()) || trade.postMood}
+                                          </span>
+                                        </div>
+                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('postThoughts')}</p>
                                         <p style={{ fontSize: '0.85rem' }}>{trade.postMindset || 'No notes.'}</p>
                                       </div>
                                    </div>

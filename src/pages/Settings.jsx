@@ -129,17 +129,67 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
         </h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '15px' }}>
           {[
-            { name: 'Elite Blue', color: '#38bdf8', glow: 'rgba(56, 189, 248, 0.2)' },
-            { name: 'Gold', color: '#fbbf24', glow: 'rgba(251, 191, 36, 0.2)' },
-            { name: 'Emerald', color: '#10b981', glow: 'rgba(16, 185, 129, 0.2)' },
-            { name: 'Royal Purple', color: '#818cf8', glow: 'rgba(129, 140, 248, 0.2)' },
-            { name: 'Crimson', color: '#f43f5e', glow: 'rgba(244, 63, 94, 0.2)' }
+            { 
+              name: 'Obsidian Mint', 
+              color: '#0df0a6', 
+              glow: 'rgba(13, 240, 166, 0.15)', 
+              accent: '#0eb37d', 
+              bg: '#08090a', 
+              card: 'rgba(17, 19, 21, 0.7)', 
+              border: 'rgba(255, 255, 255, 0.05)',
+              btnText: '#08090a'
+            },
+            { 
+              name: 'Brushed Gold', 
+              color: '#dfb26c', 
+              glow: 'rgba(223, 178, 108, 0.15)', 
+              accent: '#c29759', 
+              bg: '#0c0b0a', 
+              card: 'rgba(20, 19, 18, 0.75)', 
+              border: 'rgba(255, 255, 255, 0.045)',
+              btnText: '#08090a'
+            },
+            { 
+              name: 'Nordic Teal', 
+              color: '#06b6d4', 
+              glow: 'rgba(6, 182, 212, 0.15)', 
+              accent: '#0891b2', 
+              bg: '#060c0e', 
+              card: 'rgba(14, 22, 26, 0.7)', 
+              border: 'rgba(255, 255, 255, 0.05)',
+              btnText: '#ffffff'
+            },
+            { 
+              name: 'Electric Cobalt', 
+              color: '#3b82f6', 
+              glow: 'rgba(59, 130, 246, 0.15)', 
+              accent: '#2563eb', 
+              bg: '#080a10', 
+              card: 'rgba(16, 20, 30, 0.7)', 
+              border: 'rgba(255, 255, 255, 0.05)',
+              btnText: '#ffffff'
+            },
+            { 
+              name: 'Stealth Platinum', 
+              color: '#f4f4f5', 
+              glow: 'rgba(244, 244, 245, 0.08)', 
+              accent: '#a1a1aa', 
+              bg: '#09090b', 
+              card: 'rgba(18, 18, 22, 0.7)', 
+              border: 'rgba(255, 255, 255, 0.06)',
+              btnText: '#08090a'
+            }
           ].map((theme) => (
             <button
               key={theme.name}
               onClick={() => {
                 document.documentElement.style.setProperty('--primary', theme.color);
                 document.documentElement.style.setProperty('--primary-glow', theme.glow);
+                document.documentElement.style.setProperty('--accent', theme.accent);
+                document.documentElement.style.setProperty('--bg-dark', theme.bg);
+                document.documentElement.style.setProperty('--bg-card', theme.card);
+                document.documentElement.style.setProperty('--border', theme.border);
+                document.documentElement.style.setProperty('--btn-text', theme.btnText);
                 localStorage.setItem('somtrader_theme', JSON.stringify(theme));
               }}
               style={{

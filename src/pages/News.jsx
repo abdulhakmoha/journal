@@ -49,7 +49,7 @@ const News = () => {
                {[
                  { t: 'Pre-News', d: 'Close active trades 15m before Red Folders.', c: '#ef4444' },
                  { t: 'Execution', d: 'Avoid market orders during high volatility.', c: '#f59e0b' },
-                 { t: 'Analysis', d: 'Focus on Actual vs Forecast deviation.', c: '#38bdf8' }
+                 { t: 'Analysis', d: 'Focus on Actual vs Forecast deviation.', c: 'var(--primary)' }
                ].map((tip, i) => (
                  <div key={i} style={{ padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', borderLeft: `3px solid ${tip.c}` }}>
                     <p style={{ fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '4px' }}>{tip.t}</p>

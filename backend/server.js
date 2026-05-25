@@ -53,6 +53,7 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
 app.use('/api/payments', require('./routes/paymentRoutes'));
 app.use('/api/mindset', require('./routes/mindsetRoutes'));
+app.use('/api/news', require('./routes/newsRoutes').router);
 
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'SomTrader API v2.0 - Running ✅' });

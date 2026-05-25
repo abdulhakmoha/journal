@@ -1,19 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-dark: #020617;
-  --bg-card: rgba(15, 23, 42, 0.6);
-  --primary: #38bdf8;
-  --primary-glow: rgba(56, 189, 248, 0.2);
-  --accent: #818cf8;
+  --bg-dark: #08090a;
+  --bg-card: rgba(17, 19, 21, 0.7);
+  --primary: #0df0a6;
+  --primary-glow: rgba(13, 240, 166, 0.15);
+  --accent: #0eb37d;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
   --text-main: #f1f5f9;
   --text-muted: #94a3b8;
-  --border: rgba(255, 255, 255, 0.08);
-  --glass-bg: rgba(15, 23, 42, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.05);
+  --glass-bg: rgba(17, 19, 21, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --btn-text: #08090a;
 }
 
 * {
@@ -29,31 +30,88 @@ body {
   line-height: 1.5;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 100% 100%, rgba(129, 140, 248, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 0% 0%, var(--primary-glow) 0%, transparent 45%),
+    radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0.8) 0%, transparent 60%);
   min-height: 100vh;
 }
 
 /* Glassmorphism Utilities */
 .glass {
+  position: relative;
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
+  overflow: hidden;
 }
 
 .glass-card {
+  position: relative;
   background: var(--bg-card);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   border-radius: 16px;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.glass-card > *, .glass > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* Mouse Hover Spotlight Highlight inside Card */
+.glass-card::before, .glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    rgba(255, 255, 255, 0.035),
+    transparent 50%
+  );
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Mouse Hover Glowing Border Highlight */
+.glass-card::after, .glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px; /* border thickness */
+  background: radial-gradient(
+    250px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    var(--primary),
+    transparent 60%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+}
+
+.glass-card:hover::before, .glass:hover::before {
+  opacity: 1;
+}
+
+.glass-card:hover::after, .glass:hover::after {
+  opacity: 0.35; /* ultra premium exact subtle lit border glow */
 }
 
 .glass-card:hover {
-  border-color: rgba(56, 189, 248, 0.3);
-  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.05); /* keep actual border subtle, let the spotlight border shine! */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--primary-glow);
+  transform: translateY(-3px);
 }
 
 /* Scrollbar */
@@ -66,12 +124,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* Typography */
@@ -81,27 +139,63 @@ h1, h2, h3, h4 {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Buttons */
 .btn-primary {
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: var(--btn-text);
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px var(--primary-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Light Sweep Shimmer Highlight */
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 45%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  transition: none;
+  opacity: 0;
+}
+
+.btn-primary:hover::after {
+  left: 130%;
+  opacity: 1;
+  transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
+  opacity: 0.95;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--primary-glow);
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
 }
 
 .btn-outline {
@@ -244,3 +338,75 @@ input:focus, select:focus, textarea:focus {
   z-index: 2000;
   padding: 20px;
 }
+
+/* Premium Dynamic Aurora Background & Cyber Grid */
+.aurora-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(140px);
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.55;
+  transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blob-1 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, var(--primary) 0%, var(--primary-glow) 60%, transparent 100%);
+  top: -15%;
+  left: -15%;
+  animation: float-blob-1 25s infinite alternate ease-in-out;
+}
+
+.blob-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent) 0%, rgba(255, 255, 255, 0.005) 70%, transparent 100%);
+  bottom: -15%;
+  right: -15%;
+  animation: float-blob-2 20s infinite alternate ease-in-out;
+}
+
+.aurora-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-position: center;
+  mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 85%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 85%);
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+@keyframes float-blob-1 {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate(120px, 80px) scale(1.1) rotate(90deg);
+  }
+  100% {
+    transform: translate(-60px, -40px) scale(0.9) rotate(180deg);
+  }
+}
+
+@keyframes float-blob-2 {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate(-100px, -120px) scale(0.85) rotate(-90deg);
+  }
+  100% {
+    transform: translate(80px, 60px) scale(1.15) rotate(-180deg);
+  }
+}
+

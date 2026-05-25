@@ -1,9 +1,12 @@
 import React from 'react';
 import { LayoutDashboard, BookOpen, Target, Settings, Brain, PlusCircle, BarChart2, Zap, PlusSquare, LayoutList, FlaskConical, Calculator, LogOut, Globe, Shield, Award } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
   const { user, logout } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
+  
   const menuItems = [
     { id: 'dashboard',   label: 'Dashboard',         icon: Zap },
     { id: 'new-trade',   label: 'New Trade',          icon: PlusSquare },
@@ -22,6 +25,21 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
     { id: 'admin-payments', label: 'Admin: Payments', icon: Shield },
   ];
 
+  const translationKeys = {
+    'dashboard': 'dashboard',
+    'new-trade': 'newTrade',
+    'journal': 'tradeJournal',
+    'review': 'weeklyReview',
+    'performance': 'analytics',
+    'mindset': 'mindsetJournal',
+    'backtest': 'backtesting',
+    'calculator': 'riskCalculator',
+    'news': 'economicCalendar',
+    'settings': 'settings',
+    'pricing': 'pricingPlans',
+    'admin-payments': 'adminPayments'
+  };
+
   return (
     <div className="sidebar glass" style={{ 
       width: '280px', 
@@ -34,9 +52,51 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
       display: 'flex',
       flexDirection: 'column'
     }}>
-      <div className="logo" style={{ marginBottom: '40px' }}>
-        <h2 className="text-gradient" style={{ fontSize: '1.5rem' }}>SomTrader</h2>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Professional Performance Analytics</p>
+      <div className="logo" style={{ marginBottom: '30px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h2 className="text-gradient" style={{ fontSize: '1.5rem', fontWeight: '800', letterSpacing: '-0.03em' }}>SomTrader</h2>
+          <div style={{ position: 'relative', display: 'flex', width: '8px', height: '8px', marginTop: '2px' }}>
+            <span style={{ position: 'absolute', display: 'inline-flex', height: '100%', width: '100%', borderRadius: '50%', background: 'var(--primary)', opacity: 0.75, animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite' }}></span>
+            <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '50%', height: '8px', width: '8px', background: 'var(--primary)' }}></span>
+          </div>
+        </div>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '2px' }}>Professional Performance Analytics</p>
+        
+        {/* Language Selection Toggle */}
+        <div style={{ display: 'flex', gap: '6px', marginTop: '15px' }}>
+          <button 
+            onClick={() => setLanguage('en')}
+            style={{
+              padding: '4px 12px',
+              fontSize: '0.7rem',
+              borderRadius: '6px',
+              border: 'none',
+              background: language === 'en' ? 'var(--primary)' : 'rgba(255,255,255,0.03)',
+              color: language === 'en' ? 'var(--btn-text)' : 'var(--text-muted)',
+              cursor: 'pointer',
+              fontWeight: '700',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            EN
+          </button>
+          <button 
+            onClick={() => setLanguage('so')}
+            style={{
+              padding: '4px 12px',
+              fontSize: '0.7rem',
+              borderRadius: '6px',
+              border: 'none',
+              background: language === 'so' ? 'var(--primary)' : 'rgba(255,255,255,0.03)',
+              color: language === 'so' ? 'var(--btn-text)' : 'var(--text-muted)',
+              cursor: 'pointer',
+              fontWeight: '700',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            SO
+          </button>
+        </div>
       </div>
 
       <button 
@@ -45,7 +105,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
         onClick={() => setActiveTab('new-trade')}
       >
         <PlusCircle size={20} />
-        New Trade
+        {t('newTrade')}
       </button>
 
       <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -64,17 +124,20 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
                   padding: '12px 16px',
                   borderRadius: '12px',
                   border: 'none',
-                  background: isActive ? 'rgba(56, 189, 248, 0.1)' : 'transparent',
+                  borderLeft: isActive ? '3px solid var(--primary)' : '3px solid transparent',
+                  background: isActive ? 'linear-gradient(90deg, var(--primary-glow) 0%, transparent 100%)' : 'transparent',
                   color: isActive ? 'var(--primary)' : 'var(--text-muted)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   textAlign: 'left',
                   width: '100%',
-                  fontWeight: isActive ? '600' : '400'
+                  fontWeight: isActive ? '600' : '400',
+                  paddingLeft: isActive ? '13px' : '16px',
+                  boxShadow: isActive ? 'inset 1px 0 0 rgba(255, 255, 255, 0.02)' : 'none'
                 }}
               >
                 <Icon size={20} />
-                {item.label}
+                {t(translationKeys[item.id] || item.id)}
               </button>
             </React.Fragment>
           );
@@ -98,17 +161,19 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
                     padding: '12px 16px',
                     borderRadius: '12px',
                     border: 'none',
-                    background: isActive ? 'rgba(245, 158, 11, 0.1)' : 'transparent',
+                    borderLeft: isActive ? '3px solid var(--warning)' : '3px solid transparent',
+                    background: isActive ? 'linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0%, transparent 100%)' : 'transparent',
                     color: isActive ? 'var(--warning)' : 'var(--text-muted)',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
                     textAlign: 'left',
                     width: '100%',
-                    fontWeight: isActive ? '600' : '400'
+                    fontWeight: isActive ? '600' : '400',
+                    paddingLeft: isActive ? '13px' : '16px'
                   }}
                 >
                   <Icon size={20} />
-                  {item.label}
+                  {t(translationKeys[item.id] || item.id)}
                 </button>
               );
             })}
@@ -118,7 +183,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
 
       <div style={{ marginTop: 'auto', padding: '20px 0' }}>
         <div className="glass-card" style={{ padding: '15px', fontSize: '0.85rem' }}>
-          <p style={{ color: 'var(--text-muted)', marginBottom: '5px' }}>Discipline Score</p>
+          <p style={{ color: 'var(--text-muted)', marginBottom: '5px' }}>{t('disciplineScore')}</p>
           <div style={{ height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
             <div style={{ 
               width: `${disciplineScore}%`, 
@@ -134,7 +199,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
         {user?.subscription?.plan !== 'Premium' && !user?.isAdmin && (
           <div className="glass-card" style={{ padding: '15px', fontSize: '0.85rem', marginTop: '15px', cursor: 'pointer' }} onClick={() => setActiveTab('pricing')}>
             <p style={{ color: 'var(--text-muted)', marginBottom: '5px', display: 'flex', justifyContent: 'space-between' }}>
-              <span>Free Trades</span>
+              <span>{t('freeTrades')}</span>
               <span style={{ color: tradesCount >= 5 ? 'var(--danger)' : 'var(--warning)' }}>{Math.min(tradesCount, 5)} / 5</span>
             </p>
             <div style={{ height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
@@ -153,7 +218,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
         )}
 
         <button 
-          onClick={() => { if(window.confirm('Ma hubtaa inaad ka baxdo?')) logout(); }}
+          onClick={() => { if(window.confirm(t('confirmLogout'))) logout(); }}
           style={{ 
             width: '100%', 
             marginTop: '20px', 
@@ -170,7 +235,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
           }}
         >
           <LogOut size={18} />
-          Sign Out
+          {t('signOut')}
         </button>
       </div>
     </div>

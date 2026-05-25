@@ -13,19 +13,19 @@ const Toast = ({ message, type = 'success', onClose }) => {
   const icons = {
     success: <CheckCircle size={20} color="#10b981" />,
     error: <AlertCircle size={20} color="#ef4444" />,
-    info: <Info size={20} color="#38bdf8" />
+    info: <Info size={20} color="var(--primary)" />
   };
 
   const colors = {
     success: 'rgba(16, 185, 129, 0.1)',
     error: 'rgba(239, 68, 68, 0.1)',
-    info: 'rgba(56, 189, 248, 0.1)'
+    info: 'var(--primary-glow)'
   };
 
   const borderColors = {
     success: '#10b981',
     error: '#ef4444',
-    info: '#38bdf8'
+    info: 'var(--primary)'
   };
 
   return (
