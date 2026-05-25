@@ -205,18 +205,23 @@ function App() {
         />
       );
       case 'new-trade': 
-        if (user?.subscription?.plan !== 'Premium' && !user?.isAdmin && trades.length >= 5 && !editingTrade) {
+        if (user?.subscription?.status === 'expired' && !user?.isAdmin && !editingTrade) {
+          const isSo = localStorage.getItem('somtrader_lang') === 'so';
           return (
             <div className="glass-card" style={{ textAlign: 'center', padding: '60px 20px', maxWidth: '600px', margin: '40px auto', borderRadius: '15px' }}>
               <div style={{ background: 'rgba(239, 68, 68, 0.1)', width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
                 <span style={{ fontSize: '2rem' }}>🛑</span>
               </div>
-              <h2 style={{ marginBottom: '15px' }}>Tijaabadii 5-ta Trade way dhammaatay!</h2>
+              <h2 style={{ marginBottom: '15px' }}>
+                {isSo ? 'Tijaabadii 1-da Bil ahayd (30 Days Trial) way dhammaatay!' : 'Your 1-Month Free Trial Has Expired!'}
+              </h2>
               <p style={{ color: 'var(--text-muted)', marginBottom: '30px', fontSize: '1.1rem', lineHeight: '1.5' }}>
-                Waxaad aragtay awoodda SomTrader. Si aad u hesho adeeg aan xad lahayn (Unlimited Trades & Analytics), fadlan iska bixi <strong>$7/bil</strong>.
+                {isSo 
+                  ? 'Waxaad aragtay awoodda SomTrader. Si aad u sii waddo isticmaalka adeegga oo aan xad lahayn (Unlimited Trades & Analytics), fadlan iska bixi $7/bil.' 
+                  : 'You have experienced the power of SomTrader. To continue using unlimited trades & analytics, please subscribe for $7/month.'}
               </p>
               <button className="btn-primary" style={{ padding: '15px 40px', fontSize: '1.1rem' }} onClick={() => setActiveTab('pricing')}>
-                Diiwaangeli Hadda ($7)
+                {isSo ? 'Diiwaangeli Hadda ($7)' : 'Subscribe Now ($7)'}
               </button>
             </div>
           );

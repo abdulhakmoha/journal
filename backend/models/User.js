@@ -43,7 +43,10 @@ const userSchema = new mongoose.Schema({
     plan: { type: String, enum: ['Free', 'Premium'], default: 'Free' },
     status: { type: String, enum: ['active', 'expired', 'pending'], default: 'active' },
     startDate: { type: Date, default: Date.now },
-    endDate: { type: Date }
+    endDate: { 
+      type: Date, 
+      default: () => new Date(+new Date() + 30 * 24 * 60 * 60 * 1000) // 30 days free trial
+    }
   },
   calculatorAssets: {
     type: [{

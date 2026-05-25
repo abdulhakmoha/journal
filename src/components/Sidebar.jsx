@@ -198,22 +198,44 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
         
         {user?.subscription?.plan !== 'Premium' && !user?.isAdmin && (
           <div className="glass-card" style={{ padding: '15px', fontSize: '0.85rem', marginTop: '15px', cursor: 'pointer' }} onClick={() => setActiveTab('pricing')}>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '5px', display: 'flex', justifyContent: 'space-between' }}>
-              <span>{t('freeTrades')}</span>
-              <span style={{ color: tradesCount >= 5 ? 'var(--danger)' : 'var(--warning)' }}>{Math.min(tradesCount, 5)} / 5</span>
-            </p>
-            <div style={{ height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
-              <div style={{ 
-                width: `${Math.min((tradesCount / 5) * 100, 100)}%`, 
-                height: '100%', 
-                background: tradesCount >= 5 ? 'var(--danger)' : 'var(--warning)',
-                boxShadow: `0 0 10px ${tradesCount >= 5 ? 'rgba(239, 68, 68, 0.5)' : 'rgba(245, 158, 11, 0.5)'}`,
-                transition: 'width 1s ease'
-              }}></div>
-            </div>
-            {tradesCount >= 5 && (
-              <p style={{ color: 'var(--danger)', fontSize: '0.7rem', marginTop: '8px', textAlign: 'center' }}>Limit reached. Upgrade now.</p>
-            )}
+            {(() => {
+              const getRemainingTrialDays = () => {
+                if (!user?.subscription?.endDate) return 0;
+                const end = new Date(user.subscription.endDate);
+                const now = new Date();
+                const diffTime = end - now;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return Math.max(0, diffDays);
+              };
+              const remainingDays = getRemainingTrialDays();
+              const isExpired = user?.subscription?.status === 'expired' || remainingDays <= 0;
+              const isSo = language === 'so';
+              
+              return (
+                <>
+                  <p style={{ color: 'var(--text-muted)', marginBottom: '5px', display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{isSo ? 'Maalmo Tijaabo ah' : 'Trial Days Left'}</span>
+                    <span style={{ color: isExpired ? 'var(--danger)' : 'var(--warning)' }}>
+                      {remainingDays} / 30
+                    </span>
+                  </p>
+                  <div style={{ height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
+                    <div style={{ 
+                      width: `${(remainingDays / 30) * 100}%`, 
+                      height: '100%', 
+                      background: isExpired ? 'var(--danger)' : 'var(--warning)',
+                      boxShadow: `0 0 10px ${isExpired ? 'rgba(239, 68, 68, 0.5)' : 'rgba(245, 158, 11, 0.5)'}`,
+                      transition: 'width 1s ease'
+                    }}></div>
+                  </div>
+                  {isExpired && (
+                    <p style={{ color: 'var(--danger)', fontSize: '0.7rem', marginTop: '8px', textAlign: 'center' }}>
+                      {isSo ? 'Tijaabadii way dhammaatay. Fadlan iska bixi.' : 'Trial has ended. Please subscribe.'}
+                    </p>
+                  )}
+                </>
+              );
+            })()}
           </div>
         )}
 

@@ -21,6 +21,17 @@ router.get('/profile', auth, async (req, res) => {
       }
     }
 
+    // Auto-expire Free trials
+    if (user.subscription && user.subscription.plan === 'Free' && user.subscription.status === 'active' && user.subscription.endDate) {
+      if (new Date() > new Date(user.subscription.endDate)) {
+        await User.updateOne(
+          { _id: user._id },
+          { $set: { 'subscription.status': 'expired' } }
+        );
+        user.subscription.status = 'expired';
+      }
+    }
+
     res.json(user);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });

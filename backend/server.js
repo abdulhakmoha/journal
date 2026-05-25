@@ -70,7 +70,8 @@ const User = require('./models/User');
 cron.schedule('0 * * * *', async () => {
   console.log('⏰ Running automated subscription expiration check...');
   try {
-    const expiredUsers = await User.updateMany(
+    // 1. Expire Premium plans
+    const expiredPremium = await User.updateMany(
       { 
         'subscription.plan': 'Premium', 
         'subscription.endDate': { $lt: new Date() } 
@@ -82,8 +83,21 @@ cron.schedule('0 * * * *', async () => {
         } 
       }
     );
-    if (expiredUsers.modifiedCount > 0) {
-      console.log(`✅ Automatically expired ${expiredUsers.modifiedCount} premium subscriptions.`);
+    // 2. Expire Free trials
+    const expiredFree = await User.updateMany(
+      { 
+        'subscription.plan': 'Free',
+        'subscription.status': 'active',
+        'subscription.endDate': { $lt: new Date() } 
+      },
+      { 
+        $set: { 
+          'subscription.status': 'expired' 
+        } 
+      }
+    );
+    if (expiredPremium.modifiedCount > 0 || expiredFree.modifiedCount > 0) {
+      console.log(`✅ Subscription check: Expired ${expiredPremium.modifiedCount} premium users and ${expiredFree.modifiedCount} free trials.`);
     }
   } catch (error) {
     console.error('❌ Error running expiration cron job:', error);
