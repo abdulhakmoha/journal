@@ -37,23 +37,16 @@ function App() {
   const [accounts, setAccounts] = useState([]);
   const [editingTrade, setEditingTrade] = useState(null);
 
-  // Theme Initialization
+  // Theme Initialization - Lock to Obsidian Mint (Green)
   useEffect(() => {
-    const savedTheme = localStorage.getItem('somtrader_theme');
-    if (savedTheme) {
-      try {
-        const theme = JSON.parse(savedTheme);
-        document.documentElement.style.setProperty('--primary', theme.color);
-        document.documentElement.style.setProperty('--primary-glow', theme.glow);
-        if (theme.accent) document.documentElement.style.setProperty('--accent', theme.accent);
-        if (theme.bg) document.documentElement.style.setProperty('--bg-dark', theme.bg);
-        if (theme.card) document.documentElement.style.setProperty('--bg-card', theme.card);
-        if (theme.border) document.documentElement.style.setProperty('--border', theme.border);
-        if (theme.btnText) document.documentElement.style.setProperty('--btn-text', theme.btnText);
-      } catch (e) {
-        console.error('Failed to apply theme');
-      }
-    }
+    localStorage.removeItem('somtrader_theme');
+    document.documentElement.style.setProperty('--primary', '#0df0a6');
+    document.documentElement.style.setProperty('--primary-glow', 'rgba(13, 240, 166, 0.15)');
+    document.documentElement.style.setProperty('--accent', '#0eb37d');
+    document.documentElement.style.setProperty('--bg-dark', '#08090a');
+    document.documentElement.style.setProperty('--bg-card', 'rgba(17, 19, 21, 0.7)');
+    document.documentElement.style.setProperty('--border', 'rgba(255, 255, 255, 0.05)');
+    document.documentElement.style.setProperty('--btn-text', '#08090a');
   }, []);
 
   // Fetch Data from API

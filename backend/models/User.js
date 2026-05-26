@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema({
     }],
     default: [
       { name: 'EURUSD', pipValue: 10 },
-      { name: 'XAUUSD', pipValue: 100 },
+      { name: 'XAUUSD', pipValue: 10 },
       { name: 'US30', pipValue: 1 },
       { name: 'NAS100', pipValue: 1 },
       { name: 'BTCUSD', pipValue: 1 }

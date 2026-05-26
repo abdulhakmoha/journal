@@ -32,6 +32,25 @@ router.get('/profile', auth, async (req, res) => {
       }
     }
 
+    // Auto-correct old XAUUSD preset pipValue for existing users
+    if (user.calculatorAssets && user.calculatorAssets.length > 0) {
+      let needsUpdate = false;
+      const updatedAssets = user.calculatorAssets.map(asset => {
+        if (asset.name === 'XAUUSD' && asset.pipValue === 100) {
+          needsUpdate = true;
+          return { ...asset.toObject(), pipValue: 10 };
+        }
+        return asset;
+      });
+      if (needsUpdate) {
+        await User.updateOne(
+          { _id: user._id },
+          { $set: { calculatorAssets: updatedAssets } }
+        );
+        user.calculatorAssets = updatedAssets;
+      }
+    }
+
     res.json(user);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });

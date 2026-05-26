@@ -8,7 +8,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
   const { showNotification } = useNotification();
   const defaultPresets = [
     { name: 'EURUSD', pipValue: 10 },
-    { name: 'XAUUSD', pipValue: 100 },
+    { name: 'XAUUSD', pipValue: 10 },
     { name: 'US30', pipValue: 1 },
     { name: 'NAS100', pipValue: 1 },
     { name: 'BTCUSD', pipValue: 1 }
