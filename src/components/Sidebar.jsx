@@ -7,16 +7,22 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
   const { user, logout } = useAuth();
   const { language, setLanguage, t } = useLanguage();
   
-  const menuItems = [
-    { id: 'dashboard',   label: 'Dashboard',         icon: Zap },
+  const tradingItems = [
     { id: 'new-trade',   label: 'New Trade',          icon: PlusSquare },
     { id: 'journal',     label: 'Trade Journal',      icon: LayoutList },
     { id: 'review',      label: 'Weekly Review',      icon: Target },
+    { id: 'backtest',    label: 'Backtesting',        icon: FlaskConical },
+  ];
+
+  const analyticsItems = [
+    { id: 'dashboard',   label: 'Dashboard',         icon: Zap },
     { id: 'performance', label: 'Analytics',          icon: BarChart2 },
     { id: 'mindset',     label: 'Mindset Journal',    icon: Brain },
-    { id: 'backtest',    label: 'Backtesting',        icon: FlaskConical },
     { id: 'calculator',  label: 'Risk Calculator',    icon: Calculator },
     { id: 'news',        label: 'Economic Calendar',  icon: Globe },
+  ];
+
+  const systemItems = [
     { id: 'settings',    label: 'Settings',           icon: Settings },
     { id: 'pricing',     label: 'Pricing & Plans',    icon: Award },
   ];
@@ -108,40 +114,108 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
         {t('newTrade')}
       </button>
 
-      <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {menuItems.map((item) => {
+      <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        {/* TRADING SECTION */}
+        <div className="sidebar-section-header">{language === 'so' ? 'Ganacsiga' : 'Trading'}</div>
+        {tradingItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
           return (
-            <React.Fragment key={item.id}>
-              {item.id === 'settings' && <div style={{ height: '1px', background: 'var(--border)', margin: '10px 0' }}></div>}
-              <button
-                onClick={() => setActiveTab(item.id)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  padding: '12px 16px',
-                  borderRadius: '12px',
-                  border: 'none',
-                  borderLeft: isActive ? '3px solid var(--primary)' : '3px solid transparent',
-                  background: isActive ? 'linear-gradient(90deg, var(--primary-glow) 0%, transparent 100%)' : 'transparent',
-                  color: isActive ? 'var(--primary)' : 'var(--text-muted)',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  textAlign: 'left',
-                  width: '100%',
-                  fontWeight: isActive ? '600' : '400',
-                  paddingLeft: isActive ? '13px' : '16px',
-                  boxShadow: isActive ? 'inset 1px 0 0 rgba(255, 255, 255, 0.02)' : 'none'
-                }}
-              >
-                <Icon size={20} />
-                {t(translationKeys[item.id] || item.id)}
-              </button>
-            </React.Fragment>
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '10px 16px',
+                borderRadius: '12px',
+                border: 'none',
+                borderLeft: isActive ? '3px solid var(--primary)' : '3px solid transparent',
+                background: isActive ? 'linear-gradient(90deg, var(--primary-glow) 0%, transparent 100%)' : 'transparent',
+                color: isActive ? 'var(--primary)' : 'var(--text-muted)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                textAlign: 'left',
+                width: '100%',
+                fontWeight: isActive ? '600' : '400',
+                paddingLeft: isActive ? '13px' : '16px',
+                boxShadow: isActive ? 'inset 1px 0 0 rgba(255, 255, 255, 0.02)' : 'none'
+              }}
+            >
+              <Icon size={18} />
+              <span style={{ fontSize: '0.85rem' }}>{t(translationKeys[item.id] || item.id)}</span>
+            </button>
           );
         })}
+
+        {/* ANALYTICS SECTION */}
+        <div className="sidebar-section-header">{language === 'so' ? 'Falanqaynta' : 'Analytics'}</div>
+        {analyticsItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeTab === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '10px 16px',
+                borderRadius: '12px',
+                border: 'none',
+                borderLeft: isActive ? '3px solid var(--primary)' : '3px solid transparent',
+                background: isActive ? 'linear-gradient(90deg, var(--primary-glow) 0%, transparent 100%)' : 'transparent',
+                color: isActive ? 'var(--primary)' : 'var(--text-muted)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                textAlign: 'left',
+                width: '100%',
+                fontWeight: isActive ? '600' : '400',
+                paddingLeft: isActive ? '13px' : '16px',
+                boxShadow: isActive ? 'inset 1px 0 0 rgba(255, 255, 255, 0.02)' : 'none'
+              }}
+            >
+              <Icon size={18} />
+              <span style={{ fontSize: '0.85rem' }}>{t(translationKeys[item.id] || item.id)}</span>
+            </button>
+          );
+        })}
+
+        {/* SYSTEM SECTION */}
+        <div className="sidebar-section-header">{language === 'so' ? 'Nidaamka' : 'System'}</div>
+        {systemItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeTab === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '10px 16px',
+                borderRadius: '12px',
+                border: 'none',
+                borderLeft: isActive ? '3px solid var(--primary)' : '3px solid transparent',
+                background: isActive ? 'linear-gradient(90deg, var(--primary-glow) 0%, transparent 100%)' : 'transparent',
+                color: isActive ? 'var(--primary)' : 'var(--text-muted)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                textAlign: 'left',
+                width: '100%',
+                fontWeight: isActive ? '600' : '400',
+                paddingLeft: isActive ? '13px' : '16px',
+                boxShadow: isActive ? 'inset 1px 0 0 rgba(255, 255, 255, 0.02)' : 'none'
+              }}
+            >
+              <Icon size={18} />
+              <span style={{ fontSize: '0.85rem' }}>{t(translationKeys[item.id] || item.id)}</span>
+            </button>
+          );
+        }) }
 
         {user?.isAdmin && (
           <>

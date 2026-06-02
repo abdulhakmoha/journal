@@ -243,14 +243,30 @@ function App() {
 
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} disciplineScore={disciplineScore} tradesCount={trades.length} />
       <main className="main-content">
-        <header style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <header style={{ marginBottom: '35px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
           <div>
-            <h1 style={{ fontSize: '2rem' }}>Welcome, <span style={{ color: 'var(--primary)', textTransform: 'capitalize' }}>{user?.name || 'Trader'}</span></h1>
-            <p style={{ color: 'var(--text-muted)' }}>{new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '4px' }}>
+              SomTrader / {activeTab.replace('-', ' ')}
+            </div>
+            <h1 style={{ fontSize: '1.75rem', fontWeight: '800', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              Welcome back, <span style={{ color: 'var(--text-main)', textTransform: 'capitalize' }}>{user?.name?.split(' ')[0] || 'Trader'}</span>
+              <span style={{ fontSize: '1.4rem' }}>👋</span>
+            </h1>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '2px' }}>
+              {new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
           </div>
-          <div className="glass-card" style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '10px', height: '10px', background: 'var(--success)', borderRadius: '50%' }}></div>
-            <span style={{ fontSize: '0.9rem', fontWeight: '500' }}>Server: Online</span>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="glass" style={{ padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '8px', border: '1px solid var(--glass-border)', borderRadius: '10px' }}>
+              <span style={{ position: 'relative', display: 'flex', width: '8px', height: '8px' }}>
+                <span className="pulse-dot-active" style={{ position: 'absolute', display: 'inline-flex', height: '100%', width: '100%', borderRadius: '50%', background: 'var(--success)', opacity: 0.75 }}></span>
+                <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '50%', height: '8px', width: '8px', background: 'var(--success)' }}></span>
+              </span>
+              <span style={{ fontSize: '0.75rem', fontWeight: '750', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--text-main)' }}>
+                Server: Online
+              </span>
+            </div>
           </div>
         </header>
         {renderContent()}

@@ -410,3 +410,106 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
+/* Sidebar Section Headers (FTMO Style) */
+.sidebar-section-header {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 20px 0 8px 16px;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+/* Accented Glass Cards (FTMO border-top + FundedPips glass) */
+.glass-card.accent-primary { border-top: 3px solid var(--primary); }
+.glass-card.accent-success { border-top: 3px solid var(--success); }
+.glass-card.accent-danger { border-top: 3px solid var(--danger); }
+.glass-card.accent-warning { border-top: 3px solid var(--warning); }
+.glass-card.accent-purple { border-top: 3px solid #a855f7; }
+
+/* Custom select styling for a more premium look */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='rgba(255,255,255,0.7)' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  padding-right: 32px !important;
+  cursor: pointer;
+}
+
+/* Premium Table Rows */
+.table-row-hover:hover {
+  background: rgba(255, 255, 255, 0.018) !important;
+}
+.active-row {
+  background: rgba(255, 255, 255, 0.025) !important;
+  border-left: 3px solid var(--primary);
+}
+
+/* Objectives Tracker Styling (FTMO Objectives style) */
+.objectives-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1fr;
+  gap: 15px;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+.objectives-grid:hover {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.objectives-header {
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border);
+}
+
+.objective-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.objective-status-badge.pass {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.objective-status-badge.fail {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.objective-status-badge.progress {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--warning);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* Active pulse dot animation */
+@keyframes active-pulse {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.pulse-dot-active {
+  animation: active-pulse 2s infinite ease-in-out;
+}
+
+
