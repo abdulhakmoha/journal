@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator as CalcIcon, DollarSign, Percent, ArrowRight, Target, AlertCircle, ShieldCheck, Activity, Plus } from 'lucide-react';
+import { Calculator as CalcIcon, DollarSign, Percent, ArrowRight, Target, AlertCircle, ShieldCheck, Activity, Plus, X, Briefcase } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { useNotification } from '../context/NotificationContext';
@@ -36,7 +36,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
   
   // New Account Modal State
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newAccountForm, setNewAccountForm] = useState({ name: '', initialBalance: '', type: 'Personal', target: 0 });
+  const [newAccountForm, setNewAccountForm] = useState({ name: '', initialBalance: 10000, type: 'Challenge', website: '', profitSplit: '', target: 8 });
 
   // New Pair Modal State
   const [showPairModal, setShowPairModal] = useState(false);
@@ -47,7 +47,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
     if (!newAccountForm.name || !newAccountForm.initialBalance) return showNotification('Fadlan buuxi meelaha bannaan', 'error');
     await onAddAccount(newAccountForm);
     setShowAddModal(false);
-    setNewAccountForm({ name: '', initialBalance: '', type: 'Personal', target: 0 });
+    setNewAccountForm({ name: '', initialBalance: 10000, type: 'Challenge', website: '', profitSplit: '', target: 8 });
   };
 
   const handleAddPair = async (e) => {
@@ -279,37 +279,162 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
       {/* Add Account Modal */}
       <AnimatePresence>
         {showAddModal && (
-          <div className="modal-overlay">
+          <div className="modal-overlay" style={{ backdropFilter: 'blur(10px)' }}>
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              exit={{ scale: 0.95, opacity: 0 }}
               className="glass-card" 
-              style={{ width: '100%', maxWidth: '400px', padding: '30px' }}
+              style={{ 
+                width: '100%', 
+                maxWidth: '520px', 
+                padding: '30px', 
+                background: 'rgba(15, 18, 20, 0.95)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
+                borderRadius: '16px'
+              }}
             >
-              <h3 style={{ marginBottom: '20px' }}>Add New Trading Account</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
+                  <span style={{ display: 'flex', background: 'var(--primary-glow)', padding: '6px', borderRadius: '8px', color: 'var(--primary)' }}>
+                    <Briefcase size={18} />
+                  </span>
+                  New Trading Portfolio
+                </h3>
+                <button 
+                  type="button" 
+                  onClick={() => setShowAddModal(false)} 
+                  style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
               <form onSubmit={handleCreateAccount} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div className="input-group">
-                  <label>Account Name</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                    Portfolio Name
+                  </label>
                   <input 
                     type="text" 
-                    placeholder="e.g. My Funding Account" 
+                    placeholder="e.g. FTMO 100K Challenge" 
                     value={newAccountForm.name}
                     onChange={(e) => setNewAccountForm({...newAccountForm, name: e.target.value})}
+                    style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
                   />
                 </div>
-                <div className="input-group">
-                  <label>Initial Balance ($)</label>
-                  <input 
-                    type="number" 
-                    placeholder="10000" 
-                    value={newAccountForm.initialBalance}
-                    onChange={(e) => setNewAccountForm({...newAccountForm, initialBalance: e.target.value})}
-                  />
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                    Portfolio Type
+                  </label>
+                  <select 
+                    value={newAccountForm.type} 
+                    onChange={(e) => setNewAccountForm({...newAccountForm, type: e.target.value})}
+                    style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+                  >
+                    <option value="Challenge">Challenge Portfolio</option>
+                    <option value="Funded">Funded Portfolio</option>
+                    <option value="Personal">Personal Portfolio</option>
+                    <option value="Backtesting">Backtesting Portfolio</option>
+                  </select>
                 </div>
-                <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-                  <button type="button" onClick={() => setShowAddModal(false)} className="btn-secondary" style={{ flex: 1 }}>Cancel</button>
-                  <button type="submit" className="btn-primary" style={{ flex: 1 }}>Create Account</button>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                      Website
+                    </label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. ftmo.com" 
+                      value={newAccountForm.website}
+                      onChange={(e) => setNewAccountForm({...newAccountForm, website: e.target.value})}
+                      style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                      Profit Split (%)
+                    </label>
+                    <select 
+                      value={newAccountForm.profitSplit} 
+                      onChange={(e) => setNewAccountForm({...newAccountForm, profitSplit: e.target.value})}
+                      style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+                    >
+                      <option value="">Select Split...</option>
+                      <option value="50">50% Split</option>
+                      <option value="60">60% Split</option>
+                      <option value="70">70% Split</option>
+                      <option value="80">80% Split</option>
+                      <option value="85">85% Split</option>
+                      <option value="90">90% Split</option>
+                      <option value="100">100% Split</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                    Starting Balance
+                  </label>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+                    {[5000, 10000, 20000, 50000, 100000, 200000].map(val => {
+                      const isSelected = Number(newAccountForm.initialBalance) === val;
+                      return (
+                        <button
+                          key={val}
+                          type="button"
+                          onClick={() => setNewAccountForm({...newAccountForm, initialBalance: val})}
+                          style={{
+                            padding: '12px',
+                            borderRadius: '8px',
+                            border: isSelected ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.06)',
+                            background: isSelected ? 'rgba(13, 240, 166, 0.1)' : 'rgba(255,255,255,0.02)',
+                            color: isSelected ? 'var(--primary)' : 'var(--text-muted)',
+                            fontWeight: '750',
+                            fontSize: '0.85rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease'
+                          }}
+                        >
+                          ${val.toLocaleString()}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Custom Balance option */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '5px' }}>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Or Custom Balance:</span>
+                    <input 
+                      type="number" 
+                      placeholder="Custom Balance"
+                      value={[5000, 10000, 20000, 50000, 100000, 200000].includes(Number(newAccountForm.initialBalance)) ? '' : newAccountForm.initialBalance}
+                      onChange={(e) => setNewAccountForm({...newAccountForm, initialBalance: e.target.value})}
+                      style={{ flex: 1, padding: '8px 12px', fontSize: '0.85rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px' }}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px', marginTop: '15px' }}>
+                  <button 
+                    type="button" 
+                    onClick={() => setShowAddModal(false)} 
+                    className="btn-outline" 
+                    style={{ flex: 1, padding: '12px' }}
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    type="submit" 
+                    className="btn-primary" 
+                    style={{ flex: 1, padding: '12px' }}
+                  >
+                    Create Portfolio
+                  </button>
                 </div>
               </form>
             </motion.div>

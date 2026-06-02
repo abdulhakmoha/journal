@@ -494,80 +494,98 @@ const Backtest = ({ backtestFields, accounts }) => {
         <>
           <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <h2 className="text-gradient">Strategy Verification</h2>
-              <p style={{ color: 'var(--text-muted)' }}>Validate your edge using historical market data.</p>
+              <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '4px' }}>Strategy Lab</div>
+              <h2 className="text-gradient">Backtesting Sessions</h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '2px' }}>Validate your edge using historical market data.</p>
             </div>
-            <button className="btn-primary" onClick={() => setShowNewSessionModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Plus size={20} /> New Session
+            <button className="btn-primary" onClick={() => setShowNewSessionModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 24px' }}>
+              <Plus size={18} /> New Session
             </button>
           </header>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+          {sessions.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '80px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+              <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: 'rgba(13, 240, 166, 0.08)', border: '1px solid rgba(13, 240, 166, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <FlaskConical size={28} color="var(--primary)" />
+              </div>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: '700' }}>No Sessions Yet</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', maxWidth: '360px', lineHeight: '1.6' }}>Create your first backtesting session to start validating your trading strategy against historical data.</p>
+              <button className="btn-primary" onClick={() => setShowNewSessionModal(true)} style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Plus size={16} /> Create First Session
+              </button>
+            </div>
+          )}
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
             {sessions.map(session => {
               const stats = calculateStats(session.trades);
+              const isProfit = parseFloat(stats.totalRR) >= 0;
+              const statusColor = stats.status === 'Passed' ? 'var(--success)' : stats.status === 'Blown' ? 'var(--danger)' : isProfit ? 'var(--success)' : 'var(--danger)';
+              const statusBg = stats.status === 'Passed' ? 'rgba(16,185,129,0.12)' : stats.status === 'Blown' ? 'rgba(239,68,68,0.12)' : isProfit ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.08)';
               return (
                 <motion.div 
                   key={session._id}
-                  whileHover={{ y: -5 }}
+                  whileHover={{ y: -4, boxShadow: '0 12px 40px rgba(0,0,0,0.4)' }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   className="glass-card" 
-                  style={{ padding: '25px', cursor: 'pointer', position: 'relative' }}
+                  style={{ padding: '0', cursor: 'pointer', position: 'relative', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}
                   onClick={() => setActiveSession(session)}
                 >
-                  <button 
-                    onClick={(e) => deleteSession(session._id, e)}
-                    style={{ position: 'absolute', top: '15px', right: '15px', background: 'transparent', border: 'none', color: 'var(--danger)', opacity: 0.4 }}
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                  <div style={{ marginBottom: '20px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                      <h3 style={{ fontSize: '1.2rem', marginBottom: '5px' }}>{session.name}</h3>
-                      {stats.status === 'Passed' && <Award size={20} color="var(--success)" />}
-                      {stats.status === 'Blown' && <AlertOctagon size={20} color="var(--danger)" />}
+                  {/* Top accent line */}
+                  <div style={{ height: '3px', background: `linear-gradient(90deg, ${statusColor}, transparent)`, opacity: 0.8 }} />
+                  
+                  <div style={{ padding: '22px 24px 0 24px' }}>
+                    {/* Header */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                      <div style={{ flex: 1, marginRight: '10px' }}>
+                        <h3 style={{ fontSize: '1.05rem', fontWeight: '700', marginBottom: '6px', lineHeight: '1.3' }}>{session.name}</h3>
+                        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                          {session.strategy && <span style={{ fontSize: '0.65rem', fontWeight: '700', color: 'var(--primary)', background: 'rgba(13,240,166,0.08)', padding: '3px 8px', borderRadius: '20px', border: '1px solid rgba(13,240,166,0.2)', letterSpacing: '0.3px' }}>{session.strategy}</span>}
+                          {session.pair && <span style={{ fontSize: '0.65rem', fontWeight: '700', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.07)' }}>{session.pair}</span>}
+                          {session.account && <span style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.5)', background: 'rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.07)' }}>{session.account}</span>}
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
+                        <button 
+                          onClick={(e) => deleteSession(session._id, e)}
+                          style={{ background: 'transparent', border: 'none', color: 'var(--danger)', opacity: 0.3, cursor: 'pointer', padding: '2px', lineHeight: 1 }}
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                        {stats.status === 'Passed' && <Award size={18} color="var(--success)" />}
+                        {stats.status === 'Blown' && <AlertOctagon size={18} color="var(--danger)" />}
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '10px' }}>
-                       <span style={{ fontSize: '0.7rem', color: 'var(--primary)', background: 'rgba(56, 189, 248, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>{session.strategy || 'No Strategy'}</span>
-                       <span style={{ fontSize: '0.7rem', color: 'var(--success)', background: 'rgba(16, 185, 129, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>{session.account || 'Default'}</span>
+
+                    {/* Stats Row */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '16px' }}>
+                      <div style={{ background: statusBg, borderRadius: '10px', padding: '10px 12px', border: `1px solid ${statusColor}20` }}>
+                        <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>P&L</p>
+                        <p style={{ fontSize: '1rem', fontWeight: '800', color: statusColor, lineHeight: 1 }}>
+                          {stats.status === 'Passed' ? '+PASS' : stats.status === 'Blown' ? 'BLOWN' : `${parseFloat(stats.totalRR) > 0 ? '+' : ''}${stats.totalRR}R`}
+                        </p>
+                      </div>
+                      <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '10px 12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Win Rate</p>
+                        <p style={{ fontSize: '1rem', fontWeight: '800', color: stats.winRate >= 50 ? 'var(--success)' : 'var(--warning)', lineHeight: 1 }}>{stats.winRate}%</p>
+                      </div>
+                      <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '10px 12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Trades</p>
+                        <p style={{ fontSize: '1rem', fontWeight: '800', color: 'var(--text-main)', lineHeight: 1 }}>{stats.count}</p>
+                      </div>
                     </div>
                   </div>
-                  
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
-                    <div>
-                      <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Status</p>
-                      <p style={{ 
-                        fontSize: '1rem', 
-                        fontWeight: 'bold', 
-                        color: stats.status === 'Passed' 
-                          ? 'var(--success)' 
-                          : stats.status === 'Blown' 
-                            ? 'var(--danger)' 
-                            : parseFloat(stats.totalRR) < 0 
-                              ? 'var(--danger)' 
-                              : parseFloat(stats.totalRR) > 0 
-                                ? 'var(--success)' 
-                                : 'var(--text-muted)'
-                      }}>
-                        {stats.status === 'Passed' 
-                          ? 'PASSED ✅' 
-                          : stats.status === 'Blown' 
-                            ? 'BLOWN 💀' 
-                            : `${stats.totalRR}R ${parseFloat(stats.totalRR) >= 0 ? 'Profit' : 'Loss'}`
-                        }
-                      </p>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Win Rate</p>
-                      <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>{stats.winRate}%</p>
-                    </div>
-                  </div>
-                  
-                  <div style={{ height: '60px', opacity: 0.7, overflow: 'hidden' }}>
+
+                  {/* Mini equity chart */}
+                  <div style={{ height: '55px', opacity: 0.75, overflow: 'hidden', padding: '0 4px' }}>
                     <EquityChart data={stats.equity} mini={true} />
                   </div>
 
-                  <div style={{ marginTop: '20px', fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{stats.count} Trades</span>
-                    <span style={{ color: stats.mistakeRate > 10 ? 'var(--danger)' : 'inherit' }}>{stats.mistakeRate}% Mistakes</span>
+                  {/* Footer */}
+                  <div style={{ padding: '10px 24px 16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>PF: <span style={{ color: parseFloat(stats.profitFactor) >= 1.5 ? 'var(--success)' : 'var(--warning)', fontWeight: '700' }}>{stats.profitFactor}</span></span>
+                    <span style={{ fontSize: '0.7rem', color: stats.mistakeRate > 10 ? 'var(--danger)' : 'var(--text-muted)' }}>{stats.mistakeRate}% mistakes</span>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '3px', fontWeight: '600' }}>Open <ChevronRight size={12} /></span>
                   </div>
                 </motion.div>
               );
@@ -1032,25 +1050,78 @@ const Backtest = ({ backtestFields, accounts }) => {
 
       <AnimatePresence>
         {showNewSessionModal && (
-          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="glass-card" style={{ width: '400px', padding: '30px' }}>
-                <h3 style={{ marginBottom: '20px' }}>Create Backtest Session</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                   <input type="text" placeholder="Session Name" value={newSessionForm.name} onChange={(e) => setNewSessionForm({...newSessionForm, name: e.target.value})} />
-                   {accounts.length > 0 ? (
-                     <select value={newSessionForm.account} onChange={(e) => setNewSessionForm({...newSessionForm, account: e.target.value})}>
+          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+             <motion.div 
+               initial={{ scale: 0.94, opacity: 0, y: 10 }} 
+               animate={{ scale: 1, opacity: 1, y: 0 }} 
+               exit={{ scale: 0.94, opacity: 0, y: 10 }}
+               transition={{ type: 'spring', stiffness: 280, damping: 28 }}
+               className="glass-card" 
+               style={{ width: '100%', maxWidth: '460px', padding: '0', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 30px 80px rgba(0,0,0,0.7)' }}
+             >
+               {/* Modal Header */}
+               <div style={{ padding: '28px 30px 20px 30px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                     <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(13,240,166,0.1)', border: '1px solid rgba(13,240,166,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                       <FlaskConical size={18} color="var(--primary)" />
+                     </div>
+                     <div>
+                       <h3 style={{ fontSize: '1.1rem', fontWeight: '800', margin: 0 }}>New Backtest Session</h3>
+                       <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', margin: 0 }}>Configure your strategy test</p>
+                     </div>
+                   </div>
+                   <button onClick={() => setShowNewSessionModal(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px', borderRadius: '6px', display: 'flex' }}>
+                     <X size={18} />
+                   </button>
+                 </div>
+               </div>
+
+               {/* Modal Body */}
+               <div style={{ padding: '24px 30px 30px 30px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                   <label style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Session Name</label>
+                   <input 
+                     type="text" 
+                     placeholder="e.g. London Breakout — March 2025" 
+                     value={newSessionForm.name} 
+                     onChange={(e) => setNewSessionForm({...newSessionForm, name: e.target.value})} 
+                     style={{ padding: '12px 14px' }}
+                   />
+                 </div>
+
+                 {accounts.length > 0 ? (
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                     <label style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Backtesting Portfolio</label>
+                     <select value={newSessionForm.account} onChange={(e) => setNewSessionForm({...newSessionForm, account: e.target.value})} style={{ padding: '12px 14px' }}>
                        {accounts.map((acc, i) => <option key={i} value={acc.name}>{acc.name}</option>)}
                      </select>
-                   ) : (
-                     <div style={{ padding: '10px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--danger)', fontSize: '0.8rem', borderRadius: '8px' }}>
-                       No "Backtesting" accounts found. Create one in Settings first.
-                     </div>
-                   )}
-                   <input type="text" placeholder="Strategy" value={newSessionForm.strategy} onChange={(e) => setNewSessionForm({...newSessionForm, strategy: e.target.value})} />
-                   <input type="text" placeholder="Pair" value={newSessionForm.pair} onChange={(e) => setNewSessionForm({...newSessionForm, pair: e.target.value})} />
-                   <button className="btn-primary" onClick={createSession}>Create Session</button>
-                   <button className="btn-outline" onClick={() => setShowNewSessionModal(false)}>Cancel</button>
-                </div>
+                   </div>
+                 ) : (
+                   <div style={{ padding: '12px 16px', background: 'rgba(239, 68, 68, 0.08)', color: 'var(--danger)', fontSize: '0.8rem', borderRadius: '10px', border: '1px solid rgba(239,68,68,0.2)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                     <AlertOctagon size={16} />
+                     <span>No Backtesting portfolios found. Create one in <strong>Settings → Portfolios</strong> first.</span>
+                   </div>
+                 )}
+
+                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                     <label style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Strategy</label>
+                     <input type="text" placeholder="e.g. SMC, ICT" value={newSessionForm.strategy} onChange={(e) => setNewSessionForm({...newSessionForm, strategy: e.target.value})} style={{ padding: '12px 14px' }} />
+                   </div>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                     <label style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Pair / Market</label>
+                     <input type="text" placeholder="e.g. EURUSD" value={newSessionForm.pair} onChange={(e) => setNewSessionForm({...newSessionForm, pair: e.target.value})} style={{ padding: '12px 14px' }} />
+                   </div>
+                 </div>
+
+                 <div style={{ display: 'flex', gap: '12px', marginTop: '4px' }}>
+                   <button className="btn-outline" onClick={() => setShowNewSessionModal(false)} style={{ flex: 1, padding: '13px' }}>Cancel</button>
+                   <button className="btn-primary" onClick={createSession} style={{ flex: 2, padding: '13px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                     <Play size={16} /> Launch Session
+                   </button>
+                 </div>
+               </div>
              </motion.div>
           </div>
         )}

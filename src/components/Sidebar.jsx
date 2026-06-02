@@ -8,7 +8,6 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
   const { language, setLanguage, t } = useLanguage();
   
   const tradingItems = [
-    { id: 'new-trade',   label: 'New Trade',          icon: PlusSquare },
     { id: 'journal',     label: 'Trade Journal',      icon: LayoutList },
     { id: 'review',      label: 'Weekly Review',      icon: Target },
     { id: 'backtest',    label: 'Backtesting',        icon: FlaskConical },
@@ -51,14 +50,14 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
       width: '280px', 
       height: 'calc(100vh - 40px)', 
       margin: '20px', 
-      padding: '30px', 
+      padding: '20px', 
       position: 'sticky', 
       top: '20px',
       overflowY: 'auto',
       display: 'flex',
       flexDirection: 'column'
     }}>
-      <div className="logo" style={{ marginBottom: '30px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
+      <div className="logo" style={{ marginBottom: '15px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <h2 className="text-gradient" style={{ fontSize: '1.5rem', fontWeight: '800', letterSpacing: '-0.03em' }}>SomTrader</h2>
           <div style={{ position: 'relative', display: 'flex', width: '8px', height: '8px', marginTop: '2px' }}>
@@ -107,7 +106,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount }) => {
 
       <button 
         className="btn-primary" 
-        style={{ width: '100%', marginBottom: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
+        style={{ width: '100%', marginBottom: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
         onClick={() => setActiveTab('new-trade')}
       >
         <PlusCircle size={20} />

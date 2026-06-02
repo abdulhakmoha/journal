@@ -7,6 +7,8 @@ const accountSchema = new mongoose.Schema({
   target: { type: Number, default: 8 },
   status: { type: String, enum: ['Active', 'Passed', 'Blown'], default: 'Active' },
   initialBalance: { type: Number, default: 10000 },
+  website: { type: String, default: '' },
+  profitSplit: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now }
 });
 

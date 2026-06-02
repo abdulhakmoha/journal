@@ -16,9 +16,54 @@ import {
   ChevronDown,
   ChevronUp,
   GripVertical,
-  FlaskRound
+  FlaskRound,
+  X,
+  Briefcase,
+  Sparkles,
+  Edit3
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+// Smart name suggestion engine
+const generateNameSuggestions = (type, balance) => {
+  const balStr = balance >= 1000 ? `${Math.round(balance/1000)}K` : `${balance}`;
+  const suggestions = {
+    Challenge: [
+      `Phase 1 — ${balStr}`,
+      `FTMO ${balStr} Challenge`,
+      `FundedPips ${balStr} Pro`,
+      `Alpha Challenge ${balStr}`,
+      `Evaluation ${balStr}`,
+      `The Climb — ${balStr}`,
+    ],
+    Funded: [
+      `Funded Live ${balStr}`,
+      `Capital Deploy ${balStr}`,
+      `Live Account — ${balStr}`,
+      `Apex Funded ${balStr}`,
+      `Elite Trader ${balStr}`,
+      `Pro Funded ${balStr}`,
+    ],
+    Personal: [
+      `Personal ${balStr}`,
+      `My Capital ${balStr}`,
+      `Self-Funded ${balStr}`,
+      `Solo Trader ${balStr}`,
+      `Private Account ${balStr}`,
+      `Real Money ${balStr}`,
+    ],
+    Backtesting: [
+      `Strategy Lab ${balStr}`,
+      `Research Desk ${balStr}`,
+      `Sim Account ${balStr}`,
+      `Backtest Vault ${balStr}`,
+      `Edge Lab ${balStr}`,
+      `Paper Trading ${balStr}`,
+    ],
+  };
+  return suggestions[type] || suggestions.Personal;
+};
+
 
 const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccount, onUpdateAccount }) => {
   const [newRule, setNewRule] = useState('');
@@ -29,7 +74,8 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
     backtestFields: user?.backtestFields || []
   });
 
-  const [accForm, setAccForm] = useState({ name: '', target: 8, type: 'Challenge', initialBalance: 10000 });
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [accForm, setAccForm] = useState({ name: '', target: 8, type: 'Challenge', initialBalance: 10000, website: '', profitSplit: '' });
   const [editingAccId, setEditingAccId] = useState(null);
   const [editAccForm, setEditAccForm] = useState(null);
   const [newOption, setNewOption] = useState('');
@@ -42,7 +88,8 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
   const addAccount = () => {
     if (accForm.name.trim()) {
       onAddAccount({ ...accForm });
-      setAccForm({ name: '', target: 8, type: 'Challenge', initialBalance: 10000 });
+      setAccForm({ name: '', target: 8, type: 'Challenge', initialBalance: 10000, website: '', profitSplit: '' });
+      setShowAddModal(false);
     }
   };
 
@@ -148,68 +195,33 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
             </div>
           </section>
 
-          {/* Account Management */}
+          {/* Portfolio Management */}
           <section className="glass-card" style={{ padding: '30px' }}>
-            <h4 style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Activity size={18} color="var(--success)" />
-              Trading Accounts
-            </h4>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '15px', marginBottom: '25px', alignItems: 'end' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Name</label>
-            <input 
-              type="text" 
-              placeholder="E.g. Prop Firm" 
-              value={accForm.name} 
-              onChange={(e) => setAccForm({...accForm, name: e.target.value})} 
-            />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Type</label>
-            <select 
-              value={accForm.type} 
-              onChange={(e) => setAccForm({...accForm, type: e.target.value})}
-            >
-              <option>Challenge</option>
-              <option>Funded</option>
-              <option>Personal</option>
-              <option>Backtesting</option>
-            </select>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Balance ($)</label>
-            <input 
-              type="number" 
-              placeholder="10000" 
-              value={accForm.initialBalance} 
-              onChange={(e) => setAccForm({...accForm, initialBalance: e.target.value})}
-            />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Target (%)</label>
-            <input 
-              type="number" 
-              placeholder="8" 
-              value={accForm.target} 
-              onChange={(e) => setAccForm({...accForm, target: e.target.value})}
-            />
-          </div>
-          <button className="btn-primary" style={{ height: '45px' }} onClick={addAccount}>
-            <Plus size={20} />
-          </button>
-        </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h4 style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
+                <Activity size={18} color="var(--success)" />
+                Trading Portfolios
+              </h4>
+              <button 
+                className="btn-primary" 
+                onClick={() => setShowAddModal(true)} 
+                style={{ padding: '8px 16px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+              >
+                <Plus size={16} /> New Portfolio
+              </button>
+            </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {accounts.map((acc) => (
               <div key={acc._id} className="glass" style={{ padding: '20px', borderRadius: '12px', border: editingAccId === acc._id ? '1px solid var(--primary)' : '1px solid transparent' }}>
                 {editingAccId === acc._id ? (
-                  <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 0.8fr auto', gap: '10px', alignItems: 'end' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 1fr 1fr 0.8fr auto', gap: '10px', alignItems: 'end' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem' }}>Name</label>
+                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Name</label>
                       <input type="text" value={editAccForm.name} onChange={(e) => setEditAccForm({...editAccForm, name: e.target.value})} style={{ padding: '8px' }} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem' }}>Type</label>
+                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Type</label>
                       <select value={editAccForm.type} onChange={(e) => setEditAccForm({...editAccForm, type: e.target.value})} style={{ padding: '8px' }}>
                         <option>Challenge</option>
                         <option>Funded</option>
@@ -218,11 +230,19 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                       </select>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem' }}>Balance</label>
+                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Balance</label>
                       <input type="number" value={editAccForm.initialBalance} onChange={(e) => setEditAccForm({...editAccForm, initialBalance: e.target.value})} style={{ padding: '8px' }} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem' }}>Target %</label>
+                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Website</label>
+                      <input type="text" value={editAccForm.website || ''} onChange={(e) => setEditAccForm({...editAccForm, website: e.target.value})} style={{ padding: '8px' }} placeholder="ftmo.com" />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Split %</label>
+                      <input type="text" value={editAccForm.profitSplit || ''} onChange={(e) => setEditAccForm({...editAccForm, profitSplit: e.target.value})} style={{ padding: '8px' }} placeholder="80" />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Target %</label>
                       <input type="number" value={editAccForm.target} onChange={(e) => setEditAccForm({...editAccForm, target: e.target.value})} style={{ padding: '8px' }} />
                     </div>
                     <div style={{ display: 'flex', gap: '5px' }}>
@@ -234,14 +254,16 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                       <h4 style={{ marginBottom: '4px' }}>{acc.name} <span style={{ color: 'var(--success)', fontSize: '0.8rem', marginLeft: '10px' }}>(${acc.initialBalance?.toLocaleString()})</span></h4>
-                      <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
                         <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--primary)', textTransform: 'uppercase' }}>{acc.type}</span>
                         <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Target: {acc.target}%</span>
+                        {acc.website && <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Site: {acc.website}</span>}
+                        {acc.profitSplit && <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Split: {acc.profitSplit}%</span>}
                       </div>
                     </div>
                     <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                       <button onClick={() => startEditing(acc)} style={{ background: 'transparent', border: 'none', color: 'var(--primary)', opacity: 0.7, cursor: 'pointer' }}>
-                        <Save size={16} />
+                        <Edit3 size={16} />
                       </button>
                       <button onClick={() => onDeleteAccount(acc._id)} style={{ background: 'transparent', border: 'none', color: 'var(--danger)', opacity: 0.5, cursor: 'pointer' }}>
                         <Trash2 size={16} />
@@ -252,6 +274,226 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
               </div>
               ))}
             </div>
+
+            {/* Add Portfolio Modal */}
+            <AnimatePresence>
+              {showAddModal && (
+                <div className="modal-overlay" style={{ backdropFilter: 'blur(10px)' }}>
+                  <motion.div 
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.95, opacity: 0 }}
+                    className="glass-card" 
+                    style={{ 
+                      width: '100%', 
+                      maxWidth: '520px', 
+                      padding: '30px', 
+                      background: 'rgba(15, 18, 20, 0.95)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
+                      borderRadius: '16px'
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+                      <h3 style={{ fontSize: '1.25rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
+                        <span style={{ display: 'flex', background: 'var(--primary-glow)', padding: '6px', borderRadius: '8px', color: 'var(--primary)' }}>
+                          <Briefcase size={18} />
+                        </span>
+                        New Trading Portfolio
+                      </h3>
+                      <button 
+                        type="button" 
+                        onClick={() => setShowAddModal(false)} 
+                        style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+
+                    <form onSubmit={(e) => { e.preventDefault(); addAccount(); }} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      {/* Portfolio Type - FIRST so suggestions work */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                        <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                          Portfolio Type
+                        </label>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
+                          {[
+                            { val: 'Challenge', emoji: '⚔️', desc: 'Prop Evaluation' },
+                            { val: 'Funded', emoji: '💰', desc: 'Live Prop Capital' },
+                            { val: 'Personal', emoji: '👤', desc: 'Own Capital' },
+                            { val: 'Backtesting', emoji: '🔬', desc: 'Strategy Testing' },
+                          ].map(({ val, emoji, desc }) => {
+                            const isSelected = accForm.type === val;
+                            return (
+                              <button
+                                key={val}
+                                type="button"
+                                onClick={() => setAccForm({ ...accForm, type: val, name: '' })}
+                                style={{
+                                  padding: '10px 12px',
+                                  borderRadius: '10px',
+                                  border: isSelected ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.06)',
+                                  background: isSelected ? 'rgba(13,240,166,0.08)' : 'rgba(255,255,255,0.02)',
+                                  color: isSelected ? 'var(--primary)' : 'var(--text-muted)',
+                                  cursor: 'pointer',
+                                  textAlign: 'left',
+                                  transition: 'all 0.15s ease',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '2px'
+                                }}
+                              >
+                                <span style={{ fontSize: '0.95rem' }}>{emoji} <span style={{ fontWeight: '700', fontSize: '0.8rem' }}>{val}</span></span>
+                                <span style={{ fontSize: '0.65rem', opacity: 0.6 }}>{desc}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Portfolio Name with Smart Suggestions */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                          Portfolio Name
+                        </label>
+                        <input 
+                          type="text" 
+                          placeholder="e.g. FTMO 100K Challenge" 
+                          value={accForm.name}
+                          onChange={(e) => setAccForm({...accForm, name: e.target.value})}
+                          style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.02)', border: accForm.name ? '1px solid rgba(13,240,166,0.3)' : '1px solid rgba(255,255,255,0.06)' }}
+                        />
+                        {/* Smart name suggestions */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <Sparkles size={11} color="var(--primary)" />
+                            <span style={{ fontSize: '0.6rem', color: 'var(--primary)', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Smart Suggestions</span>
+                          </div>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {generateNameSuggestions(accForm.type, accForm.initialBalance).map((sug, i) => (
+                              <button
+                                key={i}
+                                type="button"
+                                onClick={() => setAccForm({ ...accForm, name: sug })}
+                                style={{
+                                  padding: '5px 10px',
+                                  borderRadius: '20px',
+                                  border: accForm.name === sug ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.07)',
+                                  background: accForm.name === sug ? 'rgba(13,240,166,0.12)' : 'rgba(255,255,255,0.03)',
+                                  color: accForm.name === sug ? 'var(--primary)' : 'var(--text-muted)',
+                                  fontSize: '0.72rem',
+                                  cursor: 'pointer',
+                                  fontWeight: '600',
+                                  transition: 'all 0.15s ease',
+                                  whiteSpace: 'nowrap'
+                                }}
+                              >
+                                {sug}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                          <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                            Website
+                          </label>
+                          <input 
+                            type="text" 
+                            placeholder="e.g. ftmo.com" 
+                            value={accForm.website}
+                            onChange={(e) => setAccForm({...accForm, website: e.target.value})}
+                            style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+                          />
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                          <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                            Profit Split (%)
+                          </label>
+                          <select 
+                            value={accForm.profitSplit} 
+                            onChange={(e) => setAccForm({...accForm, profitSplit: e.target.value})}
+                            style={{ width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+                          >
+                            <option value="">Select Split...</option>
+                            <option value="50">50% Split</option>
+                            <option value="60">60% Split</option>
+                            <option value="70">70% Split</option>
+                            <option value="80">80% Split</option>
+                            <option value="85">85% Split</option>
+                            <option value="90">90% Split</option>
+                            <option value="100">100% Split</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                          Starting Balance
+                        </label>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+                          {[5000, 10000, 20000, 50000, 100000, 200000].map(val => {
+                            const isSelected = Number(accForm.initialBalance) === val;
+                            return (
+                              <button
+                                key={val}
+                                type="button"
+                                onClick={() => setAccForm({...accForm, initialBalance: val})}
+                                style={{
+                                  padding: '12px',
+                                  borderRadius: '8px',
+                                  border: isSelected ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.06)',
+                                  background: isSelected ? 'rgba(13, 240, 166, 0.1)' : 'rgba(255,255,255,0.02)',
+                                  color: isSelected ? 'var(--primary)' : 'var(--text-muted)',
+                                  fontWeight: '750',
+                                  fontSize: '0.85rem',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.15s ease'
+                                }}
+                              >
+                                ${val.toLocaleString()}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '5px' }}>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Or Custom Balance:</span>
+                          <input 
+                            type="number" 
+                            placeholder="Custom Balance"
+                            value={[5000, 10000, 20000, 50000, 100000, 200000].includes(Number(accForm.initialBalance)) ? '' : accForm.initialBalance}
+                            onChange={(e) => setAccForm({...accForm, initialBalance: e.target.value})}
+                            style={{ flex: 1, padding: '8px 12px', fontSize: '0.85rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px' }}
+                          />
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '12px', marginTop: '15px' }}>
+                        <button 
+                          type="button" 
+                          onClick={() => setShowAddModal(false)} 
+                          className="btn-outline" 
+                          style={{ flex: 1, padding: '12px' }}
+                        >
+                          Cancel
+                        </button>
+                        <button 
+                          type="submit" 
+                          className="btn-primary" 
+                          style={{ flex: 1, padding: '12px' }}
+                        >
+                          Create Portfolio
+                        </button>
+                      </div>
+                    </form>
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>
           </section>
 
           {/* Rules Checklist */}
