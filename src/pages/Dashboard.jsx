@@ -17,9 +17,9 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useLanguage } from '../context/LanguageContext';
 
-const Dashboard = ({ trades, accounts }) => {
+const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) => {
   const { language } = useLanguage();
-  const [selectedChartAccount, setSelectedChartAccount] = useState('All Accounts');
+  const selectedChartAccount = selectedAccount;
 
   // Active trades based on selection
   const activeTrades = selectedChartAccount === 'All Accounts'
@@ -197,7 +197,7 @@ const Dashboard = ({ trades, accounts }) => {
               fontWeight: '800', 
               padding: '2px 6px', 
               borderRadius: '4px',
-              background: isWin ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)',
+              background: isWin ? 'rgba(0, 200, 150, 0.15)' : 'rgba(192, 57, 43, 0.15)',
               color: isWin ? 'var(--success)' : 'var(--danger)'
             }}>
               {data.result ? data.result.toUpperCase() : 'N/A'}
@@ -231,7 +231,7 @@ const Dashboard = ({ trades, accounts }) => {
           </span>
           <select 
             value={selectedChartAccount}
-            onChange={(e) => setSelectedChartAccount(e.target.value)}
+            onChange={(e) => setSelectedAccount(e.target.value)}
             style={{ background: 'transparent', border: 'none', color: 'var(--text-main)', fontSize: '0.85rem', fontWeight: '700', outline: 'none', padding: '5px' }}
           >
             <option value="All Accounts">{language === 'so' ? 'Dhammaan Akoonnada' : 'All Accounts Combined'}</option>
@@ -249,7 +249,7 @@ const Dashboard = ({ trades, accounts }) => {
               {currentPL >= 0 ? '+' : ''}{currentPL}%
             </h2>
           </div>
-          <div style={{ background: currentPL >= 0 ? 'rgba(16, 185, 129, 0.12)' : 'rgba(239, 68, 68, 0.12)', padding: '10px', borderRadius: '50%', color: currentPL >= 0 ? 'var(--success)' : 'var(--danger)' }}>
+          <div style={{ background: currentPL >= 0 ? 'rgba(0, 200, 150, 0.12)' : 'rgba(192, 57, 43, 0.12)', padding: '10px', borderRadius: '50%', color: currentPL >= 0 ? 'var(--success)' : 'var(--danger)' }}>
             {currentPL >= 0 ? <TrendingUp size={22} /> : <TrendingDown size={22} />}
           </div>
         </div>
@@ -259,7 +259,7 @@ const Dashboard = ({ trades, accounts }) => {
             <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Active Accounts</p>
             <h2 style={{ fontSize: '1.8rem', fontWeight: '800', marginTop: '5px' }}>{accounts.length}</h2>
           </div>
-          <div style={{ background: 'rgba(168, 85, 247, 0.12)', padding: '10px', borderRadius: '50%', color: '#a855f7' }}>
+          <div style={{ background: 'rgba(26, 59, 110, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--primary)' }}>
             <Layers size={22} />
           </div>
         </div>
@@ -269,7 +269,7 @@ const Dashboard = ({ trades, accounts }) => {
             <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Discipline Score</p>
             <h2 style={{ fontSize: '1.8rem', color: 'var(--warning)', fontWeight: '800', marginTop: '5px' }}>{disciplineScore}%</h2>
           </div>
-          <div style={{ background: 'rgba(245, 158, 11, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--warning)' }}>
+          <div style={{ background: 'rgba(160, 92, 16, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--warning)' }}>
             <Award size={22} />
           </div>
         </div>
@@ -281,7 +281,7 @@ const Dashboard = ({ trades, accounts }) => {
               {totalPips > 0 ? '+' : ''}{totalPips}
             </h2>
           </div>
-          <div style={{ background: totalPips >= 0 ? 'rgba(13, 240, 166, 0.12)' : 'rgba(239, 68, 68, 0.12)', padding: '10px', borderRadius: '50%', color: totalPips >= 0 ? 'var(--primary)' : 'var(--danger)' }}>
+          <div style={{ background: totalPips >= 0 ? 'rgba(0, 200, 150, 0.12)' : 'rgba(192, 57, 43, 0.12)', padding: '10px', borderRadius: '50%', color: totalPips >= 0 ? 'var(--primary)' : 'var(--danger)' }}>
             <Target size={22} />
           </div>
         </div>
@@ -291,7 +291,7 @@ const Dashboard = ({ trades, accounts }) => {
             <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Trades</p>
             <h2 style={{ fontSize: '1.8rem', fontWeight: '800', marginTop: '5px' }}>{activeTrades.length}</h2>
           </div>
-          <div style={{ background: 'rgba(13, 240, 166, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--primary)' }}>
+          <div style={{ background: 'rgba(0, 200, 150, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--primary)' }}>
             <Zap size={22} />
           </div>
         </div>
@@ -409,7 +409,7 @@ const Dashboard = ({ trades, accounts }) => {
                 padding: '20px', 
                 cursor: 'pointer'
               }}
-              onClick={() => setSelectedChartAccount(acc.name)}
+              onClick={() => setSelectedAccount(acc.name)}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
@@ -452,7 +452,7 @@ const Dashboard = ({ trades, accounts }) => {
                    color: acc.isBlown ? 'var(--danger)' : acc.isPassed ? 'var(--success)' : 'var(--text-main)',
                    fontWeight: '800',
                    fontSize: '0.7rem',
-                   background: acc.isPassed && ['Funded', 'Personal'].includes(acc.type) ? 'rgba(16, 185, 129, 0.12)' : 'rgba(255,255,255,0.02)',
+                   background: acc.isPassed && ['Funded', 'Personal'].includes(acc.type) ? 'rgba(0, 200, 150, 0.12)' : 'rgba(255,255,255,0.02)',
                    padding: '3px 8px',
                    borderRadius: '6px',
                    letterSpacing: '0.5px'

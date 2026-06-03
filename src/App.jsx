@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Globe, 
   FlaskConical, 
@@ -36,18 +36,16 @@ function App() {
   const [trades, setTrades] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [editingTrade, setEditingTrade] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState('All Accounts');
+  const [isTradeModalOpen, setIsTradeModalOpen] = useState(false);
 
-  // Theme Initialization - Lock to Obsidian Mint (Green)
-  useEffect(() => {
-    localStorage.removeItem('somtrader_theme');
-    document.documentElement.style.setProperty('--primary', '#0df0a6');
-    document.documentElement.style.setProperty('--primary-glow', 'rgba(13, 240, 166, 0.15)');
-    document.documentElement.style.setProperty('--accent', '#0eb37d');
-    document.documentElement.style.setProperty('--bg-dark', '#08090a');
-    document.documentElement.style.setProperty('--bg-card', 'rgba(17, 19, 21, 0.7)');
-    document.documentElement.style.setProperty('--border', 'rgba(255, 255, 255, 0.05)');
-    document.documentElement.style.setProperty('--btn-text', '#08090a');
-  }, []);
+  const handleOpenTradeModal = () => setIsTradeModalOpen(true);
+  const handleCloseTradeModal = () => {
+    setIsTradeModalOpen(false);
+    setEditingTrade(null);
+  };
+
+  // CML Light Theme — no overrides needed, index.css handles everything
 
   // Fetch Data from API
   useEffect(() => {
@@ -101,7 +99,7 @@ function App() {
         const res = await api.post('/api/trades', newTrade);
         setTrades([res.data, ...trades]);
       }
-      setActiveTab('journal');
+      handleCloseTradeModal();
     } catch (err) {
       showNotification('Error saving trade', 'error');
     }
@@ -109,7 +107,7 @@ function App() {
 
   const handleEdit = (trade) => {
     setEditingTrade(trade);
-    setActiveTab('new-trade');
+    setIsTradeModalOpen(true);
   };
 
   const handleDeleteTrade = async (id) => {
@@ -178,8 +176,26 @@ function App() {
     const backtestAccounts = accounts.filter(a => a.type === 'Backtesting');
 
     switch (activeTab) {
-      case 'dashboard': return <Dashboard trades={trades} accounts={liveAccounts} onAddTrade={() => setActiveTab('journal')} />;
-      case 'journal': return <Journal trades={trades} onEdit={handleEdit} onDelete={handleDeleteTrade} accounts={liveAccounts} />;
+      case 'dashboard': return (
+        <Dashboard 
+          trades={trades} 
+          accounts={liveAccounts} 
+          onAddTrade={handleOpenTradeModal} 
+          selectedAccount={selectedAccount} 
+          setSelectedAccount={setSelectedAccount} 
+        />
+      );
+      case 'journal': return (
+        <Journal 
+          trades={trades} 
+          onEdit={handleEdit} 
+          onDelete={handleDeleteTrade} 
+          onAdd={handleOpenTradeModal} 
+          accounts={liveAccounts} 
+          selectedAccount={selectedAccount} 
+          setSelectedAccount={setSelectedAccount} 
+        />
+      );
       case 'performance': return <Performance trades={trades} accounts={liveAccounts} />;
       case 'news': return <News />;
       case 'mindset': return <MindsetMirror />;
@@ -197,37 +213,7 @@ function App() {
           onUpdateAccount={handleUpdateAccount}
         />
       );
-      case 'new-trade': 
-        if (user?.subscription?.status === 'expired' && !user?.isAdmin && !editingTrade) {
-          const isSo = localStorage.getItem('somtrader_lang') === 'so';
-          return (
-            <div className="glass-card" style={{ textAlign: 'center', padding: '60px 20px', maxWidth: '600px', margin: '40px auto', borderRadius: '15px' }}>
-              <div style={{ background: 'rgba(239, 68, 68, 0.1)', width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
-                <span style={{ fontSize: '2rem' }}>🛑</span>
-              </div>
-              <h2 style={{ marginBottom: '15px' }}>
-                {isSo ? 'Tijaabadii 1-da Bil ahayd (30 Days Trial) way dhammaatay!' : 'Your 1-Month Free Trial Has Expired!'}
-              </h2>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '30px', fontSize: '1.1rem', lineHeight: '1.5' }}>
-                {isSo 
-                  ? 'Waxaad aragtay awoodda SomTrader. Si aad u sii waddo isticmaalka adeegga oo aan xad lahayn (Unlimited Trades & Analytics), fadlan iska bixi $7/bil.' 
-                  : 'You have experienced the power of SomTrader. To continue using unlimited trades & analytics, please subscribe for $7/month.'}
-              </p>
-              <button className="btn-primary" style={{ padding: '15px 40px', fontSize: '1.1rem' }} onClick={() => setActiveTab('pricing')}>
-                {isSo ? 'Diiwaangeli Hadda ($7)' : 'Subscribe Now ($7)'}
-              </button>
-            </div>
-          );
-        }
-        return (
-          <TradeEntry 
-            onSave={handleSaveTrade} 
-            customRules={userRules} 
-            formFields={user?.formFields || []}
-            accounts={liveAccounts} 
-            initialData={editingTrade} 
-          />
-        );
+
       case 'pricing': return <Pricing />;
       case 'admin-payments': return <AdminPayments />;
       default: return <Dashboard trades={trades} accounts={liveAccounts} />;
@@ -236,40 +222,147 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Premium Dynamic Background Effects */}
-      <div className="aurora-blob blob-1"></div>
-      <div className="aurora-blob blob-2"></div>
-      <div className="aurora-grid"></div>
-
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} disciplineScore={disciplineScore} tradesCount={trades.length} />
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        disciplineScore={disciplineScore} 
+        tradesCount={trades.length} 
+        accounts={accounts}
+        selectedAccount={selectedAccount}
+        setSelectedAccount={setSelectedAccount}
+        onOpenNewTrade={handleOpenTradeModal}
+      />
       <main className="main-content">
-        <header style={{ marginBottom: '35px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
+        {/* Top App Bar */}
+        <header style={{ 
+          marginBottom: '32px', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          flexWrap: 'wrap', 
+          gap: '16px',
+          padding: '16px 24px',
+          background: '#ffffff',
+          borderRadius: '16px',
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-sm)'
+        }}>
           <div>
-            <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '4px' }}>
-              SomTrader / {activeTab.replace('-', ' ')}
+            <div style={{ fontSize: '0.6rem', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '2px' }}>
+              SomTrader · {activeTab.replace(/-/g, ' ')}
             </div>
-            <h1 style={{ fontSize: '1.75rem', fontWeight: '800', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              Welcome back, <span style={{ color: 'var(--text-main)', textTransform: 'capitalize' }}>{user?.name?.split(' ')[0] || 'Trader'}</span>
-              <span style={{ fontSize: '1.4rem' }}>👋</span>
+            <h1 style={{ fontSize: '1.35rem', fontWeight: '800', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-main)' }}>
+              Welcome back, <span style={{ color: 'var(--primary)', textTransform: 'capitalize' }}>{user?.name?.split(' ')[0] || 'Trader'}</span> 👋
             </h1>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '2px' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: '1px' }}>
               {new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
           </div>
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div className="glass" style={{ padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '8px', border: '1px solid var(--glass-border)', borderRadius: '10px' }}>
-              <span style={{ position: 'relative', display: 'flex', width: '8px', height: '8px' }}>
-                <span className="pulse-dot-active" style={{ position: 'absolute', display: 'inline-flex', height: '100%', width: '100%', borderRadius: '50%', background: 'var(--success)', opacity: 0.75 }}></span>
-                <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '50%', height: '8px', width: '8px', background: 'var(--success)' }}></span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {/* Server Status */}
+            <div style={{ 
+              padding: '7px 14px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              background: 'var(--success-bg)',
+              border: '1px solid rgba(0,200,150,0.2)',
+              borderRadius: '10px' 
+            }}>
+              <span style={{ position: 'relative', display: 'flex', width: '7px', height: '7px' }}>
+                <span className="pulse-dot-active" style={{ position: 'absolute', display: 'inline-flex', height: '100%', width: '100%', borderRadius: '50%', background: 'var(--success)', opacity: 0.6 }}></span>
+                <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '50%', height: '7px', width: '7px', background: 'var(--success)' }}></span>
               </span>
-              <span style={{ fontSize: '0.75rem', fontWeight: '750', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--text-main)' }}>
-                Server: Online
-              </span>
+              <span style={{ fontSize: '0.72rem', fontWeight: '700', letterSpacing: '0.4px', color: 'var(--success)' }}>Live</span>
+            </div>
+            {/* User Avatar */}
+            <div style={{
+              width: '36px', height: '36px',
+              borderRadius: '50%',
+              background: 'var(--primary)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: 'white', fontWeight: '700', fontSize: '0.9rem'
+            }}>
+              {(user?.name?.[0] || 'T').toUpperCase()}
             </div>
           </div>
         </header>
         {renderContent()}
+
+        {/* Trade Entry Modal Overlay */}
+        <AnimatePresence>
+          {(isTradeModalOpen || editingTrade) && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                position: 'fixed',
+                top: 0, left: 0, right: 0, bottom: 0,
+                background: 'rgba(13, 31, 69, 0.85)',
+                backdropFilter: 'blur(8px)',
+                zIndex: 9999,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                padding: '40px 20px',
+                overflowY: 'auto'
+              }}
+              onClick={handleCloseTradeModal}
+            >
+              <div 
+                style={{ width: '100%', maxWidth: '900px', position: 'relative' }} 
+                onClick={e => e.stopPropagation()}
+              >
+                {/* Modal Close Button */}
+                <button 
+                  onClick={handleCloseTradeModal}
+                  style={{ 
+                    position: 'absolute', top: '20px', right: '20px', zIndex: 10, 
+                    background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%', 
+                    width: '32px', height: '32px', color: 'white', cursor: 'pointer', 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'background 0.2s'
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                >
+                  ✕
+                </button>
+                
+                {user?.subscription?.status === 'expired' && !user?.isAdmin && !editingTrade ? (
+                  <div className="glass-card" style={{ textAlign: 'center', padding: '60px 20px', maxWidth: '600px', margin: '40px auto', borderRadius: '15px' }}>
+                    <div style={{ background: 'rgba(192, 57, 43, 0.1)', width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
+                      <span style={{ fontSize: '2rem' }}>🛑</span>
+                    </div>
+                    <h2 style={{ marginBottom: '15px' }}>
+                      {localStorage.getItem('somtrader_lang') === 'so' ? 'Tijaabadii 1-da Bil ahayd (30 Days Trial) way dhammaatay!' : 'Your 1-Month Free Trial Has Expired!'}
+                    </h2>
+                    <p style={{ color: 'var(--text-muted)', marginBottom: '30px', fontSize: '1.1rem', lineHeight: '1.5' }}>
+                      {localStorage.getItem('somtrader_lang') === 'so' 
+                        ? 'Waxaad aragtay awoodda SomTrader. Si aad u sii waddo isticmaalka adeegga oo aan xad lahayn (Unlimited Trades & Analytics), fadlan iska bixi $7/bil.' 
+                        : 'You have experienced the power of SomTrader. To continue using unlimited trades & analytics, please subscribe for $7/month.'}
+                    </p>
+                    <button className="btn-primary" style={{ padding: '15px 40px', fontSize: '1.1rem' }} onClick={() => { handleCloseTradeModal(); setActiveTab('pricing'); }}>
+                      {localStorage.getItem('somtrader_lang') === 'so' ? 'Diiwaangeli Hadda ($7)' : 'Subscribe Now ($7)'}
+                    </button>
+                  </div>
+                ) : (
+                  <TradeEntry 
+                    onSave={handleSaveTrade} 
+                    customRules={userRules} 
+                    formFields={user?.formFields || []}
+                    accounts={liveAccounts} 
+                    initialData={editingTrade} 
+                    user={user}
+                    onUpdateProfile={handleUpdateProfile}
+                  />
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );

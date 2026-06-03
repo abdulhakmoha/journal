@@ -208,7 +208,7 @@ const generateSomCoachReport = (filteredTrades, language) => {
 // ─────────────────────────────────────────────
 const MoodChart = ({ trades, t }) => {
   const MOODS = ['Confident', 'Calm', 'Neutral', 'Fearful', 'Aggressive'];
-  const COLORS = { Confident: '#38bdf8', Calm: '#10b981', Neutral: '#a78bfa', Fearful: '#f59e0b', Aggressive: '#ef4444' };
+  const COLORS = { Confident: '#1A3B6E', Calm: '#00C896', Neutral: '#6B7A9F', Fearful: '#A05C10', Aggressive: '#C0392B' };
 
   const data = MOODS.map(mood => {
     const mTrades = trades.filter(tr => tr.preMood === mood);
@@ -335,10 +335,10 @@ const Review = ({ trades, accounts }) => {
 
   const coachSections = generateSomCoachReport(filteredTrades, language);
   const coachColors = {
-    success: { bg: 'rgba(16,185,129,0.07)', border: 'rgba(16,185,129,0.4)' },
-    danger: { bg: 'rgba(239,68,68,0.07)', border: 'rgba(239,68,68,0.4)' },
-    primary: { bg: 'rgba(56,189,248,0.07)', border: 'rgba(56,189,248,0.4)' },
-    warning: { bg: 'rgba(245,158,11,0.07)', border: 'rgba(245,158,11,0.4)' },
+    success: { bg: 'rgba(0,200,150,0.07)', border: 'rgba(0,200,150,0.4)' },
+    danger: { bg: 'rgba(192,57,43,0.07)', border: 'rgba(192,57,43,0.4)' },
+    primary: { bg: 'rgba(26,59,110,0.07)', border: 'rgba(26,59,110,0.4)' },
+    warning: { bg: 'rgba(160,92,16,0.07)', border: 'rgba(160,92,16,0.4)' },
     neutral: { bg: 'rgba(255,255,255,0.02)', border: 'rgba(255,255,255,0.1)' }
   };
 
@@ -441,7 +441,7 @@ const Review = ({ trades, accounts }) => {
               <div style={{
                 width: '70px', height: '70px', borderRadius: '50%', margin: '0 auto 15px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: stat.winRate >= 60 ? 'rgba(16,185,129,0.15)' : stat.winRate >= 40 ? 'rgba(56,189,248,0.1)' : 'rgba(239,68,68,0.1)',
+                background: stat.winRate >= 60 ? 'rgba(0,200,150,0.15)' : stat.winRate >= 40 ? 'rgba(26,59,110,0.1)' : 'rgba(192,57,43,0.1)',
                 border: `2px solid ${stat.winRate >= 60 ? 'var(--success)' : stat.winRate >= 40 ? 'var(--primary)' : 'var(--danger)'}`,
                 fontSize: '1.4rem', fontWeight: '900'
               }}>
@@ -471,7 +471,7 @@ const Review = ({ trades, accounts }) => {
                   <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '5px', textTransform: 'uppercase' }}>{language === 'so' ? 'Trades Xilli News' : 'Trades During News'}</p>
                   <p style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--warning)' }}>{conflicts.length}</p>
                 </div>
-                <div style={{ background: cRate < 40 ? 'rgba(239,68,68,0.08)' : 'rgba(16,185,129,0.08)', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
+                <div style={{ background: cRate < 40 ? 'rgba(192,57,43,0.08)' : 'rgba(0,200,150,0.08)', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
                   <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '5px', textTransform: 'uppercase' }}>{t('winRate')}</p>
                   <p style={{ fontSize: '2rem', fontWeight: '900', color: cRate < 40 ? 'var(--danger)' : 'var(--success)' }}>{cRate}%</p>
                 </div>
@@ -490,7 +490,7 @@ const Review = ({ trades, accounts }) => {
         <h4 style={{ marginBottom: '30px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
           <Brain size={22} color="var(--primary)" />
           <span style={{
-            background: 'linear-gradient(135deg, var(--primary), var(--accent))',
+            background: 'linear-gradient(135deg, var(--navy), var(--navy-dark))',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             fontSize: '1.2rem', fontWeight: '800'
           }}>
@@ -498,8 +498,8 @@ const Review = ({ trades, accounts }) => {
           </span>
           <span style={{
             fontSize: '0.65rem', color: 'var(--text-muted)',
-            background: 'rgba(56,189,248,0.1)', padding: '3px 10px',
-            borderRadius: '10px', border: '1px solid rgba(56,189,248,0.2)',
+            background: 'rgba(26,59,110,0.1)', padding: '3px 10px',
+            borderRadius: '10px', border: '1px solid rgba(26,59,110,0.2)',
             WebkitTextFillColor: 'var(--text-muted)', WebkitBackgroundClip: 'unset'
           }}>
             {language === 'so' ? 'ALGORITHMIC • SOMALI' : 'ALGORITHMIC • ENGLISH'}

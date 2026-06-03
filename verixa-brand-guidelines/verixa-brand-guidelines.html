@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verixa — Brand Guidelines</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #1A3B6E;
+    --navy-dark:  #0D1F45;
+    --navy-mid:   #12295A;
+    --frost:      #F0F4FB;
+    --frost-mid:  #D8E2F5;
+    --slate:      #3E4E6C;
+    --slate-mid:  #6B7A9F;
+    --slate-light:#9BA8C2;
+    --mint:       #00C896;
+    --mint-dark:  #00A87E;
+    --mint-light: #E6FBF4;
+    --white:      #FFFFFF;
+    --border:     rgba(26,59,110,0.12);
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans:  'Inter', system-ui, sans-serif;
+    --mono:  'Courier New', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--frost);
+    color: var(--slate);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 60px;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-logo {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--mint);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo svg { width: 18px; height: 18px; }
+  .nav-name { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -0.3px; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a {
+    font-size: 12px; color: rgba(255,255,255,0.6);
+    padding: 6px 12px; border-radius: 6px;
+    text-decoration: none; transition: all 0.15s;
+  }
+  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+  .nav-badge {
+    font-size: 11px; font-weight: 500; color: var(--mint);
+    border: 1px solid rgba(0,200,150,0.35);
+    padding: 3px 10px; border-radius: 20px;
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 900px; margin: 0 auto; padding: 60px 32px 100px; }
+
+  section { margin-bottom: 72px; }
+
+  .section-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--mint-dark);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: 32px; color: var(--navy); line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .section-desc {
+    font-size: 14px; color: var(--slate-mid); max-width: 560px; line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--frost-mid); margin: 72px 0; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 64px 56px;
+    margin-bottom: 72px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: rgba(0,200,150,0.06);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -80px; right: 120px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--mint); margin-bottom: 16px;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: 52px; color: #fff; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    font-size: 15px; color: rgba(255,255,255,0.6);
+    max-width: 460px; line-height: 1.7; margin-bottom: 32px;
+  }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .hero-tag {
+    font-size: 11px; font-weight: 500;
+    padding: 5px 14px; border-radius: 20px;
+    background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .hero-logo-big {
+    position: absolute; right: 56px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-logo-icon {
+    width: 100px; height: 100px; border-radius: 24px;
+    background: rgba(0,200,150,0.15);
+    border: 1px solid rgba(0,200,150,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-logo-icon svg { width: 56px; height: 56px; }
+
+  /* ── COLOR CARDS ── */
+  .color-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .color-card {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--white);
+  }
+  .color-swatch { height: 100px; position: relative; }
+  .swatch-label {
+    position: absolute; bottom: 12px; left: 14px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .color-body { padding: 16px; }
+  .color-step { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint-dark); margin-bottom: 4px; }
+  .color-name { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .color-use { font-size: 12px; color: var(--slate-mid); line-height: 1.55; margin-bottom: 12px; }
+  .hex-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .hex-chip {
+    font-family: var(--mono); font-size: 10px;
+    padding: 3px 8px; border-radius: 6px;
+    background: var(--frost); color: var(--slate);
+    border: 1px solid var(--frost-mid);
+  }
+
+  /* ── COLOR PALETTE STRIP ── */
+  .palette-strip {
+    display: flex; border-radius: 12px; overflow: hidden;
+    height: 56px; margin-bottom: 12px;
+    border: 1px solid var(--border);
+  }
+  .palette-strip div { flex: 1; }
+  .palette-labels { display: flex; gap: 0; }
+  .palette-labels span {
+    flex: 1; font-family: var(--mono); font-size: 9px;
+    color: var(--slate-mid); text-align: center; padding-top: 4px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .type-block {
+    background: var(--white); border-radius: 16px;
+    border: 1px solid var(--border); padding: 32px;
+    margin-bottom: 16px;
+  }
+  .type-meta {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--frost-mid);
+  }
+  .type-badge {
+    font-size: 11px; font-weight: 600; padding: 4px 12px;
+    border-radius: 20px; letter-spacing: 0.04em;
+  }
+  .type-badge.serif { background: #E8EEF8; color: var(--navy); }
+  .type-badge.sans  { background: var(--mint-light); color: var(--mint-dark); }
+  .type-badge.mono  { background: #F5F0FF; color: #5B3FB5; }
+  .type-font-name { font-size: 13px; font-weight: 600; color: var(--navy); }
+  .type-font-sub  { font-size: 11px; color: var(--slate-mid); margin-top: 1px; }
+  .type-roles { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .type-role-pill {
+    font-size: 10px; padding: 2px 8px; border-radius: 20px;
+    border: 1px solid var(--frost-mid); color: var(--slate-mid);
+    background: var(--frost);
+  }
+
+  .specimen-serif { font-family: var(--serif); font-size: 42px; color: var(--navy); line-height: 1; }
+  .specimen-sans  { font-family: var(--sans); font-size: 36px; font-weight: 600; color: var(--navy); line-height: 1; }
+  .specimen-mono  { font-family: var(--mono); font-size: 18px; color: var(--slate); line-height: 1.4; }
+  .specimen-alphabet { font-size: 14px; color: var(--slate-mid); margin-top: 12px; line-height: 1.8; }
+
+  /* ── TYPE SCALE ── */
+  .scale-table { width: 100%; border-collapse: collapse; }
+  .scale-table tr { border-bottom: 1px solid var(--frost-mid); }
+  .scale-table tr:last-child { border-bottom: none; }
+  .scale-table td { padding: 14px 0; vertical-align: middle; }
+  .scale-table .col-meta {
+    width: 130px; font-family: var(--mono); font-size: 11px;
+    color: var(--slate-light); vertical-align: top; padding-top: 18px;
+  }
+
+  /* ── LOGO ── */
+  .logo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .logo-card {
+    border-radius: 16px; border: 1px solid var(--border);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 32px 20px; gap: 16px;
+  }
+  .logo-mark-wrap {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-icon {
+    width: 44px; height: 44px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-wordmark { font-family: var(--serif); font-size: 26px; letter-spacing: -0.5px; }
+  .logo-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate-light);
+  }
+
+  /* ── UI COMPONENTS ── */
+  .components-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .comp-card {
+    background: var(--white); border-radius: 16px;
+    border: 1px solid var(--border); padding: 24px;
+  }
+  .comp-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-light); margin-bottom: 16px; }
+
+  .btn-row { display: flex; flex-direction: column; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--sans); font-size: 13px; font-weight: 500;
+    padding: 10px 20px; border-radius: 8px; cursor: default;
+    border: none; transition: opacity 0.15s;
+  }
+  .btn-primary   { background: var(--mint); color: var(--white); }
+  .btn-secondary { background: var(--navy); color: var(--white); }
+  .btn-outline   { background: transparent; color: var(--navy); border: 1.5px solid var(--navy); }
+  .btn-ghost     { background: var(--frost); color: var(--slate); }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: 20px; letter-spacing: 0.03em;
+  }
+  .badge-success { background: var(--mint-light); color: var(--mint-dark); }
+  .badge-info    { background: #EAF2FF; color: #1751A6; }
+  .badge-warning { background: #FEF3E6; color: #A05C10; }
+  .badge-danger  { background: #FEECEC; color: #A33030; }
+  .badge-neutral { background: var(--frost-mid); color: var(--slate); }
+
+  .input-demo { display: flex; flex-direction: column; gap: 10px; }
+  .input-field {
+    font-family: var(--sans); font-size: 13px;
+    padding: 10px 14px; border-radius: 8px;
+    border: 1.5px solid var(--frost-mid); background: var(--frost);
+    color: var(--slate); outline: none; width: 100%;
+  }
+  .input-field:focus { border-color: var(--navy); background: var(--white); }
+  .input-label { font-size: 11px; font-weight: 600; color: var(--slate); margin-bottom: 4px; display: block; }
+
+  .metric-row-demo { display: flex; flex-direction: column; gap: 8px; }
+  .metric-mini {
+    background: var(--frost); border-radius: 10px; padding: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .metric-mini-label { font-size: 11px; color: var(--slate-mid); }
+  .metric-mini-val   { font-size: 17px; font-weight: 600; color: var(--navy); }
+  .metric-mini-badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; }
+
+  /* ── TYPOGRAPHY EXAMPLE ── */
+  .type-example {
+    background: var(--frost); border-radius: 16px;
+    padding: 40px 48px; margin-bottom: 16px;
+  }
+  .te-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint-dark); margin-bottom: 10px; }
+  .te-h1 { font-family: var(--serif); font-size: 36px; color: var(--navy); line-height: 1.15; margin-bottom: 10px; }
+  .te-h2 { font-family: var(--sans); font-size: 18px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .te-body { font-size: 14px; color: var(--slate); line-height: 1.75; margin-bottom: 6px; }
+  .te-caption { font-size: 11px; color: var(--slate-light); }
+  .te-divider { border: none; border-top: 1px solid var(--frost-mid); margin: 20px 0; }
+
+  /* ── USAGE RULES ── */
+  .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .rule-card {
+    border-radius: 12px; padding: 20px;
+    border: 1px solid var(--border);
+  }
+  .rule-card.do   { background: var(--mint-light); border-color: rgba(0,200,150,0.25); }
+  .rule-card.dont { background: #FEECEC; border-color: rgba(163,48,48,0.2); }
+  .rule-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 9px; border-radius: 20px;
+    margin-bottom: 10px; display: inline-block;
+  }
+  .rule-badge.do   { background: var(--mint); color: var(--white); }
+  .rule-badge.dont { background: #E24B4A; color: var(--white); }
+  .rule-text { font-size: 13px; line-height: 1.6; }
+  .rule-card.do   .rule-text { color: var(--mint-dark); }
+  .rule-card.dont .rule-text { color: #7A1F1F; }
+
+  /* ── DASHBOARD MOCK ── */
+  .dashboard-mock {
+    background: var(--white); border-radius: 20px;
+    border: 1px solid var(--border); overflow: hidden;
+  }
+  .dash-top {
+    background: var(--navy); padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .dash-top-left { display: flex; align-items: center; gap: 10px; }
+  .dash-top-icon { width: 28px; height: 28px; border-radius: 7px; background: var(--mint); display: flex; align-items: center; justify-content: center; }
+  .dash-top-icon svg { width: 16px; height: 16px; }
+  .dash-top-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .dash-top-nav { display: flex; gap: 2px; }
+  .dash-top-nav span {
+    font-size: 12px; color: rgba(255,255,255,0.55);
+    padding: 5px 12px; border-radius: 6px;
+  }
+  .dash-top-nav span.active { color: #fff; background: rgba(255,255,255,0.12); }
+  .dash-body { background: var(--frost); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .dash-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .dash-metric {
+    background: var(--white); border-radius: 10px;
+    border: 1px solid var(--border); padding: 14px;
+  }
+  .dash-metric-label { font-size: 11px; color: var(--slate-mid); margin-bottom: 4px; }
+  .dash-metric-val   { font-size: 18px; font-weight: 600; color: var(--navy); }
+  .dash-metric-sub   { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; margin-top: 6px; display: inline-block; }
+  .dash-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .dash-panel {
+    background: var(--white); border-radius: 10px;
+    border: 1px solid var(--border); padding: 16px;
+  }
+  .dash-panel-title { font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 12px; }
+  .dash-chart {
+    display: flex; align-items: flex-end; gap: 6px; height: 60px;
+  }
+  .bar {
+    flex: 1; border-radius: 4px 4px 0 0;
+    background: var(--frost-mid); min-width: 0;
+  }
+  .bar.active { background: var(--mint); }
+  .bar.navy   { background: var(--navy); }
+  .dash-tx { display: flex; flex-direction: column; gap: 8px; }
+  .dash-tx-row { display: flex; justify-content: space-between; align-items: center; }
+  .dash-tx-left { display: flex; align-items: center; gap: 8px; }
+  .dash-tx-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dash-tx-name { font-size: 12px; color: var(--slate); }
+  .dash-tx-date { font-size: 10px; color: var(--slate-light); }
+  .dash-tx-amount { font-size: 12px; font-weight: 600; color: var(--navy); }
+  .dash-cta { display: flex; gap: 10px; }
+  .dash-btn-p { background: var(--mint); color: #fff; border: none; font-family: var(--sans); font-size: 13px; font-weight: 500; padding: 10px 20px; border-radius: 8px; cursor: default; flex: 1; }
+  .dash-btn-s { background: transparent; color: var(--navy); border: 1.5px solid var(--navy); font-family: var(--sans); font-size: 13px; font-weight: 500; padding: 10px 20px; border-radius: 8px; cursor: default; flex: 1; }
+
+  /* ── FOOTER ── */
+  .brand-footer {
+    background: var(--navy); border-radius: 20px;
+    padding: 48px 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .bf-left .bf-name { font-family: var(--serif); font-size: 36px; color: #fff; }
+  .bf-left .bf-tag  { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+  .bf-chips { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+  .bf-chip {
+    font-size: 11px; padding: 4px 14px; border-radius: 20px;
+    background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    nav { display: none; }
+    body { background: #fff; }
+    .hero, .brand-footer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 40px 28px; }
+    .hero-logo-big { display: none; }
+    .hero-title { font-size: 36px; }
+    .color-grid { grid-template-columns: 1fr; }
+    .logo-grid { grid-template-columns: 1fr 1fr; }
+    .components-grid { grid-template-columns: 1fr; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .dash-metrics { grid-template-columns: 1fr 1fr; }
+    .dash-row { grid-template-columns: 1fr; }
+    .brand-footer { flex-direction: column; gap: 24px; }
+    .bf-chips { align-items: flex-start; }
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .page { padding: 40px 20px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 18 18" fill="none">
+        <rect x="2" y="9" width="3" height="7" rx="1" fill="#1A3B6E"/>
+        <rect x="7.5" y="5.5" width="3" height="10.5" rx="1" fill="rgba(26,59,110,0.5)"/>
+        <rect x="13" y="2" width="3" height="14" rx="1" fill="#1A3B6E"/>
+      </svg>
+    </div>
+    <span class="nav-name">Verixa</span>
+  </div>
+  <div class="nav-links">
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#logo">Logo</a>
+    <a href="#components">Components</a>
+    <a href="#ui">UI Preview</a>
+  </div>
+  <span class="nav-badge">Brand v1.0</span>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">Brand guidelines · 2026</p>
+    <h1 class="hero-title">Verixa<br>Brand System</h1>
+    <p class="hero-sub">A complete visual identity for a financial intelligence platform — built on clarity, trust, and precision.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Color system</span>
+      <span class="hero-tag">Typography</span>
+      <span class="hero-tag">Logo usage</span>
+      <span class="hero-tag">UI components</span>
+      <span class="hero-tag">Do &amp; Don't</span>
+    </div>
+    <div class="hero-logo-big">
+      <div class="hero-logo-icon">
+        <svg viewBox="0 0 56 56" fill="none">
+          <rect x="6" y="28" width="10" height="22" rx="3" fill="#00C896"/>
+          <rect x="23" y="17" width="10" height="33" rx="3" fill="rgba(0,200,150,0.45)"/>
+          <rect x="40" y="6" width="10" height="44" rx="3" fill="rgba(255,255,255,0.9)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLORS -->
+  <section id="colors">
+    <p class="section-label">01 · Color system</p>
+    <h2 class="section-title">Four-step palette</h2>
+    <p class="section-desc">Every color has a role. Use them with intention — never swap primary for accent or dilute the system with off-palette colors.</p>
+
+    <!-- Palette strip -->
+    <div style="margin-bottom:32px;">
+      <div class="palette-strip">
+        <div style="background:#1A3B6E;"></div>
+        <div style="background:#12295A;"></div>
+        <div style="background:#0D1F45;"></div>
+        <div style="background:#F0F4FB;"></div>
+        <div style="background:#D8E2F5;"></div>
+        <div style="background:#BFD0EE;"></div>
+        <div style="background:#3E4E6C;"></div>
+        <div style="background:#6B7A9F;"></div>
+        <div style="background:#9BA8C2;"></div>
+        <div style="background:#00C896;"></div>
+        <div style="background:#00A87E;"></div>
+        <div style="background:#E6FBF4;"></div>
+      </div>
+      <div class="palette-labels">
+        <span>Primary ←→</span>
+        <span></span>
+        <span></span>
+        <span>Secondary ←→</span>
+        <span></span>
+        <span></span>
+        <span>Tertiary ←→</span>
+        <span></span>
+        <span></span>
+        <span>Accent ←→</span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="color-grid">
+      <!-- PRIMARY -->
+      <div class="color-card">
+        <div class="color-swatch" style="background:#1A3B6E;">
+          <span class="swatch-label" style="background:rgba(255,255,255,0.15);color:#fff;">Trust Navy</span>
+        </div>
+        <div class="color-body">
+          <p class="color-step">Step 1 · Primary</p>
+          <p class="color-name">Trust Navy</p>
+          <p class="color-use">Main brand color. Used on the logo, primary buttons, navigation bars, and key structural elements. Conveys authority and reliability.</p>
+          <div class="hex-row">
+            <span class="hex-chip">#1A3B6E — Main</span>
+            <span class="hex-chip">#12295A — Dark</span>
+            <span class="hex-chip">#0D1F45 — Deepest</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECONDARY -->
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F0F4FB; border-bottom:1px solid #D8E2F5;">
+          <span class="swatch-label" style="background:rgba(26,59,110,0.1);color:#1A3B6E;">Cloud Frost</span>
+        </div>
+        <div class="color-body">
+          <p class="color-step">Step 2 · Secondary</p>
+          <p class="color-name">Cloud Frost</p>
+          <p class="color-use">Supporting color for backgrounds, card surfaces, input fields, and data panels. Creates calm, airy spaces without visual noise.</p>
+          <div class="hex-row">
+            <span class="hex-chip">#F0F4FB — Light</span>
+            <span class="hex-chip">#D8E2F5 — Mid</span>
+            <span class="hex-chip">#BFD0EE — Deep</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TERTIARY -->
+      <div class="color-card">
+        <div class="color-swatch" style="background:#3E4E6C;">
+          <span class="swatch-label" style="background:rgba(255,255,255,0.15);color:#fff;">Ink Slate</span>
+        </div>
+        <div class="color-body">
+          <p class="color-step">Step 3 · Tertiary</p>
+          <p class="color-name">Ink Slate</p>
+          <p class="color-use">Text and contrast. Headings use the dark stop, body copy uses mid, captions and metadata use the light stop for natural visual hierarchy.</p>
+          <div class="hex-row">
+            <span class="hex-chip">#3E4E6C — Heading</span>
+            <span class="hex-chip">#6B7A9F — Body</span>
+            <span class="hex-chip">#9BA8C2 — Caption</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCENT -->
+      <div class="color-card">
+        <div class="color-swatch" style="background:#00C896;">
+          <span class="swatch-label" style="background:rgba(255,255,255,0.2);color:#004D3A;">Meridian Mint</span>
+        </div>
+        <div class="color-body">
+          <p class="color-step">Step 4 · Accent</p>
+          <p class="color-name">Meridian Mint</p>
+          <p class="color-use">Highlights, CTAs, and decorative touches. Reserved for action buttons, positive trends, success states, and key interactive elements.</p>
+          <div class="hex-row">
+            <span class="hex-chip">#00C896 — Action</span>
+            <span class="hex-chip">#00A87E — Hover</span>
+            <span class="hex-chip">#E6FBF4 — Tint</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- TYPOGRAPHY -->
+  <section id="typography">
+    <p class="section-label">02 · Typography</p>
+    <h2 class="section-title">Two-font system</h2>
+    <p class="section-desc">DM Serif Display leads brand storytelling. Inter handles all product UI. Never mix their roles.</p>
+
+    <!-- Serif -->
+    <div class="type-block">
+      <div class="type-meta">
+        <div>
+          <span class="type-badge serif">Display · Serif</span>
+          <div class="type-roles">
+            <span class="type-role-pill">Hero headlines</span>
+            <span class="type-role-pill">Section titles</span>
+            <span class="type-role-pill">Marketing copy</span>
+            <span class="type-role-pill">Reports</span>
+          </div>
+        </div>
+        <div style="margin-left:auto; text-align:right;">
+          <p class="type-font-name">DM Serif Display</p>
+          <p class="type-font-sub">Google Fonts · Free · Regular</p>
+        </div>
+      </div>
+      <p class="specimen-serif">Financial clarity,<br>built for scale.</p>
+      <p class="specimen-alphabet" style="font-family:'DM Serif Display',serif;">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz 0123456789 &amp; $ % . , : !</p>
+    </div>
+
+    <!-- Sans -->
+    <div class="type-block">
+      <div class="type-meta">
+        <div>
+          <span class="type-badge sans">UI · Sans-serif</span>
+          <div class="type-roles">
+            <span class="type-role-pill">Body copy</span>
+            <span class="type-role-pill">UI labels</span>
+            <span class="type-role-pill">Buttons</span>
+            <span class="type-role-pill">Data tables</span>
+            <span class="type-role-pill">Navigation</span>
+          </div>
+        </div>
+        <div style="margin-left:auto; text-align:right;">
+          <p class="type-font-name">Inter</p>
+          <p class="type-font-sub">Google Fonts · Free · 400 &amp; 500</p>
+        </div>
+      </div>
+      <p class="specimen-sans">Track every dollar.</p>
+      <p class="specimen-alphabet" style="font-family:'Inter',sans-serif;">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz 0123456789 &amp; $ % . , : !</p>
+    </div>
+
+    <!-- Mono -->
+    <div class="type-block">
+      <div class="type-meta">
+        <div>
+          <span class="type-badge mono">Data · Monospace</span>
+          <div class="type-roles">
+            <span class="type-role-pill">Transaction IDs</span>
+            <span class="type-role-pill">Account numbers</span>
+            <span class="type-role-pill">Raw values</span>
+          </div>
+        </div>
+        <div style="margin-left:auto; text-align:right;">
+          <p class="type-font-name">Courier New</p>
+          <p class="type-font-sub">System font · No import needed</p>
+        </div>
+      </div>
+      <p class="specimen-mono">TXN-20260603-00841<br>ACC · ETH-2024-000192<br>$284,500.00 · USD</p>
+    </div>
+
+    <!-- Type scale -->
+    <div class="type-block">
+      <p class="comp-title" style="margin-bottom:8px;">Type scale</p>
+      <table class="scale-table">
+        <tr>
+          <td class="col-meta">Display / 48px<br>DM Serif</td>
+          <td><span style="font-family:'DM Serif Display',serif;font-size:48px;color:#1A3B6E;line-height:1;">Verixa</span></td>
+        </tr>
+        <tr>
+          <td class="col-meta">H1 / 32px<br>DM Serif</td>
+          <td><span style="font-family:'DM Serif Display',serif;font-size:32px;color:#1A3B6E;line-height:1.1;">Your finances, one view</span></td>
+        </tr>
+        <tr>
+          <td class="col-meta">H2 / 22px<br>Inter 600</td>
+          <td><span style="font-family:'Inter',sans-serif;font-size:22px;font-weight:600;color:#1A3B6E;">Revenue breakdown</span></td>
+        </tr>
+        <tr>
+          <td class="col-meta">H3 / 16px<br>Inter 600</td>
+          <td><span style="font-family:'Inter',sans-serif;font-size:16px;font-weight:600;color:#1A3B6E;">Monthly active accounts</span></td>
+        </tr>
+        <tr>
+          <td class="col-meta">Body / 14px<br>Inter 400</td>
+          <td><span style="font-family:'Inter',sans-serif;font-size:14px;color:#3E4E6C;line-height:1.75;">Track every transaction with real-time analytics and intelligent categorization across all your accounts and entities.</span></td>
+        </tr>
+        <tr>
+          <td class="col-meta">Caption / 11px<br>Inter 400</td>
+          <td><span style="font-family:'Inter',sans-serif;font-size:11px;color:#9BA8C2;">Last synced · June 3, 2026 at 09:41 AM · UTC+3</span></td>
+        </tr>
+        <tr>
+          <td class="col-meta">Mono / 13px<br>Courier New</td>
+          <td><span style="font-family:'Courier New',monospace;font-size:13px;color:#3E4E6C;">TXN-20260603-00841 · $12,450.00</span></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- LOGO -->
+  <section id="logo">
+    <p class="section-label">03 · Logo usage</p>
+    <h2 class="section-title">Logo variations</h2>
+    <p class="section-desc">Always maintain clear space around the logo equal to the height of the "V". Never distort, recolor, or add effects.</p>
+
+    <div class="logo-grid">
+      <!-- Light -->
+      <div class="logo-card" style="background:#fff;">
+        <div class="logo-mark-wrap">
+          <div class="logo-icon" style="background:#1A3B6E;">
+            <svg viewBox="0 0 44 44" fill="none" width="44" height="44">
+              <rect x="6" y="22" width="8" height="16" rx="2" fill="#00C896"/>
+              <rect x="18" y="13" width="8" height="25" rx="2" fill="rgba(0,200,150,0.5)"/>
+              <rect x="30" y="5" width="8" height="33" rx="2" fill="#fff"/>
+            </svg>
+          </div>
+          <span class="logo-wordmark" style="color:#1A3B6E;">Verixa</span>
+        </div>
+        <span class="logo-label">Light background</span>
+      </div>
+      <!-- Dark -->
+      <div class="logo-card" style="background:#1A3B6E;">
+        <div class="logo-mark-wrap">
+          <div class="logo-icon" style="background:rgba(0,200,150,0.2);border:1px solid rgba(0,200,150,0.3);">
+            <svg viewBox="0 0 44 44" fill="none" width="44" height="44">
+              <rect x="6" y="22" width="8" height="16" rx="2" fill="#00C896"/>
+              <rect x="18" y="13" width="8" height="25" rx="2" fill="rgba(0,200,150,0.5)"/>
+              <rect x="30" y="5" width="8" height="33" rx="2" fill="#fff"/>
+            </svg>
+          </div>
+          <span class="logo-wordmark" style="color:#fff;">Verixa</span>
+        </div>
+        <span class="logo-label" style="color:rgba(255,255,255,0.35);">Dark background</span>
+      </div>
+      <!-- Icon only -->
+      <div class="logo-card" style="background:var(--frost);">
+        <div class="logo-icon" style="background:#1A3B6E;width:56px;height:56px;border-radius:14px;">
+          <svg viewBox="0 0 44 44" fill="none" width="32" height="32">
+            <rect x="6" y="22" width="8" height="16" rx="2" fill="#00C896"/>
+            <rect x="18" y="13" width="8" height="25" rx="2" fill="rgba(0,200,150,0.5)"/>
+            <rect x="30" y="5" width="8" height="33" rx="2" fill="#fff"/>
+          </svg>
+        </div>
+        <span class="logo-label">Icon only — App icon</span>
+      </div>
+      <!-- Wordmark only -->
+      <div class="logo-card" style="background:#fff;">
+        <span class="logo-wordmark" style="color:#1A3B6E; font-size:32px;">Verixa</span>
+        <span class="logo-label">Wordmark only — Minimal use</span>
+      </div>
+      <!-- Mint on dark -->
+      <div class="logo-card" style="background:#0D1F45;">
+        <div class="logo-mark-wrap">
+          <div class="logo-icon" style="background:var(--mint); width:48px;height:48px;border-radius:12px;">
+            <svg viewBox="0 0 44 44" fill="none" width="26" height="26">
+              <rect x="6" y="22" width="8" height="16" rx="2" fill="#0D1F45"/>
+              <rect x="18" y="13" width="8" height="25" rx="2" fill="rgba(13,31,69,0.5)"/>
+              <rect x="30" y="5" width="8" height="33" rx="2" fill="#1A3B6E"/>
+            </svg>
+          </div>
+          <span class="logo-wordmark" style="color:#fff;">Verixa</span>
+        </div>
+        <span class="logo-label" style="color:rgba(255,255,255,0.3);">Accent variant</span>
+      </div>
+      <!-- Tagline -->
+      <div class="logo-card" style="background:#fff; gap:8px;">
+        <div class="logo-mark-wrap">
+          <div class="logo-icon" style="background:#1A3B6E;">
+            <svg viewBox="0 0 44 44" fill="none" width="26" height="26">
+              <rect x="6" y="22" width="8" height="16" rx="2" fill="#00C896"/>
+              <rect x="18" y="13" width="8" height="25" rx="2" fill="rgba(0,200,150,0.5)"/>
+              <rect x="30" y="5" width="8" height="33" rx="2" fill="#fff"/>
+            </svg>
+          </div>
+          <span class="logo-wordmark" style="color:#1A3B6E;">Verixa</span>
+        </div>
+        <span style="font-size:10px;color:var(--slate-light);letter-spacing:0.06em;text-transform:uppercase;">Financial intelligence platform</span>
+        <span class="logo-label">With tagline</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- COMPONENTS -->
+  <section id="components">
+    <p class="section-label">04 · UI components</p>
+    <h2 class="section-title">Core elements</h2>
+    <p class="section-desc">Consistent components built from the color and type system. Use these patterns across all Verixa touchpoints.</p>
+
+    <div class="components-grid">
+      <!-- Buttons -->
+      <div class="comp-card">
+        <p class="comp-title">Buttons</p>
+        <div class="btn-row">
+          <button class="btn btn-primary" style="width:100%;">Generate report →</button>
+          <button class="btn btn-secondary" style="width:100%;">Connect account</button>
+          <button class="btn btn-outline" style="width:100%;">Export data</button>
+          <button class="btn btn-ghost" style="width:100%;">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="comp-card">
+        <p class="comp-title">Status badges</p>
+        <div class="badge-row" style="margin-bottom:12px;">
+          <span class="badge badge-success">↑ Positive</span>
+          <span class="badge badge-info">Processing</span>
+          <span class="badge badge-warning">Pending</span>
+          <span class="badge badge-danger">Failed</span>
+          <span class="badge badge-neutral">Draft</span>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-success">↑ 12.4%</span>
+          <span class="badge badge-danger">↓ 3.1%</span>
+          <span class="badge badge-warning">→ 0.2%</span>
+          <span class="badge badge-info">Live</span>
+        </div>
+      </div>
+
+      <!-- Inputs -->
+      <div class="comp-card">
+        <p class="comp-title">Form inputs</p>
+        <div class="input-demo">
+          <div>
+            <label class="input-label">Company name</label>
+            <input class="input-field" type="text" placeholder="Verixa Technologies Ltd." readonly>
+          </div>
+          <div>
+            <label class="input-label">Base currency</label>
+            <input class="input-field" type="text" placeholder="USD — US Dollar" readonly>
+          </div>
+          <div>
+            <label class="input-label">Monthly budget</label>
+            <input class="input-field" type="text" placeholder="$50,000.00" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="comp-card">
+        <p class="comp-title">Metric cards</p>
+        <div class="metric-row-demo">
+          <div class="metric-mini">
+            <div>
+              <div class="metric-mini-label">Net revenue</div>
+              <div class="metric-mini-val">$284,500</div>
+            </div>
+            <span class="metric-mini-badge badge-success">↑ 12.4%</span>
+          </div>
+          <div class="metric-mini">
+            <div>
+              <div class="metric-mini-label">Active accounts</div>
+              <div class="metric-mini-val">3,841</div>
+            </div>
+            <span class="metric-mini-badge badge-success">↑ 5.1%</span>
+          </div>
+          <div class="metric-mini">
+            <div>
+              <div class="metric-mini-label">Monthly burn</div>
+              <div class="metric-mini-val">$61,200</div>
+            </div>
+            <span class="metric-mini-badge badge-warning" style="background:#FEF3E6;color:#A05C10;">→ 0.2%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- TYPOGRAPHY IN USE -->
+  <section>
+    <p class="section-label">05 · Typography in use</p>
+    <h2 class="section-title">Hero block example</h2>
+    <p class="section-desc">Serif for headlines, sans for everything below. Maintain this hierarchy consistently across marketing and product surfaces.</p>
+
+    <div class="type-example">
+      <p class="te-eyebrow">New · AI-powered forecasting</p>
+      <h1 class="te-h1">Your finances,<br>always one step ahead</h1>
+      <hr class="te-divider">
+      <h2 class="te-h2">Built for finance teams that move fast</h2>
+      <p class="te-body">Verixa consolidates every account, currency, and entity into a single intelligent dashboard — giving your team the numbers they need, the moment they need them. Stop chasing spreadsheets. Start making decisions.</p>
+      <p class="te-caption">Trusted by 3,841 finance teams · SOC 2 Type II certified · 99.98% uptime</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- UI PREVIEW -->
+  <section id="ui">
+    <p class="section-label">06 · Dashboard preview</p>
+    <h2 class="section-title">Product in context</h2>
+    <p class="section-desc">How the full brand system comes together in the Verixa product interface.</p>
+
+    <div class="dashboard-mock">
+      <div class="dash-top">
+        <div class="dash-top-left">
+          <div class="dash-top-icon">
+            <svg viewBox="0 0 16 16" fill="none" width="16" height="16">
+              <rect x="1" y="8" width="3" height="6" rx="1" fill="#1A3B6E"/>
+              <rect x="6.5" y="5" width="3" height="9" rx="1" fill="rgba(26,59,110,0.5)"/>
+              <rect x="12" y="2" width="3" height="12" rx="1" fill="#1A3B6E"/>
+            </svg>
+          </div>
+          <span class="dash-top-name">Verixa</span>
+        </div>
+        <div class="dash-top-nav">
+          <span class="active">Overview</span>
+          <span>Transactions</span>
+          <span>Reports</span>
+          <span>Settings</span>
+        </div>
+      </div>
+      <div class="dash-body">
+        <div class="dash-metrics">
+          <div class="dash-metric">
+            <div class="dash-metric-label">Net revenue</div>
+            <div class="dash-metric-val">$284,500</div>
+            <span class="dash-metric-sub badge-success" style="background:#E6FBF4;color:#0D7A5F;">↑ 12.4%</span>
+          </div>
+          <div class="dash-metric">
+            <div class="dash-metric-label">Active accounts</div>
+            <div class="dash-metric-val">3,841</div>
+            <span class="dash-metric-sub badge-success" style="background:#E6FBF4;color:#0D7A5F;">↑ 5.1%</span>
+          </div>
+          <div class="dash-metric">
+            <div class="dash-metric-label">Monthly burn</div>
+            <div class="dash-metric-val">$61,200</div>
+            <span class="dash-metric-sub" style="background:#FEF3E6;color:#A05C10;font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;display:inline-block;margin-top:6px;">→ 0.2%</span>
+          </div>
+          <div class="dash-metric">
+            <div class="dash-metric-label">Open invoices</div>
+            <div class="dash-metric-val">14</div>
+            <span class="dash-metric-sub" style="background:#FEECEC;color:#A33030;font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;display:inline-block;margin-top:6px;">↓ 2</span>
+          </div>
+        </div>
+        <div class="dash-row">
+          <div class="dash-panel">
+            <div class="dash-panel-title">Revenue — last 7 months</div>
+            <div class="dash-chart">
+              <div class="bar" style="height:40%;"></div>
+              <div class="bar" style="height:55%;"></div>
+              <div class="bar" style="height:45%;"></div>
+              <div class="bar" style="height:70%;"></div>
+              <div class="bar" style="height:60%;"></div>
+              <div class="bar navy" style="height:82%;"></div>
+              <div class="bar active" style="height:100%;"></div>
+            </div>
+          </div>
+          <div class="dash-panel">
+            <div class="dash-panel-title">Recent transactions</div>
+            <div class="dash-tx">
+              <div class="dash-tx-row">
+                <div class="dash-tx-left">
+                  <div class="dash-tx-dot" style="background:#00C896;"></div>
+                  <div><div class="dash-tx-name">Stripe payout</div><div class="dash-tx-date">Jun 3, 2026</div></div>
+                </div>
+                <span class="dash-tx-amount" style="color:#00A87E;">+$42,300</span>
+              </div>
+              <div class="dash-tx-row">
+                <div class="dash-tx-left">
+                  <div class="dash-tx-dot" style="background:#E24B4A;"></div>
+                  <div><div class="dash-tx-name">AWS infrastructure</div><div class="dash-tx-date">Jun 2, 2026</div></div>
+                </div>
+                <span class="dash-tx-amount" style="color:#A33030;">−$8,120</span>
+              </div>
+              <div class="dash-tx-row">
+                <div class="dash-tx-left">
+                  <div class="dash-tx-dot" style="background:#1A3B6E;"></div>
+                  <div><div class="dash-tx-name">Payroll cycle</div><div class="dash-tx-date">Jun 1, 2026</div></div>
+                </div>
+                <span class="dash-tx-amount" style="color:#A33030;">−$31,500</span>
+              </div>
+              <div class="dash-tx-row">
+                <div class="dash-tx-left">
+                  <div class="dash-tx-dot" style="background:#00C896;"></div>
+                  <div><div class="dash-tx-name">Enterprise contract</div><div class="dash-tx-date">May 31, 2026</div></div>
+                </div>
+                <span class="dash-tx-amount" style="color:#00A87E;">+$18,000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dash-cta">
+          <button class="dash-btn-p">Generate report →</button>
+          <button class="dash-btn-s">Export data</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- DO & DON'T -->
+  <section>
+    <p class="section-label">07 · Usage rules</p>
+    <h2 class="section-title">Do &amp; don't</h2>
+    <p class="section-desc">These rules protect brand consistency. They apply to every surface — marketing, product, and print.</p>
+
+    <div class="rules-grid">
+      <div class="rule-card do">
+        <span class="rule-badge do">Do</span>
+        <p class="rule-text">Use Trust Navy as the dominant color across all primary brand elements and navigation.</p>
+      </div>
+      <div class="rule-card dont">
+        <span class="rule-badge dont">Don't</span>
+        <p class="rule-text">Don't substitute the primary navy with other blues or mix in off-palette colors.</p>
+      </div>
+      <div class="rule-card do">
+        <span class="rule-badge do">Do</span>
+        <p class="rule-text">Reserve Meridian Mint exclusively for CTAs, positive data, and key interactive elements.</p>
+      </div>
+      <div class="rule-card dont">
+        <span class="rule-badge dont">Don't</span>
+        <p class="rule-text">Don't use the mint accent color for backgrounds, decorative patterns, or non-interactive elements.</p>
+      </div>
+      <div class="rule-card do">
+        <span class="rule-badge do">Do</span>
+        <p class="rule-text">Use DM Serif Display for all display-level headlines and major section titles.</p>
+      </div>
+      <div class="rule-card dont">
+        <span class="rule-badge dont">Don't</span>
+        <p class="rule-text">Don't use DM Serif Display for body text, UI labels, buttons, or small copy under 18px.</p>
+      </div>
+      <div class="rule-card do">
+        <span class="rule-badge do">Do</span>
+        <p class="rule-text">Maintain generous white space. Use Cloud Frost (#F0F4FB) as the page background consistently.</p>
+      </div>
+      <div class="rule-card dont">
+        <span class="rule-badge dont">Don't</span>
+        <p class="rule-text">Don't add drop shadows, gradients, or decorative effects that aren't in this system.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRAND FOOTER -->
+  <div class="brand-footer">
+    <div class="bf-left">
+      <p class="bf-name">Verixa</p>
+      <p class="bf-tag">Brand Guidelines v1.0 · June 2026</p>
+    </div>
+    <div class="bf-chips">
+      <span class="bf-chip">Primary — Trust Navy #1A3B6E</span>
+      <span class="bf-chip">Secondary — Cloud Frost #F0F4FB</span>
+      <span class="bf-chip">Tertiary — Ink Slate #3E4E6C</span>
+      <span class="bf-chip">Accent — Meridian Mint #00C896</span>
+      <span class="bf-chip">Fonts — DM Serif Display + Inter</span>
+    </div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>

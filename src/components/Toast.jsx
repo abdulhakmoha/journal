@@ -11,20 +11,20 @@ const Toast = ({ message, type = 'success', onClose }) => {
   }, [onClose]);
 
   const icons = {
-    success: <CheckCircle size={20} color="#10b981" />,
-    error: <AlertCircle size={20} color="#ef4444" />,
+    success: <CheckCircle size={20} color="#00C896" />,
+    error: <AlertCircle size={20} color="#C0392B" />,
     info: <Info size={20} color="var(--primary)" />
   };
 
   const colors = {
-    success: 'rgba(16, 185, 129, 0.1)',
-    error: 'rgba(239, 68, 68, 0.1)',
+    success: 'rgba(0, 200, 150, 0.1)',
+    error: 'rgba(192, 57, 43, 0.1)',
     info: 'var(--primary-glow)'
   };
 
   const borderColors = {
-    success: '#10b981',
-    error: '#ef4444',
+    success: '#00C896',
+    error: '#C0392B',
     info: 'var(--primary)'
   };
 
@@ -41,10 +41,10 @@ const Toast = ({ message, type = 'success', onClose }) => {
         minWidth: '320px',
         padding: '16px 20px',
         borderRadius: '12px',
-        background: 'rgba(15, 23, 42, 0.95)',
+        background: 'rgba(13, 31, 69, 0.95)',
         backdropFilter: 'blur(10px)',
         border: `1px solid ${borderColors[type]}`,
-        boxShadow: `0 10px 30px rgba(0,0,0,0.5), 0 0 15px ${borderColors[type]}33`,
+        boxShadow: `0 10px 30px rgba(13, 31, 69, 0.5), 0 0 15px ${borderColors[type]}33`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',

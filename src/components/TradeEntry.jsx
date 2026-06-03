@@ -17,9 +17,10 @@ const getImageUrl = (url) => {
 import { useNotification } from '../context/NotificationContext';
 import { useLanguage } from '../context/LanguageContext';
 
-const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) => {
+const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, user, onUpdateProfile }) => {
   const { showNotification } = useNotification();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [newRuleText, setNewRuleText] = useState('');
   const getInitialState = () => {
     // 1. Priority: If editing an existing trade, use that data
     if (initialData) {
@@ -202,6 +203,46 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
     }));
   };
 
+  const handleAddRule = async () => {
+    if (!newRuleText.trim()) return;
+    if (customRules.includes(newRuleText.trim())) {
+      showNotification('Rule exists already', 'error');
+      return;
+    }
+    const updatedRules = [...customRules, newRuleText.trim()];
+    
+    setFormData(prev => ({
+      ...prev,
+      rules: { ...prev.rules, [newRuleText.trim()]: false }
+    }));
+    
+    if (onUpdateProfile) {
+      await onUpdateProfile({ ...user, customRules: updatedRules });
+    }
+    
+    setNewRuleText('');
+  };
+
+  const handleDeleteRule = async (ruleToDelete) => {
+    const confirmMsg = language === 'so' 
+      ? `Ma hubtaa inaad tirtirto sharcigan: "${ruleToDelete}"?`
+      : `Are you sure you want to delete this rule: "${ruleToDelete}"?`;
+      
+    if (window.confirm(confirmMsg)) {
+      const updatedRules = customRules.filter(r => r !== ruleToDelete);
+      
+      setFormData(prev => {
+        const nextRules = { ...prev.rules };
+        delete nextRules[ruleToDelete];
+        return { ...prev, rules: nextRules };
+      });
+      
+      if (onUpdateProfile) {
+        await onUpdateProfile({ ...user, customRules: updatedRules });
+      }
+    }
+  };
+
   const handleSubmit = (e, completed = true) => {
     e.preventDefault();
 
@@ -366,7 +407,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
                     <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                       Pips Gained/Lost
                     </label>
-                    <input type="number" step="any" placeholder="e.g. +50" style={{ width: '100%', border: '1px solid var(--primary)', background: 'rgba(56, 189, 248, 0.05)' }} value={formData.pips} onChange={(e) => setFormData({...formData, pips: e.target.value})} />
+                    <input type="number" step="any" placeholder="e.g. +50" style={{ width: '100%', border: '1px solid var(--primary)', background: 'rgba(26, 59, 110, 0.05)' }} value={formData.pips} onChange={(e) => setFormData({...formData, pips: e.target.value})} />
                   </div>
                 )}
              </div>
@@ -396,12 +437,49 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {Object.keys(formData.rules).map(rule => (
-                <label key={rule} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px', borderRadius: '8px', background: formData.rules[rule] ? 'rgba(16, 185, 129, 0.1)' : 'transparent' }}>
-                  <input type="checkbox" checked={formData.rules[rule]} onChange={() => handleRuleToggle(rule)} />
-                  <span style={{ fontSize: '0.85rem', color: formData.rules[rule] ? 'var(--text-main)' : 'var(--text-muted)' }}>{rule}</span>
-                </label>
+                <div key={rule} style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  alignItems: 'center', 
+                  padding: '4px 10px', 
+                  borderRadius: '8px', 
+                  background: formData.rules[rule] ? 'rgba(0, 200, 150, 0.08)' : 'transparent',
+                  border: '1px solid var(--border)'
+                }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', flex: 1, padding: '6px 0' }}>
+                    <input type="checkbox" checked={formData.rules[rule]} onChange={() => handleRuleToggle(rule)} />
+                    <span style={{ fontSize: '0.85rem', color: formData.rules[rule] ? 'var(--text-main)' : 'var(--text-sub)' }}>{rule}</span>
+                  </label>
+                  <button 
+                    type="button" 
+                    onClick={() => handleDeleteRule(rule)} 
+                    style={{ background: 'transparent', border: 'none', color: 'var(--danger)', cursor: 'pointer', opacity: 0.6, fontSize: '0.9rem', padding: '4px 8px' }}
+                    title="Delete rule"
+                  >
+                    ✕
+                  </button>
+                </div>
               ))}
               {Object.keys(formData.rules).length === 0 && <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center', padding: '20px' }}>No rules defined.</p>}
+            </div>
+
+            {/* Add new rule */}
+            <div style={{ display: 'flex', gap: '8px', marginTop: '15px', paddingTop: '15px', borderTop: '1px solid var(--border)' }}>
+              <input 
+                type="text" 
+                placeholder={language === 'so' ? 'Ku dar sharci...' : 'Add new rule...'} 
+                value={newRuleText} 
+                onChange={(e) => setNewRuleText(e.target.value)} 
+                style={{ padding: '8px 12px', fontSize: '0.8rem', flex: 1 }}
+              />
+              <button 
+                type="button" 
+                onClick={handleAddRule} 
+                className="btn-primary" 
+                style={{ padding: '8px 16px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+              >
+                + Add
+              </button>
             </div>
           </div>
         </div>
@@ -482,7 +560,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts }) 
 
         <div style={{ display: 'flex', gap: '15px' }}>
           {!initialData && (
-            <button type="button" className="btn-outline" style={{ padding: '15px', color: 'var(--danger)', borderColor: 'rgba(239,68,68,0.2)' }} onClick={resetForm}>
+            <button type="button" className="btn-outline" style={{ padding: '15px', color: 'var(--danger)', borderColor: 'rgba(192, 57, 43, 0.2)' }} onClick={resetForm}>
               {t('resetForm')}
             </button>
           )}

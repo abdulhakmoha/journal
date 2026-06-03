@@ -78,12 +78,18 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
   const [accForm, setAccForm] = useState({ name: '', target: 8, type: 'Challenge', initialBalance: 10000, website: '', profitSplit: '' });
   const [editingAccId, setEditingAccId] = useState(null);
   const [editAccForm, setEditAccForm] = useState(null);
+  const [portfolioTab, setPortfolioTab] = useState('live');
   const [newOption, setNewOption] = useState('');
   const [newBTOption, setNewBTOption] = useState('');
   const [newFieldName, setNewFieldName] = useState('');
   const [newBTFieldName, setNewBTFieldName] = useState('');
   const [activeFieldIdx, setActiveFieldIdx] = useState(null);
   const [activeBTFieldIdx, setActiveBTFieldIdx] = useState(null);
+
+  const openAddModal = (defaultType) => {
+    setAccForm({ name: '', target: 8, type: defaultType, initialBalance: 10000, website: '', profitSplit: '' });
+    setShowAddModal(true);
+  };
 
   const addAccount = () => {
     if (accForm.name.trim()) {
@@ -195,84 +201,179 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
             </div>
           </section>
 
-          {/* Portfolio Management */}
-          <section className="glass-card" style={{ padding: '30px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h4 style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
-                <Activity size={18} color="var(--success)" />
-                Trading Portfolios
-              </h4>
-              <button 
-                className="btn-primary" 
-                onClick={() => setShowAddModal(true)} 
-                style={{ padding: '8px 16px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
-              >
-                <Plus size={16} /> New Portfolio
-              </button>
+          {/* Portfolio Management - Tabbed */}
+          <section className="glass-card" style={{ padding: '0', overflow: 'hidden' }}>
+            {/* Section Header */}
+            <div style={{ padding: '24px 28px 0 28px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <div>
+                  <div style={{ fontSize: '0.6rem', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '3px' }}>Manage</div>
+                  <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: 0, fontSize: '1rem' }}>
+                    <Activity size={16} color="var(--success)" />
+                    Trading Portfolios
+                  </h4>
+                </div>
+                <button 
+                  className="btn-primary" 
+                  onClick={() => openAddModal(portfolioTab === 'live' ? 'Challenge' : 'Backtesting')} 
+                  style={{ padding: '8px 16px', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+                >
+                  <Plus size={15} /> New Portfolio
+                </button>
+              </div>
+
+              {/* Tabs */}
+              <div style={{ display: 'flex', gap: '0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                {[
+                  { key: 'live', label: 'Live Trading', icon: '📈', color: 'var(--success)', count: accounts.filter(a => a.type !== 'Backtesting').length },
+                  { key: 'backtest', label: 'Backtesting', icon: '🔬', color: 'var(--primary)', count: accounts.filter(a => a.type === 'Backtesting').length },
+                ].map(tab => (
+                  <button
+                    key={tab.key}
+                    onClick={() => setPortfolioTab(tab.key)}
+                    style={{
+                      padding: '11px 20px',
+                      background: 'transparent',
+                      border: 'none',
+                      borderBottom: portfolioTab === tab.key ? `2px solid ${tab.color}` : '2px solid transparent',
+                      color: portfolioTab === tab.key ? tab.color : 'var(--text-muted)',
+                      fontWeight: portfolioTab === tab.key ? '700' : '500',
+                      fontSize: '0.82rem',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '7px',
+                      transition: 'all 0.15s ease',
+                      marginBottom: '-1px',
+                      letterSpacing: '0.2px'
+                    }}
+                  >
+                    <span>{tab.icon}</span>
+                    {tab.label}
+                    <span style={{
+                      background: portfolioTab === tab.key ? `${tab.color}22` : 'rgba(255,255,255,0.05)',
+                      color: portfolioTab === tab.key ? tab.color : 'var(--text-muted)',
+                      fontSize: '0.65rem', fontWeight: '800',
+                      padding: '2px 7px', borderRadius: '20px'
+                    }}>{tab.count}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {accounts.map((acc) => (
-              <div key={acc._id} className="glass" style={{ padding: '20px', borderRadius: '12px', border: editingAccId === acc._id ? '1px solid var(--primary)' : '1px solid transparent' }}>
-                {editingAccId === acc._id ? (
-                  <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 1fr 1fr 0.8fr auto', gap: '10px', alignItems: 'end' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Name</label>
-                      <input type="text" value={editAccForm.name} onChange={(e) => setEditAccForm({...editAccForm, name: e.target.value})} style={{ padding: '8px' }} />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Type</label>
-                      <select value={editAccForm.type} onChange={(e) => setEditAccForm({...editAccForm, type: e.target.value})} style={{ padding: '8px' }}>
-                        <option>Challenge</option>
-                        <option>Funded</option>
-                        <option>Personal</option>
-                        <option>Backtesting</option>
-                      </select>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Balance</label>
-                      <input type="number" value={editAccForm.initialBalance} onChange={(e) => setEditAccForm({...editAccForm, initialBalance: e.target.value})} style={{ padding: '8px' }} />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Website</label>
-                      <input type="text" value={editAccForm.website || ''} onChange={(e) => setEditAccForm({...editAccForm, website: e.target.value})} style={{ padding: '8px' }} placeholder="ftmo.com" />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Split %</label>
-                      <input type="text" value={editAccForm.profitSplit || ''} onChange={(e) => setEditAccForm({...editAccForm, profitSplit: e.target.value})} style={{ padding: '8px' }} placeholder="80" />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Target %</label>
-                      <input type="number" value={editAccForm.target} onChange={(e) => setEditAccForm({...editAccForm, target: e.target.value})} style={{ padding: '8px' }} />
-                    </div>
-                    <div style={{ display: 'flex', gap: '5px' }}>
-                      <button onClick={saveEdit} style={{ background: 'var(--success)', color: 'white', border: 'none', borderRadius: '8px', padding: '10px', cursor: 'pointer' }}>Save</button>
-                      <button onClick={() => setEditingAccId(null)} style={{ background: 'transparent', color: 'var(--text-muted)', border: 'none', cursor: 'pointer', fontSize: '0.7rem' }}>Cancel</button>
-                    </div>
+            {/* Account List */}
+            <div style={{ padding: '16px 28px 28px 28px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {(() => {
+                const filtered = accounts.filter(a =>
+                  portfolioTab === 'live' ? a.type !== 'Backtesting' : a.type === 'Backtesting'
+                );
+                const accentColor = portfolioTab === 'live' ? 'var(--success)' : 'var(--primary)';
+                const accentBg = portfolioTab === 'live' ? 'rgba(16,185,129,0.06)' : 'rgba(13,240,166,0.06)';
+
+                if (filtered.length === 0) return (
+                  <div style={{ textAlign: 'center', padding: '40px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '2rem' }}>{portfolioTab === 'live' ? '📈' : '🔬'}</span>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>
+                      {portfolioTab === 'live' ? 'No live trading portfolios yet.' : 'No backtesting portfolios yet.'}
+                    </p>
+                    <button
+                      className="btn-primary"
+                      onClick={() => openAddModal(portfolioTab === 'live' ? 'Challenge' : 'Backtesting')}
+                      style={{ fontSize: '0.78rem', padding: '8px 18px', display: 'flex', alignItems: 'center', gap: '6px' }}
+                    >
+                      <Plus size={14} /> Create One
+                    </button>
                   </div>
-                ) : (
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <h4 style={{ marginBottom: '4px' }}>{acc.name} <span style={{ color: 'var(--success)', fontSize: '0.8rem', marginLeft: '10px' }}>(${acc.initialBalance?.toLocaleString()})</span></h4>
-                      <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
-                        <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--primary)', textTransform: 'uppercase' }}>{acc.type}</span>
-                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Target: {acc.target}%</span>
-                        {acc.website && <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Site: {acc.website}</span>}
-                        {acc.profitSplit && <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Split: {acc.profitSplit}%</span>}
+                );
+
+                return filtered.map((acc) => (
+                  <div
+                    key={acc._id}
+                    style={{
+                      padding: '16px 18px',
+                      borderRadius: '12px',
+                      background: editingAccId === acc._id ? accentBg : 'rgba(255,255,255,0.02)',
+                      border: editingAccId === acc._id ? `1px solid ${accentColor}` : '1px solid rgba(255,255,255,0.05)',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    {editingAccId === acc._id ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Name</label>
+                            <input type="text" value={editAccForm.name} onChange={(e) => setEditAccForm({...editAccForm, name: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} />
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Type</label>
+                            <select value={editAccForm.type} onChange={(e) => setEditAccForm({...editAccForm, type: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }}>
+                              <option>Challenge</option>
+                              <option>Funded</option>
+                              <option>Personal</option>
+                              <option>Backtesting</option>
+                            </select>
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Balance</label>
+                            <input type="number" value={editAccForm.initialBalance} onChange={(e) => setEditAccForm({...editAccForm, initialBalance: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} />
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Target %</label>
+                            <input type="number" value={editAccForm.target} onChange={(e) => setEditAccForm({...editAccForm, target: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} />
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Website</label>
+                            <input type="text" value={editAccForm.website || ''} onChange={(e) => setEditAccForm({...editAccForm, website: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} placeholder="ftmo.com" />
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Split %</label>
+                            <input type="text" value={editAccForm.profitSplit || ''} onChange={(e) => setEditAccForm({...editAccForm, profitSplit: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} placeholder="80" />
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                          <button onClick={() => setEditingAccId(null)} style={{ background: 'transparent', color: 'var(--text-muted)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontSize: '0.8rem' }}>Cancel</button>
+                          <button onClick={saveEdit} style={{ background: accentColor === 'var(--success)' ? 'var(--success)' : 'var(--primary)', color: '#08090a', border: 'none', borderRadius: '8px', padding: '8px 20px', cursor: 'pointer', fontWeight: '700', fontSize: '0.8rem' }}>Save Changes</button>
+                        </div>
                       </div>
-                    </div>
-                    <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                      <button onClick={() => startEditing(acc)} style={{ background: 'transparent', border: 'none', color: 'var(--primary)', opacity: 0.7, cursor: 'pointer' }}>
-                        <Edit3 size={16} />
-                      </button>
-                      <button onClick={() => onDeleteAccount(acc._id)} style={{ background: 'transparent', border: 'none', color: 'var(--danger)', opacity: 0.5, cursor: 'pointer' }}>
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
+                    ) : (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                          {/* Type badge / icon */}
+                          <div style={{
+                            width: '38px', height: '38px', borderRadius: '10px',
+                            background: accentBg,
+                            border: `1px solid ${accentColor}30`,
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            fontSize: '1.1rem', flexShrink: 0
+                          }}>
+                            {acc.type === 'Challenge' ? '⚔️' : acc.type === 'Funded' ? '💰' : acc.type === 'Personal' ? '👤' : '🔬'}
+                          </div>
+                          <div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                              <span style={{ fontWeight: '700', fontSize: '0.9rem' }}>{acc.name}</span>
+                              <span style={{ fontSize: '0.65rem', fontWeight: '700', color: accentColor, background: accentBg, padding: '2px 8px', borderRadius: '20px', border: `1px solid ${accentColor}30`, textTransform: 'uppercase' }}>{acc.type}</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                              <span style={{ fontSize: '0.75rem', color: 'var(--success)', fontWeight: '700' }}>${acc.initialBalance?.toLocaleString()}</span>
+                              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Target: <span style={{ color: accentColor }}>{acc.target}%</span></span>
+                              {acc.website && <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>🌐 {acc.website}</span>}
+                              {acc.profitSplit && <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Split: {acc.profitSplit}%</span>}
+                            </div>
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                          <button onClick={() => startEditing(acc)} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '8px', color: 'var(--text-muted)', padding: '7px 10px', cursor: 'pointer', display: 'flex' }}>
+                            <Edit3 size={14} />
+                          </button>
+                          <button onClick={() => onDeleteAccount(acc._id)} style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: '8px', color: 'var(--danger)', padding: '7px 10px', cursor: 'pointer', display: 'flex' }}>
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              ))}
+                ));
+              })()}
             </div>
 
             {/* Add Portfolio Modal */}

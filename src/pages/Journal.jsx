@@ -36,13 +36,16 @@ const getImageUrl = (url) => {
   return `${cleanBase}${cleanUrl}`;
 };
 
-const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
+const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, setSelectedAccount }) => {
   const { t } = useLanguage();
   const [view, setView] = useState('list');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
-  const [filterAccount, setFilterAccount] = useState('All');
+  const filterAccount = selectedAccount === 'All Accounts' ? 'All' : selectedAccount;
+  const setFilterAccount = (val) => {
+    setSelectedAccount(val === 'All' ? 'All Accounts' : val);
+  };
   const [expandedTrade, setExpandedTrade] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [visibleColumns, setVisibleColumns] = useState(() => {
@@ -435,7 +438,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                               borderRadius: '12px',
                               fontSize: '0.8rem',
                               fontWeight: 'bold',
-                              background: trade.status?.toLowerCase().includes('win') ? 'rgba(16, 185, 129, 0.15)' : trade.status?.toLowerCase().includes('loss') ? 'rgba(239, 68, 68, 0.15)' : 'rgba(56, 189, 248, 0.15)',
+                              background: trade.status?.toLowerCase().includes('win') ? 'rgba(0, 200, 150, 0.15)' : trade.status?.toLowerCase().includes('loss') ? 'rgba(192, 57, 43, 0.15)' : 'rgba(26, 59, 110, 0.15)',
                               color: trade.status?.toLowerCase().includes('win') ? 'var(--success)' : trade.status?.toLowerCase().includes('loss') ? 'var(--danger)' : 'var(--primary)'
                             }}>
                               {trade.status}
@@ -577,7 +580,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                                             borderRadius: '12px',
                                             fontSize: '0.75rem',
                                             fontWeight: 'bold',
-                                            background: 'rgba(16, 185, 129, 0.15)',
+                                            background: 'rgba(0, 200, 150, 0.15)',
                                             color: 'var(--success)'
                                           }}>
                                             {t(trade.postMood?.toLowerCase()) || trade.postMood}
@@ -670,8 +673,8 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                           fontSize: '0.7rem', 
                           padding: '6px 8px', 
                           borderRadius: '6px', 
-                          background: t.status === 'Win' ? 'linear-gradient(to right, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05))' : t.status === 'Loss' ? 'linear-gradient(to right, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05))' : 'rgba(255,255,255,0.05)',
-                          borderLeft: `3px solid ${t.status === 'Win' ? '#10b981' : t.status === 'Loss' ? '#ef4444' : 'var(--text-muted)'}`,
+                          background: t.status === 'Win' ? 'linear-gradient(to right, rgba(0, 200, 150, 0.15), rgba(0, 200, 150, 0.05))' : t.status === 'Loss' ? 'linear-gradient(to right, rgba(192, 57, 43, 0.15), rgba(192, 57, 43, 0.05))' : 'rgba(255,255,255,0.05)',
+                          borderLeft: `3px solid ${t.status === 'Win' ? '#00C896' : t.status === 'Loss' ? '#C0392B' : 'var(--text-muted)'}`,
                           cursor: 'pointer',
                           display: 'flex',
                           flexDirection: 'column',
@@ -682,13 +685,13 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts }) => {
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <span style={{ 
                             fontWeight: 'bold', 
-                            color: t.status === 'Win' ? '#10b981' : t.status === 'Loss' ? '#ef4444' : 'var(--text-muted)' 
+                            color: t.status === 'Win' ? '#00C896' : t.status === 'Loss' ? '#C0392B' : 'var(--text-muted)' 
                           }}>
                             {t.status.toUpperCase()}
                           </span>
                           <span style={{ 
                             fontWeight: 'bold',
-                            color: t.status === 'Win' ? '#10b981' : t.status === 'Loss' ? '#ef4444' : 'var(--text-muted)'
+                            color: t.status === 'Win' ? '#00C896' : t.status === 'Loss' ? '#C0392B' : 'var(--text-muted)'
                           }}>
                             {t.status === 'Loss' && !percentStr.includes('-') ? '-' : ''}{percentStr}
                           </span>
