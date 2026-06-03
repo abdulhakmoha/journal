@@ -139,12 +139,12 @@ const Performance = ({ trades, accounts }) => {
         <div className="glass-card" style={{ padding: '25px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
             <TrendingUp size={18} color="var(--success)" />
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Net Profit / Loss</p>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Net Profit / Loss</p>
           </div>
-          <h3 style={{ fontSize: '1.8rem', fontWeight: '900', color: parseFloat(metrics.profit) >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '8px' }}>
+          <h3 style={{ fontSize: '32px', fontWeight: '900', color: parseFloat(metrics.profit) >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '8px' }}>
             {parseFloat(metrics.profit) >= 0 ? '+' : ''}{metrics.profit}%
           </h3>
-          <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
             Total percentage growth/loss. <span style={{ color: 'var(--primary)' }}>Positive = profitable</span>
           </p>
         </div>
@@ -153,12 +153,12 @@ const Performance = ({ trades, accounts }) => {
         <div className="glass-card" style={{ padding: '25px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
             <Activity size={18} color="var(--primary)" />
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Win Rate</p>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Win Rate</p>
           </div>
-          <h3 style={{ fontSize: '1.8rem', fontWeight: '900', color: metrics.winRate >= 50 ? 'var(--success)' : 'var(--warning)', marginBottom: '8px' }}>
+          <h3 style={{ fontSize: '32px', fontWeight: '900', color: metrics.winRate >= 50 ? 'var(--success)' : 'var(--warning)', marginBottom: '8px' }}>
             {metrics.winRate}%
           </h3>
-          <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
             Out of {metrics.totalTrades} trades, <span style={{ color: 'var(--primary)' }}>{Math.round(metrics.totalTrades * metrics.winRate / 100)} were winners</span>
           </p>
         </div>
@@ -167,12 +167,12 @@ const Performance = ({ trades, accounts }) => {
         <div className="glass-card" style={{ padding: '25px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
             <Target size={18} color="var(--warning)" />
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Profit Ratio</p>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Profit Ratio</p>
           </div>
-          <h3 style={{ fontSize: '1.8rem', fontWeight: '900', color: parseFloat(metrics.profitFactor) >= 1.5 ? 'var(--success)' : 'var(--danger)', marginBottom: '8px' }}>
+          <h3 style={{ fontSize: '32px', fontWeight: '900', color: parseFloat(metrics.profitFactor) >= 1.5 ? 'var(--success)' : 'var(--danger)', marginBottom: '8px' }}>
             {metrics.profitFactor}
           </h3>
-          <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
             For every 1% lost, you made <span style={{ color: 'var(--primary)' }}>{metrics.profitFactor}%</span>. Above 1.5 = good.
           </p>
         </div>
@@ -181,12 +181,12 @@ const Performance = ({ trades, accounts }) => {
         <div className="glass-card" style={{ padding: '25px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
             <PieChart size={18} color="var(--accent)" />
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Avg Gain / Trade</p>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Avg Gain / Trade</p>
           </div>
-          <h3 style={{ fontSize: '1.8rem', fontWeight: '900', color: parseFloat(metrics.expectancy) >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '8px' }}>
+          <h3 style={{ fontSize: '32px', fontWeight: '900', color: parseFloat(metrics.expectancy) >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '8px' }}>
             {metrics.expectancy}%
           </h3>
-          <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
             Expected profit per trade on average. <span style={{ color: 'var(--primary)' }}>Must be positive</span>
           </p>
         </div>
@@ -199,14 +199,14 @@ const Performance = ({ trades, accounts }) => {
           <h4 style={{ marginBottom: '25px', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <Calendar size={18} color="var(--primary)" /> Your Best & Worst Trading Days
           </h4>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '20px' }}>Which day of the week do you perform best?</p>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '20px' }}>Which day of the week do you perform best?</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', height: '200px', gap: '15px' }}>
             {dayData.map((d, i) => {
               const maxPnl = Math.max(...dayData.map(x => Math.abs(x.pnl)), 100);
               const height = (Math.abs(d.pnl) / maxPnl) * 150;
               return (
                 <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 'bold', color: d.pnl >= 0 ? 'var(--success)' : 'var(--danger)' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 'bold', color: d.pnl >= 0 ? 'var(--success)' : 'var(--danger)' }}>
                     {d.pnl !== 0 ? `${d.pnl > 0 ? '+' : ''}${Math.round(d.pnl)}` : ''}
                   </div>
                   <motion.div 
@@ -219,7 +219,7 @@ const Performance = ({ trades, accounts }) => {
                       opacity: 0.8
                     }}
                   />
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{d.day.substring(0, 3)}</span>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{d.day.substring(0, 3)}</span>
                 </div>
               );
             })}
@@ -231,11 +231,11 @@ const Performance = ({ trades, accounts }) => {
           <h4 style={{ marginBottom: '25px', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <Clock size={18} color="var(--accent)" /> Which Session Makes You Money?
           </h4>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '20px' }}>London, New York, Asia — where is your real edge?</p>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '20px' }}>London, New York, Asia — where is your real edge?</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {sessionData.map((s, i) => (
               <div key={i}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '13px' }}>
                   <span style={{ fontWeight: 'bold' }}>{s.session}</span>
                   <span style={{ color: s.pnl >= 0 ? 'var(--success)' : 'var(--danger)' }}>
                     {s.pnl.toLocaleString()}% ({s.count} trades)
@@ -262,7 +262,7 @@ const Performance = ({ trades, accounts }) => {
           </h4>
         </div>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+          <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '13px', color: 'var(--text-muted)' }}>
             <tr>
               <th style={{ padding: '15px 25px', textAlign: 'left' }}>PAIR</th>
               <th style={{ padding: '15px 25px', textAlign: 'left' }}>TRADES</th>
@@ -272,7 +272,7 @@ const Performance = ({ trades, accounts }) => {
           </thead>
           <tbody>
             {pairData.map((p, i) => (
-              <tr key={i} style={{ borderBottom: '1px solid var(--border)', fontSize: '0.9rem' }}>
+              <tr key={i} style={{ borderBottom: '1px solid var(--border)', fontSize: '14px' }}>
                 <td style={{ padding: '15px 25px', fontWeight: 'bold' }}>{p.pair}</td>
                 <td style={{ padding: '15px 25px' }}>{p.count}</td>
                 <td style={{ padding: '15px 25px' }}>

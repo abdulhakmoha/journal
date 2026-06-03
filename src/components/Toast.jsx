@@ -53,7 +53,7 @@ const Toast = ({ message, type = 'success', onClose }) => {
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         {icons[type]}
-        <span style={{ color: 'white', fontSize: '0.9rem', fontWeight: '500' }}>{message}</span>
+        <span style={{ color: 'white', fontSize: '14px', fontWeight: '500' }}>{message}</span>
       </div>
       <button 
         onClick={onClose}

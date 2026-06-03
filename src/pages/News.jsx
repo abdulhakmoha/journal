@@ -11,8 +11,8 @@ const News = () => {
         </div>
         <div style={{ display: 'flex', gap: '15px' }}>
            <div className="glass" style={{ padding: '8px 15px', borderRadius: '10px', borderLeft: '4px solid #ef4444' }}>
-              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>HIGH IMPACT</span>
-              <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#ef4444' }}>RED FOLDERS</span>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block' }}>HIGH IMPACT</span>
+              <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#ef4444' }}>RED FOLDERS</span>
            </div>
         </div>
       </header>
@@ -41,7 +41,7 @@ const News = () => {
         {/* Pro Trading Tips */}
         <aside style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
           <div className="glass-card" style={{ padding: '20px' }}>
-            <h4 style={{ fontSize: '1rem', marginBottom: '15px', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <h4 style={{ fontSize: '14px', marginBottom: '15px', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '10px' }}>
               <Info size={18} />
               News Protocol
             </h4>
@@ -52,8 +52,8 @@ const News = () => {
                  { t: 'Analysis', d: 'Focus on Actual vs Forecast deviation.', c: 'var(--primary)' }
                ].map((tip, i) => (
                  <div key={i} style={{ padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', borderLeft: `3px solid ${tip.c}` }}>
-                    <p style={{ fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '4px' }}>{tip.t}</p>
-                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{tip.d}</p>
+                    <p style={{ fontSize: '13px', fontWeight: 'bold', marginBottom: '4px' }}>{tip.t}</p>
+                    <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{tip.d}</p>
                  </div>
                ))}
             </div>
@@ -61,10 +61,10 @@ const News = () => {
 
           <div className="glass-card" style={{ padding: '20px', textAlign: 'center' }}>
             <Globe size={40} color="var(--primary)" style={{ opacity: 0.2, marginBottom: '15px' }} />
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: '1.5' }}>
               "The market is a device for transferring money from the impatient to the patient."
             </p>
-            <p style={{ fontSize: '0.7rem', color: 'var(--primary)', marginTop: '10px' }}>— Warren Buffett</p>
+            <p style={{ fontSize: '11px', color: 'var(--primary)', marginTop: '10px' }}>— Warren Buffett</p>
           </div>
         </aside>
       </div>

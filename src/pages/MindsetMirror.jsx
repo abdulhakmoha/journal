@@ -115,7 +115,7 @@ const MindsetMirror = () => {
                   }}
                 >
                   <m.icon size={24} />
-                  <span style={{ fontSize: '0.8rem', fontWeight: '600' }}>{m.label}</span>
+                  <span style={{ fontSize: '13px', fontWeight: '600' }}>{m.label}</span>
                 </button>
               ))}
             </div>
@@ -162,7 +162,7 @@ const MindsetMirror = () => {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0 }}
-                    style={{ color: 'var(--success)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px' }}
+                    style={{ color: 'var(--success)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}
                   >
                     <CheckCircle size={16} />
                     Insight Saved!
@@ -192,11 +192,11 @@ const MindsetMirror = () => {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                         {new Date(entry.timestamp).toLocaleDateString()}
                       </span>
                       <span style={{
-                        fontSize: '0.65rem',
+                        fontSize: '11px',
                         fontWeight: 'bold',
                         padding: '2px 8px',
                         borderRadius: '10px',
@@ -213,7 +213,7 @@ const MindsetMirror = () => {
                       <Trash2 size={14} />
                     </button>
                   </div>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', lineHeight: '1.6' }}>
+                  <p style={{ fontSize: '14px', color: 'var(--text-main)', lineHeight: '1.6' }}>
                     {entry.reflection}
                   </p>
                 </div>
@@ -252,7 +252,7 @@ const MindsetMirror = () => {
             </div>
             <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                {chartData.map(d => (
-                 <div key={d.name} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.75rem' }}>
+                 <div key={d.name} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px' }}>
                     <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: d.color }}></div>
                     <span style={{ color: 'var(--text-muted)' }}>{d.name}:</span>
                     <span style={{ fontWeight: 'bold' }}>{d.value}</span>
@@ -263,7 +263,7 @@ const MindsetMirror = () => {
 
           <section className="glass" style={{ padding: '25px' }}>
             <h4 style={{ marginBottom: '15px', color: 'var(--primary)' }}>Mindset Tip</h4>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
               "The market is a device for transferring money from the impatient to the patient."
               <br /><br />
               Observe your moods. Aggressive moods often lead to over-trading. Calm moods lead to better execution.

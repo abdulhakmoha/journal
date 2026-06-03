@@ -134,7 +134,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
                         setSelectedAccount(accounts.find(a => a._id === e.target.value));
                       }
                     }}
-                    style={{ flex: 1, padding: '15px', fontSize: '1rem' }}
+                    style={{ flex: 1, padding: '15px', fontSize: '14px' }}
                   >
                     {accounts.map(acc => (
                       <option key={acc._id} value={acc._id}>{acc.name} (${acc.initialBalance.toLocaleString()})</option>
@@ -151,7 +151,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
                       value={customBalance} 
                       onChange={(e) => setCustomBalance(e.target.value)} 
                       placeholder="Enter Manual Balance"
-                      style={{ width: '100%', padding: '15px 15px 15px 35px', fontSize: '1.2rem', fontWeight: 'bold', border: '1px solid var(--success)', background: 'rgba(16, 185, 129, 0.05)' }}
+                      style={{ width: '100%', padding: '15px 15px 15px 35px', fontSize: '16px', fontWeight: 'bold', border: '1px solid var(--success)', background: 'rgba(16, 185, 129, 0.05)' }}
                     />
                   </div>
                 )}
@@ -215,25 +215,25 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
                   <Plus size={20} />
                 </button>
               </div>
-              <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '8px' }}>Asset selection automatically adjusts the calculation logic.</p>
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '8px' }}>Asset selection automatically adjusts the calculation logic.</p>
             </div>
 
           </div>
 
           <div style={{ marginTop: '40px', padding: '30px', background: 'rgba(56, 189, 248, 0.05)', borderRadius: '20px', border: '1px solid rgba(56, 189, 248, 0.1)', textAlign: 'center' }}>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '10px' }}>RECOMMENDED LOT SIZE</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '10px' }}>RECOMMENDED LOT SIZE</p>
             <h1 style={{ fontSize: '4rem', fontWeight: '900', color: 'var(--primary)', letterSpacing: '-2px' }}>
-              {lotSize} <span style={{ fontSize: '1.5rem', fontWeight: '400', color: 'var(--text-muted)' }}>Lots</span>
+              {lotSize} <span style={{ fontSize: '22px', fontWeight: '400', color: 'var(--text-muted)' }}>Lots</span>
             </h1>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginTop: '20px' }}>
                <div>
-                 <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>TOTAL RISK</p>
-                 <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--danger)' }}>${parseFloat(riskAmount).toLocaleString()}</p>
+                 <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>TOTAL RISK</p>
+                 <p style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--danger)' }}>${parseFloat(riskAmount).toLocaleString()}</p>
                </div>
                <div style={{ width: '1px', height: '40px', background: 'var(--border)' }}></div>
                <div>
-                 <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>BALANCE</p>
-                 <p style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                 <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>BALANCE</p>
+                 <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
                    ${(isCustom ? parseFloat(customBalance) : (selectedAccount?.initialBalance || 0)).toLocaleString()}
                  </p>
                </div>
@@ -247,7 +247,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
               <h4 style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <ShieldCheck size={18} color="var(--success)" /> Safety Rules
               </h4>
-              <ul style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <ul style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <li style={{ display: 'flex', gap: '10px' }}>
                   <div style={{ minWidth: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)', marginTop: '6px' }}></div>
                   Never risk more than 2% per trade.
@@ -266,9 +266,9 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
            <div className="glass" style={{ padding: '25px', borderRadius: '20px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
                 <AlertCircle size={24} color="var(--warning)" />
-                <h4 style={{ fontSize: '0.9rem' }}>Risk Tip</h4>
+                <h4 style={{ fontSize: '14px' }}>Risk Tip</h4>
               </div>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
                 Always round down your lot size if you are unsure. Capital preservation is the only way to stay in the game for the long run.
               </p>
            </div>
@@ -313,7 +313,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
 
               <form onSubmit={handleCreateAccount} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                  <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                     Portfolio Name
                   </label>
                   <input 
@@ -326,7 +326,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                  <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                     Portfolio Type
                   </label>
                   <select 
@@ -343,7 +343,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                    <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                       Website
                     </label>
                     <input 
@@ -356,7 +356,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                    <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                       Profit Split (%)
                     </label>
                     <select 
@@ -377,7 +377,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                  <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                     Starting Balance
                   </label>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
@@ -395,7 +395,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
                             background: isSelected ? 'rgba(13, 240, 166, 0.1)' : 'rgba(255,255,255,0.02)',
                             color: isSelected ? 'var(--primary)' : 'var(--text-muted)',
                             fontWeight: '750',
-                            fontSize: '0.85rem',
+                            fontSize: '13px',
                             cursor: 'pointer',
                             transition: 'all 0.15s ease'
                           }}
@@ -408,13 +408,13 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
                   
                   {/* Custom Balance option */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '5px' }}>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Or Custom Balance:</span>
+                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Or Custom Balance:</span>
                     <input 
                       type="number" 
                       placeholder="Custom Balance"
                       value={[5000, 10000, 20000, 50000, 100000, 200000].includes(Number(newAccountForm.initialBalance)) ? '' : newAccountForm.initialBalance}
                       onChange={(e) => setNewAccountForm({...newAccountForm, initialBalance: e.target.value})}
-                      style={{ flex: 1, padding: '8px 12px', fontSize: '0.85rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px' }}
+                      style={{ flex: 1, padding: '8px 12px', fontSize: '13px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px' }}
                     />
                   </div>
                 </div>
@@ -454,7 +454,7 @@ const Calculator = ({ accounts, onAddAccount, user, onUpdateProfile }) => {
               style={{ width: '100%', maxWidth: '400px', padding: '30px' }}
             >
               <h3 style={{ marginBottom: '10px' }}>Add Custom Pair / Asset</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginBottom: '20px' }}>Define a new instrument and its pip value for calculations.</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginBottom: '20px' }}>Define a new instrument and its pip value for calculations.</p>
               
               <form onSubmit={handleAddPair} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div className="input-group">

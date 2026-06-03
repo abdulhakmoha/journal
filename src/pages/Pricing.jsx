@@ -81,12 +81,12 @@ const Pricing = () => {
               }}
             >
               {plan.isPopular && (
-                <div style={{ position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)', background: 'var(--primary)', color: 'white', padding: '5px 15px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold' }}>
+                <div style={{ position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)', background: 'var(--primary)', color: 'white', padding: '5px 15px', borderRadius: '20px', fontSize: '13px', fontWeight: 'bold' }}>
                   MOST POPULAR
                 </div>
               )}
               <div style={{ marginBottom: '20px' }}>{plan.icon}</div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>{plan.name}</h3>
+              <h3 style={{ fontSize: '22px', marginBottom: '10px' }}>{plan.name}</h3>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '5px', marginBottom: '30px' }}>
                 <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>${plan.price}</span>
                 <span style={{ color: 'var(--text-muted)' }}>/month</span>
@@ -94,7 +94,7 @@ const Pricing = () => {
               
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 40px 0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                 {plan.features.map((feat, fIdx) => (
-                  <li key={fIdx} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem' }}>
+                  <li key={fIdx} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
                     <Check size={16} color="var(--success)" />
                     {feat}
                   </li>
@@ -132,7 +132,7 @@ const Pricing = () => {
             >
               <Bitcoin size={30} color="#F7931A" style={{ marginBottom: '10px' }} />
               <p style={{ fontWeight: 'bold' }}>Crypto</p>
-              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>USDT / BTC / ETH</span>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>USDT / BTC / ETH</span>
             </div>
             <div 
               onClick={() => setPaymentMethod('EVC Plus')}
@@ -147,7 +147,7 @@ const Pricing = () => {
             >
               <Smartphone size={30} color="var(--success)" style={{ marginBottom: '10px' }} />
               <p style={{ fontWeight: 'bold' }}>EVC Plus</p>
-              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Somalia Mobile Money</span>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Somalia Mobile Money</span>
             </div>
           </div>
 
@@ -155,14 +155,14 @@ const Pricing = () => {
             {paymentMethod === 'Crypto' && (
               <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} style={{ overflow: 'hidden' }}>
                 <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '10px' }}>Fadlan bixi <strong>${selectedPlan.price} USDT (TRC20)</strong> cinwaanka Binance ee hoose:</p>
-                  <div style={{ background: 'var(--bg-dark)', padding: '10px', borderRadius: '8px', fontFamily: 'monospace', fontSize: '0.8rem', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '10px' }}>Fadlan bixi <strong>${selectedPlan.price} USDT (TRC20)</strong> cinwaanka Binance ee hoose:</p>
+                  <div style={{ background: 'var(--bg-dark)', padding: '10px', borderRadius: '8px', fontFamily: 'monospace', fontSize: '13px', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span>TJRcbveNbnLJ1dmULU2u8KAx5VAYqsAxiK</span>
-                    <button onClick={() => navigator.clipboard.writeText('TJRcbveNbnLJ1dmULU2u8KAx5VAYqsAxiK')} style={{ background: 'var(--primary)', border: 'none', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer' }}>Copy</button>
+                    <button onClick={() => navigator.clipboard.writeText('TJRcbveNbnLJ1dmULU2u8KAx5VAYqsAxiK')} style={{ background: 'var(--primary)', border: 'none', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', cursor: 'pointer' }}>Copy</button>
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Gmail-ka aad Binance-ka ku leedahay:</label>
+                  <label style={{ display: 'block', fontSize: '13px', marginBottom: '8px' }}>Gmail-ka aad Binance-ka ku leedahay:</label>
                   <input 
                     type="email" 
                     placeholder="Tusaale: user@gmail.com" 
@@ -176,14 +176,14 @@ const Pricing = () => {
             {paymentMethod === 'EVC Plus' && (
               <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} style={{ overflow: 'hidden' }}>
                 <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '10px' }}>Fadlan bixi <strong>${selectedPlan.price}</strong> nambaarka hoose:</p>
-                  <div style={{ background: 'var(--bg-dark)', padding: '10px', borderRadius: '8px', fontSize: '1.2rem', fontWeight: 'bold', border: '1px solid var(--border)', textAlign: 'center', color: 'var(--primary)' }}>
+                  <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '10px' }}>Fadlan bixi <strong>${selectedPlan.price}</strong> nambaarka hoose:</p>
+                  <div style={{ background: 'var(--bg-dark)', padding: '10px', borderRadius: '8px', fontSize: '16px', fontWeight: 'bold', border: '1px solid var(--border)', textAlign: 'center', color: 'var(--primary)' }}>
                     617755701
                   </div>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>EVC Plus Somalia</p>
+                  <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>EVC Plus Somalia</p>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '8px' }}>Nambarka aad lacagta ka soo dirtay:</label>
+                  <label style={{ display: 'block', fontSize: '13px', marginBottom: '8px' }}>Nambarka aad lacagta ka soo dirtay:</label>
                   <input 
                     type="text" 
                     placeholder="Tusaale: 0615XXXXXX" 

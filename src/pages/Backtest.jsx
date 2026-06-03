@@ -494,9 +494,9 @@ const Backtest = ({ backtestFields, accounts }) => {
         <>
           <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '4px' }}>Strategy Lab</div>
+              <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '4px' }}>Strategy Lab</div>
               <h2 className="text-gradient">Backtesting Sessions</h2>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '2px' }}>Validate your edge using historical market data.</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginTop: '2px' }}>Validate your edge using historical market data.</p>
             </div>
             <button className="btn-primary" onClick={() => setShowNewSessionModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 24px' }}>
               <Plus size={18} /> New Session
@@ -509,7 +509,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                 <FlaskConical size={28} color="var(--primary)" />
               </div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: '700' }}>No Sessions Yet</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', maxWidth: '360px', lineHeight: '1.6' }}>Create your first backtesting session to start validating your trading strategy against historical data.</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '13px', maxWidth: '360px', lineHeight: '1.6' }}>Create your first backtesting session to start validating your trading strategy against historical data.</p>
               <button className="btn-primary" onClick={() => setShowNewSessionModal(true)} style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Plus size={16} /> Create First Session
               </button>
@@ -538,11 +538,11 @@ const Backtest = ({ backtestFields, accounts }) => {
                     {/* Header */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
                       <div style={{ flex: 1, marginRight: '10px' }}>
-                        <h3 style={{ fontSize: '1.05rem', fontWeight: '700', marginBottom: '6px', lineHeight: '1.3' }}>{session.name}</h3>
+                        <h3 style={{ fontSize: '14px', fontWeight: '700', marginBottom: '6px', lineHeight: '1.3' }}>{session.name}</h3>
                         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                          {session.strategy && <span style={{ fontSize: '0.65rem', fontWeight: '700', color: 'var(--primary)', background: 'rgba(13,240,166,0.08)', padding: '3px 8px', borderRadius: '20px', border: '1px solid rgba(13,240,166,0.2)', letterSpacing: '0.3px' }}>{session.strategy}</span>}
-                          {session.pair && <span style={{ fontSize: '0.65rem', fontWeight: '700', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.07)' }}>{session.pair}</span>}
-                          {session.account && <span style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.5)', background: 'rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.07)' }}>{session.account}</span>}
+                          {session.strategy && <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--primary)', background: 'rgba(13,240,166,0.08)', padding: '3px 8px', borderRadius: '20px', border: '1px solid rgba(13,240,166,0.2)', letterSpacing: '0.3px' }}>{session.strategy}</span>}
+                          {session.pair && <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.07)' }}>{session.pair}</span>}
+                          {session.account && <span style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.5)', background: 'rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.07)' }}>{session.account}</span>}
                         </div>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
@@ -560,18 +560,18 @@ const Backtest = ({ backtestFields, accounts }) => {
                     {/* Stats Row */}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '16px' }}>
                       <div style={{ background: statusBg, borderRadius: '10px', padding: '10px 12px', border: `1px solid ${statusColor}20` }}>
-                        <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>P&L</p>
-                        <p style={{ fontSize: '1rem', fontWeight: '800', color: statusColor, lineHeight: 1 }}>
+                        <p style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>P&L</p>
+                        <p style={{ fontSize: '14px', fontWeight: '800', color: statusColor, lineHeight: 1 }}>
                           {stats.status === 'Passed' ? '+PASS' : stats.status === 'Blown' ? 'BLOWN' : `${parseFloat(stats.totalRR) > 0 ? '+' : ''}${stats.totalRR}R`}
                         </p>
                       </div>
                       <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '10px 12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Win Rate</p>
-                        <p style={{ fontSize: '1rem', fontWeight: '800', color: stats.winRate >= 50 ? 'var(--success)' : 'var(--warning)', lineHeight: 1 }}>{stats.winRate}%</p>
+                        <p style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Win Rate</p>
+                        <p style={{ fontSize: '14px', fontWeight: '800', color: stats.winRate >= 50 ? 'var(--success)' : 'var(--warning)', lineHeight: 1 }}>{stats.winRate}%</p>
                       </div>
                       <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '10px 12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Trades</p>
-                        <p style={{ fontSize: '1rem', fontWeight: '800', color: 'var(--text-main)', lineHeight: 1 }}>{stats.count}</p>
+                        <p style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Trades</p>
+                        <p style={{ fontSize: '14px', fontWeight: '800', color: 'var(--text-main)', lineHeight: 1 }}>{stats.count}</p>
                       </div>
                     </div>
                   </div>
@@ -583,9 +583,9 @@ const Backtest = ({ backtestFields, accounts }) => {
 
                   {/* Footer */}
                   <div style={{ padding: '10px 24px 16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>PF: <span style={{ color: parseFloat(stats.profitFactor) >= 1.5 ? 'var(--success)' : 'var(--warning)', fontWeight: '700' }}>{stats.profitFactor}</span></span>
-                    <span style={{ fontSize: '0.7rem', color: stats.mistakeRate > 10 ? 'var(--danger)' : 'var(--text-muted)' }}>{stats.mistakeRate}% mistakes</span>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '3px', fontWeight: '600' }}>Open <ChevronRight size={12} /></span>
+                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>PF: <span style={{ color: parseFloat(stats.profitFactor) >= 1.5 ? 'var(--success)' : 'var(--warning)', fontWeight: '700' }}>{stats.profitFactor}</span></span>
+                    <span style={{ fontSize: '11px', color: stats.mistakeRate > 10 ? 'var(--danger)' : 'var(--text-muted)' }}>{stats.mistakeRate}% mistakes</span>
+                    <span style={{ fontSize: '11px', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '3px', fontWeight: '600' }}>Open <ChevronRight size={12} /></span>
                   </div>
                 </motion.div>
               );
@@ -608,15 +608,15 @@ const Backtest = ({ backtestFields, accounts }) => {
               </button>
               <div className="glass" style={{ padding: '10px 25px', borderRadius: '15px', display: 'flex', gap: '40px', alignItems: 'center' }}>
                 <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Current P/L</p>
-                  <p style={{ fontSize: '1.2rem', fontWeight: '900', color: parseFloat(calculateStats(activeSession.trades).totalRR) >= 0 ? 'var(--success)' : 'var(--danger)' }}>
+                  <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Current P/L</p>
+                  <p style={{ fontSize: '16px', fontWeight: '900', color: parseFloat(calculateStats(activeSession.trades).totalRR) >= 0 ? 'var(--success)' : 'var(--danger)' }}>
                     {calculateStats(activeSession.trades).totalRR}%
                   </p>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Status</p>
+                  <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Status</p>
                   <span style={{ 
-                    fontSize: '0.7rem', 
+                    fontSize: '11px', 
                     fontWeight: 'bold', 
                     padding: '2px 10px', 
                     borderRadius: '10px',
@@ -632,112 +632,112 @@ const Backtest = ({ backtestFields, accounts }) => {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Win : Loss Ratio</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: parseFloat(calculateStats(activeSession.trades).profitFactor) >= 1.5 ? 'var(--success)' : 'var(--danger)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Win : Loss Ratio</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: parseFloat(calculateStats(activeSession.trades).profitFactor) >= 1.5 ? 'var(--success)' : 'var(--danger)', marginBottom: '6px' }}>
                   {calculateStats(activeSession.trades).profitFactor}
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Gross wins ÷ Gross losses. <span style={{ color: 'var(--primary)' }}>Above 1.5 = Good edge</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Avg Gain / Trade</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: parseFloat(calculateStats(activeSession.trades).expectancy) >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Avg Gain / Trade</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: parseFloat(calculateStats(activeSession.trades).expectancy) >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '6px' }}>
                   {calculateStats(activeSession.trades).expectancy}R
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Avg return per trade. <span style={{ color: 'var(--primary)' }}>Positive = Profitable strategy</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Max Drawdown</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: 'var(--danger)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Max Drawdown</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'var(--danger)', marginBottom: '6px' }}>
                   -{calculateStats(activeSession.trades).maxDrawdown}R
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Biggest losing streak. <span style={{ color: 'var(--primary)' }}>Lower = Safer strategy</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Win Rate</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: calculateStats(activeSession.trades).winRate >= 50 ? 'var(--success)' : 'var(--warning)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Win Rate</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: calculateStats(activeSession.trades).winRate >= 50 ? 'var(--success)' : 'var(--warning)', marginBottom: '6px' }}>
                   {calculateStats(activeSession.trades).winRate}%
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Winning trades out of total. <span style={{ color: 'var(--primary)' }}>50%+ with good R:R = edge</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Best Session</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: calculateStats(activeSession.trades).bestSession.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Best Session</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: calculateStats(activeSession.trades).bestSession.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)', marginBottom: '6px' }}>
                   {calculateStats(activeSession.trades).bestSession.name}
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Highest Win Rate: <span style={{ color: 'var(--primary)' }}>{calculateStats(activeSession.trades).bestSession.rate}%</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Best Day</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: calculateStats(activeSession.trades).bestDay.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Best Day</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: calculateStats(activeSession.trades).bestDay.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)', marginBottom: '6px' }}>
                   {calculateStats(activeSession.trades).bestDay.name}
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Highest Win Rate: <span style={{ color: 'var(--primary)' }}>{calculateStats(activeSession.trades).bestDay.rate}%</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Best Setup</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: calculateStats(activeSession.trades).bestSetup.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Best Setup</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: calculateStats(activeSession.trades).bestSetup.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)', marginBottom: '6px' }}>
                   {calculateStats(activeSession.trades).bestSetup.name}
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Highest Win Rate: <span style={{ color: 'var(--primary)' }}>{calculateStats(activeSession.trades).bestSetup.rate}%</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Best Hour</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: calculateStats(activeSession.trades).bestHour.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Best Hour</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: calculateStats(activeSession.trades).bestHour.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)', marginBottom: '6px' }}>
                   {calculateStats(activeSession.trades).bestHour.name}
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Highest Win Rate: <span style={{ color: 'var(--primary)' }}>{calculateStats(activeSession.trades).bestHour.rate}%</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Max Streaks</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: 'var(--text-main)', marginBottom: '6px', display: 'flex', gap: '15px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Max Streaks</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'var(--text-main)', marginBottom: '6px', display: 'flex', gap: '15px' }}>
                   <span style={{ color: 'var(--success)' }}>{calculateStats(activeSession.trades).maxWinStreak}W</span>
                   <span style={{ color: 'var(--danger)' }}>{calculateStats(activeSession.trades).maxLossStreak}L</span>
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Longest consecutive <span style={{ color: 'var(--success)' }}>Wins</span> & <span style={{ color: 'var(--danger)' }}>Losses</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Recovery Factor</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: parseFloat(calculateStats(activeSession.trades).recoveryFactor) >= 2 ? 'var(--success)' : 'var(--warning)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Recovery Factor</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: parseFloat(calculateStats(activeSession.trades).recoveryFactor) >= 2 ? 'var(--success)' : 'var(--warning)', marginBottom: '6px' }}>
                   {calculateStats(activeSession.trades).recoveryFactor}
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Net Profit ÷ Max DD. <span style={{ color: 'var(--primary)' }}>Above 2.0 = Excellent</span>
                 </p>
              </div>
 
              <div className="glass-card" style={{ padding: '20px' }}>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Total Pips Gained</p>
-                <p style={{ fontSize: '1.6rem', fontWeight: 'bold', color: calculateStats(activeSession.trades).totalPips >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '6px' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Total Pips Gained</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: calculateStats(activeSession.trades).totalPips >= 0 ? 'var(--success)' : 'var(--danger)', marginBottom: '6px' }}>
                   {calculateStats(activeSession.trades).totalPips > 0 ? '+' : ''}{calculateStats(activeSession.trades).totalPips}
                 </p>
-                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                   Cumulative pips captured. <span style={{ color: 'var(--primary)' }}>Tracking growth in distance.</span>
                 </p>
              </div>
@@ -753,11 +753,11 @@ const Backtest = ({ backtestFields, accounts }) => {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                    <div>
-                     <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Pair</label>
+                     <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Pair</label>
                      <input type="text" value={tradeForm.symbol} onChange={(e) => setTradeForm({...tradeForm, symbol: e.target.value})} placeholder="e.g. GBPUSD" />
                    </div>
                    <div>
-                     <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Type</label>
+                     <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Type</label>
                      <select value={tradeForm.type} onChange={(e) => setTradeForm({...tradeForm, type: e.target.value})}>
                        <option>Long</option>
                        <option>Short</option>
@@ -770,7 +770,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                      .filter(field => !['pair', 'type', 'status', 'r:r', 'rr'].includes(field.label.toLowerCase()))
                      .map((field, idx) => (
                      <div key={idx}>
-                       <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>{field.label}</label>
+                       <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>{field.label}</label>
                        <select 
                          value={tradeForm.customData[field.label] || ''} 
                          onChange={(e) => setTradeForm({
@@ -786,7 +786,7 @@ const Backtest = ({ backtestFields, accounts }) => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '15px' }}>
                    <div>
-                     <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Status</label>
+                     <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Status</label>
                      <select value={tradeForm.status} onChange={(e) => setTradeForm({...tradeForm, status: e.target.value})}>
                        <option value="Win">Win ✅</option>
                        <option value="Loss">Loss ❌</option>
@@ -794,7 +794,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                      </select>
                    </div>
                    <div>
-                      <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Unit</label>
+                      <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Unit</label>
                       <select value={tradeForm.riskUnit} onChange={(e) => setTradeForm({...tradeForm, riskUnit: e.target.value})}>
                         <option value="%">% (Percent)</option>
                         <option value="Pips">Pips</option>
@@ -802,17 +802,17 @@ const Backtest = ({ backtestFields, accounts }) => {
                    </div>
                    {tradeForm.riskUnit === 'Pips' && (
                      <div>
-                       <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Risk %</label>
+                       <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Risk %</label>
                        <input type="number" step="0.1" value={tradeForm.riskPercent} onChange={(e) => setTradeForm({...tradeForm, riskPercent: e.target.value})} />
                      </div>
                    )}
                    <div>
-                     <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>R:R</label>
+                     <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>R:R</label>
                      <input type="number" step="0.1" value={tradeForm.rr} onChange={(e) => setTradeForm({...tradeForm, rr: e.target.value})} />
                    </div>
                    {tradeForm.riskUnit === 'Pips' && (
                      <div>
-                       <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Pips Gained/Lost</label>
+                       <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>Pips Gained/Lost</label>
                        <input type="number" step="any" placeholder="+50" style={{ border: '1px solid var(--primary)', background: 'rgba(56, 189, 248, 0.05)' }} value={tradeForm.pips} onChange={(e) => setTradeForm({...tradeForm, pips: e.target.value})} />
                      </div>
                    )}
@@ -820,7 +820,7 @@ const Backtest = ({ backtestFields, accounts }) => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                    <div>
-                     <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>📅 Trade Date</label>
+                     <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>📅 Trade Date</label>
                      <input 
                        type="date" 
                        value={tradeForm.tradeDate} 
@@ -829,7 +829,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                      />
                    </div>
                    <div>
-                     <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>⏰ Trade Time</label>
+                     <label style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', marginBottom: '5px' }}>⏰ Trade Time</label>
                      <input 
                        type="time" 
                        value={tradeForm.tradeTime} 
@@ -841,7 +841,7 @@ const Backtest = ({ backtestFields, accounts }) => {
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <input type="checkbox" checked={tradeForm.isMistake} onChange={(e) => setTradeForm({...tradeForm, isMistake: e.target.checked})} />
-                  <label style={{ fontSize: '0.8rem', color: tradeForm.isMistake ? 'var(--danger)' : 'var(--text-muted)' }}>Execution Mistake?</label>
+                  <label style={{ fontSize: '13px', color: tradeForm.isMistake ? 'var(--danger)' : 'var(--text-muted)' }}>Execution Mistake?</label>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
@@ -863,8 +863,8 @@ const Backtest = ({ backtestFields, accounts }) => {
                     ) : (
                       <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px', cursor: 'pointer', gap: '8px' }}>
                         <Upload size={22} color="var(--primary)" />
-                        <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', margin: 0 }}>BEFORE</p>
-                        <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', margin: 0 }}>{uploading.before ? 'Uploading...' : 'Click to upload'}</p>
+                        <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: 0 }}>BEFORE</p>
+                        <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: 0 }}>{uploading.before ? 'Uploading...' : 'Click to upload'}</p>
                         <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleFileUpload(e, 'before')} />
                       </label>
                     )}
@@ -888,8 +888,8 @@ const Backtest = ({ backtestFields, accounts }) => {
                     ) : (
                       <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px', cursor: 'pointer', gap: '8px' }}>
                         <Upload size={22} color="var(--success)" />
-                        <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', margin: 0 }}>AFTER</p>
-                        <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', margin: 0 }}>{uploading.after ? 'Uploading...' : 'Click to upload'}</p>
+                        <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: 0 }}>AFTER</p>
+                        <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: 0 }}>{uploading.after ? 'Uploading...' : 'Click to upload'}</p>
                         <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleFileUpload(e, 'after')} />
                       </label>
                     )}
@@ -897,14 +897,14 @@ const Backtest = ({ backtestFields, accounts }) => {
                 </div>
 
                 <div style={{ padding: '15px', background: 'rgba(56, 189, 248, 0.03)', borderRadius: '12px', border: '1px solid rgba(56, 189, 248, 0.1)' }}>
-                  <label style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                  <label style={{ fontSize: '14px', fontWeight: 'bold', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                     <Edit3 size={16} /> 📝 Notes / Observation (Per Trade)
                   </label>
                   <textarea 
                     placeholder="Why did you take this trade? What did you see? (This clears after logging)" 
                     value={tradeForm.notes} 
                     onChange={(e) => setTradeForm({...tradeForm, notes: e.target.value})}
-                    style={{ width: '100%', minHeight: '120px', background: 'rgba(0,0,0,0.2)', color: 'var(--text-main)', fontSize: '0.9rem', padding: '12px', border: '1px solid var(--border)', borderRadius: '8px' }}
+                    style={{ width: '100%', minHeight: '120px', background: 'rgba(0,0,0,0.2)', color: 'var(--text-main)', fontSize: '14px', padding: '12px', border: '1px solid var(--border)', borderRadius: '8px' }}
                   />
                 </div>
 
@@ -914,11 +914,11 @@ const Backtest = ({ backtestFields, accounts }) => {
 
             <section className="glass-card" style={{ padding: '0', overflow: 'hidden', gridColumn: 'span 2' }}>
                <div style={{ padding: '20px', borderBottom: '1px solid var(--border)' }}>
-                 <h3 style={{ fontSize: '1rem' }}>Strategy Log ({activeSession.trades.length} Executions)</h3>
+                 <h3 style={{ fontSize: '14px' }}>Strategy Log ({activeSession.trades.length} Executions)</h3>
                </div>
                <div style={{ overflowX: 'auto', width: '100%' }}>
                <table style={{ width: '100%', minWidth: '900px', borderCollapse: 'collapse' }}>
-                  <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '13px', color: 'var(--text-muted)' }}>
                     <tr>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>DATE / TIME</th>
                       <th style={{ padding: '15px 15px', textAlign: 'left' }}>PAIR</th>
@@ -934,13 +934,13 @@ const Backtest = ({ backtestFields, accounts }) => {
                   </thead>
                   <tbody>
                     {activeSession.trades.slice().reverse().map((trade, idx) => (
-                      <tr key={trade._id || idx} style={{ borderBottom: '1px solid var(--border)', fontSize: '0.9rem' }}>
-                        <td style={{ padding: '20px 25px', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                      <tr key={trade._id || idx} style={{ borderBottom: '1px solid var(--border)', fontSize: '14px' }}>
+                        <td style={{ padding: '20px 25px', color: 'var(--text-muted)', fontSize: '13px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '2px' }}>
-                            <span style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '0.65rem', textTransform: 'uppercase' }}>
+                            <span style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '11px', textTransform: 'uppercase' }}>
                               {trade.tradeDate ? ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(trade.tradeDate).getUTCDay()] : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(trade.timestamp).getDay()]}
                             </span>
-                            {trade.tradeTime && <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.05)', padding: '2px 6px', borderRadius: '4px' }}>{trade.tradeTime}</span>}
+                            {trade.tradeTime && <span style={{ fontSize: '11px', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.05)', padding: '2px 6px', borderRadius: '4px' }}>{trade.tradeTime}</span>}
                           </div>
                           {trade.tradeDate ? new Date(trade.tradeDate).toLocaleDateString('en-GB', { timeZone: 'UTC' }) : new Date(trade.timestamp).toLocaleDateString('en-GB')}
                         </td>
@@ -950,7 +950,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                           <span style={{
                             padding: '6px 12px',
                             borderRadius: '12px',
-                            fontSize: '0.8rem',
+                            fontSize: '13px',
                             fontWeight: 'bold',
                             background: trade.status === 'Win' ? 'rgba(16, 185, 129, 0.15)' : trade.status === 'Loss' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(56, 189, 248, 0.15)',
                             color: trade.status === 'Win' ? 'var(--success)' : trade.status === 'Loss' ? 'var(--danger)' : 'var(--primary)'
@@ -966,7 +966,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                         </td>
                         <td style={{ padding: '15px 15px' }}>{trade.isMistake ? '🔴 Yes' : '🟢 No'}</td>
                         <td style={{ padding: '15px 15px' }}>
-                          <div style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '0.75rem', color: 'var(--text-muted)' }} title={trade.notes}>
+                          <div style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '11px', color: 'var(--text-muted)' }} title={trade.notes}>
                             {trade.notes || '—'}
                           </div>
                         </td>
@@ -985,10 +985,10 @@ const Backtest = ({ backtestFields, accounts }) => {
                                   onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                                   onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                                 />
-                                <span style={{ fontSize: '0.6rem', fontWeight: 'bold', color: 'var(--primary)' }}>BEFORE</span>
+                                <span style={{ fontSize: '10px', fontWeight: 'bold', color: 'var(--primary)' }}>BEFORE</span>
                               </div>
                             ) : (
-                              <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.15)' }}>—</span>
+                              <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.15)' }}>—</span>
                             )}
                             {trade.afterChart ? (
                               <div
@@ -1003,10 +1003,10 @@ const Backtest = ({ backtestFields, accounts }) => {
                                   onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                                   onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                                 />
-                                <span style={{ fontSize: '0.6rem', fontWeight: 'bold', color: 'var(--success)' }}>AFTER</span>
+                                <span style={{ fontSize: '10px', fontWeight: 'bold', color: 'var(--success)' }}>AFTER</span>
                               </div>
                             ) : (
-                              <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.15)' }}>—</span>
+                              <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.15)' }}>—</span>
                             )}
                           </div>
                         </td>
@@ -1068,7 +1068,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                      </div>
                      <div>
                        <h3 style={{ fontSize: '1.1rem', fontWeight: '800', margin: 0 }}>New Backtest Session</h3>
-                       <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', margin: 0 }}>Configure your strategy test</p>
+                       <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: 0 }}>Configure your strategy test</p>
                      </div>
                    </div>
                    <button onClick={() => setShowNewSessionModal(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px', borderRadius: '6px', display: 'flex' }}>
@@ -1080,7 +1080,7 @@ const Backtest = ({ backtestFields, accounts }) => {
                {/* Modal Body */}
                <div style={{ padding: '24px 30px 30px 30px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                   <label style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Session Name</label>
+                   <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Session Name</label>
                    <input 
                      type="text" 
                      placeholder="e.g. London Breakout — March 2025" 
@@ -1092,13 +1092,13 @@ const Backtest = ({ backtestFields, accounts }) => {
 
                  {accounts.length > 0 ? (
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                     <label style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Backtesting Portfolio</label>
+                     <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Backtesting Portfolio</label>
                      <select value={newSessionForm.account} onChange={(e) => setNewSessionForm({...newSessionForm, account: e.target.value})} style={{ padding: '12px 14px' }}>
                        {accounts.map((acc, i) => <option key={i} value={acc.name}>{acc.name}</option>)}
                      </select>
                    </div>
                  ) : (
-                   <div style={{ padding: '12px 16px', background: 'rgba(239, 68, 68, 0.08)', color: 'var(--danger)', fontSize: '0.8rem', borderRadius: '10px', border: '1px solid rgba(239,68,68,0.2)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                   <div style={{ padding: '12px 16px', background: 'rgba(239, 68, 68, 0.08)', color: 'var(--danger)', fontSize: '13px', borderRadius: '10px', border: '1px solid rgba(239,68,68,0.2)', display: 'flex', alignItems: 'center', gap: '10px' }}>
                      <AlertOctagon size={16} />
                      <span>No Backtesting portfolios found. Create one in <strong>Settings → Portfolios</strong> first.</span>
                    </div>
@@ -1106,11 +1106,11 @@ const Backtest = ({ backtestFields, accounts }) => {
 
                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                     <label style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Strategy</label>
+                     <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Strategy</label>
                      <input type="text" placeholder="e.g. SMC, ICT" value={newSessionForm.strategy} onChange={(e) => setNewSessionForm({...newSessionForm, strategy: e.target.value})} style={{ padding: '12px 14px' }} />
                    </div>
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                     <label style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Pair / Market</label>
+                     <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>Pair / Market</label>
                      <input type="text" placeholder="e.g. EURUSD" value={newSessionForm.pair} onChange={(e) => setNewSessionForm({...newSessionForm, pair: e.target.value})} style={{ padding: '12px 14px' }} />
                    </div>
                  </div>

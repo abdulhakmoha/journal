@@ -45,7 +45,7 @@ const Login = () => {
                 style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
               >
                 <div className="input-group">
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '13px' }}>
                     <User size={16} /> Full Name
                   </label>
                   <input 
@@ -61,7 +61,7 @@ const Login = () => {
           </AnimatePresence>
 
           <div className="input-group">
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '13px' }}>
               <Mail size={16} /> Email Address
             </label>
             <input 
@@ -74,7 +74,7 @@ const Login = () => {
           </div>
 
           <div className="input-group">
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '13px' }}>
               <Lock size={16} /> Password
             </label>
             <input 
@@ -86,7 +86,7 @@ const Login = () => {
             />
           </div>
 
-          {error && <p style={{ color: 'var(--danger)', fontSize: '0.85rem', textAlign: 'center' }}>{error}</p>}
+          {error && <p style={{ color: 'var(--danger)', fontSize: '13px', textAlign: 'center' }}>{error}</p>}
 
           <button className="btn-primary" style={{ padding: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginTop: '10px' }}>
             {isLogin ? 'Sign In' : 'Create Account'}
@@ -94,7 +94,7 @@ const Login = () => {
           </button>
         </form>
 
-        <div style={{ marginTop: '30px', textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+        <div style={{ marginTop: '30px', textAlign: 'center', fontSize: '14px', color: 'var(--text-muted)' }}>
           {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button 
             onClick={() => setIsLogin(!isLogin)}
@@ -105,7 +105,7 @@ const Login = () => {
         </div>
 
         <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', gap: '20px', opacity: 0.5 }}>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.7rem' }}>
+           <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px' }}>
              <ShieldCheck size={12} /> Secure Authentication
            </div>
         </div>

@@ -78,28 +78,28 @@ const AdminPayments = () => {
       {/* Stats Section */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
         <div className="glass-card" style={{ padding: '20px', textAlign: 'center' }}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Total Requests</p>
-          <h3 style={{ fontSize: '1.8rem' }}>{stats.total}</h3>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Total Requests</p>
+          <h3 style={{ fontSize: '32px' }}>{stats.total}</h3>
         </div>
         <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid #F7931A' }}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Crypto Payments</p>
-          <h3 style={{ fontSize: '1.8rem', color: '#F7931A' }}>{stats.crypto}</h3>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Crypto Payments</p>
+          <h3 style={{ fontSize: '32px', color: '#F7931A' }}>{stats.crypto}</h3>
         </div>
         <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--primary)' }}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>EVC Plus Payments</p>
-          <h3 style={{ fontSize: '1.8rem', color: 'var(--primary)' }}>{stats.evc}</h3>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>EVC Plus Payments</p>
+          <h3 style={{ fontSize: '32px', color: 'var(--primary)' }}>{stats.evc}</h3>
         </div>
         <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--success)', cursor: 'pointer' }} onClick={() => setStatusFilter('approved')}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Approved Payments</p>
-          <h3 style={{ fontSize: '1.8rem', color: 'var(--success)' }}>{stats.approved}</h3>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Approved Payments</p>
+          <h3 style={{ fontSize: '32px', color: 'var(--success)' }}>{stats.approved}</h3>
         </div>
         <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--warning)', cursor: 'pointer' }} onClick={() => setStatusFilter('pending')}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Pending Approval</p>
-          <h3 style={{ fontSize: '1.8rem', color: 'var(--warning)' }}>{stats.pending}</h3>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Pending Approval</p>
+          <h3 style={{ fontSize: '32px', color: 'var(--warning)' }}>{stats.pending}</h3>
         </div>
         <div className="glass-card" style={{ padding: '20px', textAlign: 'center', borderBottom: '2px solid var(--danger)', cursor: 'pointer' }} onClick={() => setStatusFilter('rejected')}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Rejected Requests</p>
-          <h3 style={{ fontSize: '1.8rem', color: 'var(--danger)' }}>{stats.rejected}</h3>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '5px' }}>Rejected Requests</p>
+          <h3 style={{ fontSize: '32px', color: 'var(--danger)' }}>{stats.rejected}</h3>
         </div>
       </div>
 
@@ -125,7 +125,7 @@ const AdminPayments = () => {
                   padding: '6px 12px',
                   borderRadius: '6px',
                   border: 'none',
-                  fontSize: '0.75rem',
+                  fontSize: '11px',
                   fontWeight: '600',
                   cursor: 'pointer',
                   background: statusFilter === s ? 'var(--primary)' : 'transparent',
@@ -141,7 +141,7 @@ const AdminPayments = () => {
 
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '900px' }}>
-            <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+            <thead style={{ background: 'rgba(255,255,255,0.02)', fontSize: '13px', color: 'var(--text-muted)' }}>
               <tr>
                 <th style={{ padding: '15px 25px', textAlign: 'left' }}>USER</th>
                 <th style={{ padding: '15px 25px', textAlign: 'left' }}>PLAN / AMOUNT</th>
@@ -153,14 +153,14 @@ const AdminPayments = () => {
             </thead>
           <tbody>
             {filteredPayments.map((p, i) => (
-              <tr key={p._id} style={{ borderBottom: '1px solid var(--border)', fontSize: '0.9rem' }}>
+              <tr key={p._id} style={{ borderBottom: '1px solid var(--border)', fontSize: '14px' }}>
                 <td style={{ padding: '15px 25px' }}>
                   <div style={{ fontWeight: 'bold' }}>{p.user?.name || 'Unknown User'}</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{p.user?.email || 'No Email'}</div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{p.user?.email || 'No Email'}</div>
                 </td>
                 <td style={{ padding: '15px 25px' }}>
                   <span style={{ fontWeight: 'bold', color: 'var(--primary)' }}>{p.plan}</span>
-                  <div style={{ fontSize: '0.8rem' }}>${p.amount}</div>
+                  <div style={{ fontSize: '13px' }}>${p.amount}</div>
                 </td>
                 <td style={{ padding: '15px 25px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -169,7 +169,7 @@ const AdminPayments = () => {
                   </div>
                 </td>
                 <td style={{ padding: '15px 25px' }}>
-                  <div style={{ maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: 'monospace', fontSize: '0.8rem' }} title={p.transactionId}>
+                  <div style={{ maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: 'monospace', fontSize: '13px' }} title={p.transactionId}>
                     {p.transactionId}
                   </div>
                   {p.method === 'Crypto' && (
@@ -177,7 +177,7 @@ const AdminPayments = () => {
                       href={`https://tronscan.org/#/transaction/${p.transactionId}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      style={{ fontSize: '0.65rem', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '3px', marginTop: '4px', textDecoration: 'none' }}
+                      style={{ fontSize: '11px', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '3px', marginTop: '4px', textDecoration: 'none' }}
                     >
                       <ExternalLink size={10} /> View on Scan
                     </a>
@@ -187,7 +187,7 @@ const AdminPayments = () => {
                   <span style={{ 
                     padding: '4px 10px', 
                     borderRadius: '12px', 
-                    fontSize: '0.75rem', 
+                    fontSize: '11px', 
                     fontWeight: 'bold',
                     background: p.status === 'approved' ? 'rgba(16, 185, 129, 0.1)' : p.status === 'rejected' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)',
                     color: p.status === 'approved' ? 'var(--success)' : p.status === 'rejected' ? 'var(--danger)' : 'var(--warning)'
@@ -200,14 +200,14 @@ const AdminPayments = () => {
                     <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                       <button 
                         className="btn-primary" 
-                        style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+                        style={{ padding: '6px 12px', fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
                         onClick={() => handleApprove(p._id)}
                       >
                         <ShieldCheck size={14} /> Approve
                       </button>
                       <button 
                         className="btn-secondary" 
-                        style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '5px', borderColor: 'var(--danger)', color: 'var(--danger)' }}
+                        style={{ padding: '6px 12px', fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '5px', borderColor: 'var(--danger)', color: 'var(--danger)' }}
                         onClick={() => handleReject(p._id)}
                       >
                         <XCircle size={14} /> Reject
@@ -215,10 +215,10 @@ const AdminPayments = () => {
                     </div>
                   )}
                   {p.status === 'approved' && (
-                    <div style={{ color: 'var(--success)', fontSize: '0.75rem', display: 'inline-block' }}>Verified ✅</div>
+                    <div style={{ color: 'var(--success)', fontSize: '11px', display: 'inline-block' }}>Verified ✅</div>
                   )}
                   {p.status === 'rejected' && (
-                    <div style={{ color: 'var(--danger)', fontSize: '0.75rem', display: 'inline-block' }}>Rejected ❌</div>
+                    <div style={{ color: 'var(--danger)', fontSize: '11px', display: 'inline-block' }}>Rejected ❌</div>
                   )}
                 </td>
               </tr>

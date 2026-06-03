@@ -191,7 +191,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
               Personal Profile
             </h4>
             <div className="input-group">
-              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem' }}>Full Name</label>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px' }}>Full Name</label>
               <input 
                 type="text" 
                 value={profile.name} 
@@ -207,8 +207,8 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
             <div style={{ padding: '24px 28px 0 28px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div>
-                  <div style={{ fontSize: '0.6rem', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '3px' }}>Manage</div>
-                  <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: 0, fontSize: '1rem' }}>
+                  <div style={{ fontSize: '10px', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '3px' }}>Manage</div>
+                  <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: 0, fontSize: '14px' }}>
                     <Activity size={16} color="var(--success)" />
                     Trading Portfolios
                   </h4>
@@ -216,7 +216,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                 <button 
                   className="btn-primary" 
                   onClick={() => openAddModal(portfolioTab === 'live' ? 'Challenge' : 'Backtesting')} 
-                  style={{ padding: '8px 16px', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+                  style={{ padding: '8px 16px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}
                 >
                   <Plus size={15} /> New Portfolio
                 </button>
@@ -238,7 +238,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                       borderBottom: portfolioTab === tab.key ? `2px solid ${tab.color}` : '2px solid transparent',
                       color: portfolioTab === tab.key ? tab.color : 'var(--text-muted)',
                       fontWeight: portfolioTab === tab.key ? '700' : '500',
-                      fontSize: '0.82rem',
+                      fontSize: '13px',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
@@ -253,7 +253,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                     <span style={{
                       background: portfolioTab === tab.key ? `${tab.color}22` : 'rgba(255,255,255,0.05)',
                       color: portfolioTab === tab.key ? tab.color : 'var(--text-muted)',
-                      fontSize: '0.65rem', fontWeight: '800',
+                      fontSize: '11px', fontWeight: '800',
                       padding: '2px 7px', borderRadius: '20px'
                     }}>{tab.count}</span>
                   </button>
@@ -273,13 +273,13 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                 if (filtered.length === 0) return (
                   <div style={{ textAlign: 'center', padding: '40px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '2rem' }}>{portfolioTab === 'live' ? '📈' : '🔬'}</span>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
                       {portfolioTab === 'live' ? 'No live trading portfolios yet.' : 'No backtesting portfolios yet.'}
                     </p>
                     <button
                       className="btn-primary"
                       onClick={() => openAddModal(portfolioTab === 'live' ? 'Challenge' : 'Backtesting')}
-                      style={{ fontSize: '0.78rem', padding: '8px 18px', display: 'flex', alignItems: 'center', gap: '6px' }}
+                      style={{ fontSize: '13px', padding: '8px 18px', display: 'flex', alignItems: 'center', gap: '6px' }}
                     >
                       <Plus size={14} /> Create One
                     </button>
@@ -302,11 +302,11 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Name</label>
-                            <input type="text" value={editAccForm.name} onChange={(e) => setEditAccForm({...editAccForm, name: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} />
+                            <input type="text" value={editAccForm.name} onChange={(e) => setEditAccForm({...editAccForm, name: e.target.value})} style={{ padding: '9px 12px', fontSize: '13px' }} />
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Type</label>
-                            <select value={editAccForm.type} onChange={(e) => setEditAccForm({...editAccForm, type: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }}>
+                            <select value={editAccForm.type} onChange={(e) => setEditAccForm({...editAccForm, type: e.target.value})} style={{ padding: '9px 12px', fontSize: '13px' }}>
                               <option>Challenge</option>
                               <option>Funded</option>
                               <option>Personal</option>
@@ -315,24 +315,24 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Balance</label>
-                            <input type="number" value={editAccForm.initialBalance} onChange={(e) => setEditAccForm({...editAccForm, initialBalance: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} />
+                            <input type="number" value={editAccForm.initialBalance} onChange={(e) => setEditAccForm({...editAccForm, initialBalance: e.target.value})} style={{ padding: '9px 12px', fontSize: '13px' }} />
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Target %</label>
-                            <input type="number" value={editAccForm.target} onChange={(e) => setEditAccForm({...editAccForm, target: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} />
+                            <input type="number" value={editAccForm.target} onChange={(e) => setEditAccForm({...editAccForm, target: e.target.value})} style={{ padding: '9px 12px', fontSize: '13px' }} />
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Website</label>
-                            <input type="text" value={editAccForm.website || ''} onChange={(e) => setEditAccForm({...editAccForm, website: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} placeholder="ftmo.com" />
+                            <input type="text" value={editAccForm.website || ''} onChange={(e) => setEditAccForm({...editAccForm, website: e.target.value})} style={{ padding: '9px 12px', fontSize: '13px' }} placeholder="ftmo.com" />
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <label style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Split %</label>
-                            <input type="text" value={editAccForm.profitSplit || ''} onChange={(e) => setEditAccForm({...editAccForm, profitSplit: e.target.value})} style={{ padding: '9px 12px', fontSize: '0.85rem' }} placeholder="80" />
+                            <input type="text" value={editAccForm.profitSplit || ''} onChange={(e) => setEditAccForm({...editAccForm, profitSplit: e.target.value})} style={{ padding: '9px 12px', fontSize: '13px' }} placeholder="80" />
                           </div>
                         </div>
                         <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-                          <button onClick={() => setEditingAccId(null)} style={{ background: 'transparent', color: 'var(--text-muted)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontSize: '0.8rem' }}>Cancel</button>
-                          <button onClick={saveEdit} style={{ background: accentColor === 'var(--success)' ? 'var(--success)' : 'var(--primary)', color: '#08090a', border: 'none', borderRadius: '8px', padding: '8px 20px', cursor: 'pointer', fontWeight: '700', fontSize: '0.8rem' }}>Save Changes</button>
+                          <button onClick={() => setEditingAccId(null)} style={{ background: 'transparent', color: 'var(--text-muted)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontSize: '13px' }}>Cancel</button>
+                          <button onClick={saveEdit} style={{ background: accentColor === 'var(--success)' ? 'var(--success)' : 'var(--primary)', color: '#08090a', border: 'none', borderRadius: '8px', padding: '8px 20px', cursor: 'pointer', fontWeight: '700', fontSize: '13px' }}>Save Changes</button>
                         </div>
                       </div>
                     ) : (
@@ -350,14 +350,14 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                           </div>
                           <div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                              <span style={{ fontWeight: '700', fontSize: '0.9rem' }}>{acc.name}</span>
-                              <span style={{ fontSize: '0.65rem', fontWeight: '700', color: accentColor, background: accentBg, padding: '2px 8px', borderRadius: '20px', border: `1px solid ${accentColor}30`, textTransform: 'uppercase' }}>{acc.type}</span>
+                              <span style={{ fontWeight: '700', fontSize: '14px' }}>{acc.name}</span>
+                              <span style={{ fontSize: '11px', fontWeight: '700', color: accentColor, background: accentBg, padding: '2px 8px', borderRadius: '20px', border: `1px solid ${accentColor}30`, textTransform: 'uppercase' }}>{acc.type}</span>
                             </div>
                             <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-                              <span style={{ fontSize: '0.75rem', color: 'var(--success)', fontWeight: '700' }}>${acc.initialBalance?.toLocaleString()}</span>
-                              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Target: <span style={{ color: accentColor }}>{acc.target}%</span></span>
-                              {acc.website && <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>🌐 {acc.website}</span>}
-                              {acc.profitSplit && <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Split: {acc.profitSplit}%</span>}
+                              <span style={{ fontSize: '11px', color: 'var(--success)', fontWeight: '700' }}>${acc.initialBalance?.toLocaleString()}</span>
+                              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Target: <span style={{ color: accentColor }}>{acc.target}%</span></span>
+                              {acc.website && <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>🌐 {acc.website}</span>}
+                              {acc.profitSplit && <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Split: {acc.profitSplit}%</span>}
                             </div>
                           </div>
                         </div>
@@ -414,7 +414,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                     <form onSubmit={(e) => { e.preventDefault(); addAccount(); }} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                       {/* Portfolio Type - FIRST so suggestions work */}
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                        <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                        <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                           Portfolio Type
                         </label>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
@@ -444,8 +444,8 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                                   gap: '2px'
                                 }}
                               >
-                                <span style={{ fontSize: '0.95rem' }}>{emoji} <span style={{ fontWeight: '700', fontSize: '0.8rem' }}>{val}</span></span>
-                                <span style={{ fontSize: '0.65rem', opacity: 0.6 }}>{desc}</span>
+                                <span style={{ fontSize: '0.95rem' }}>{emoji} <span style={{ fontWeight: '700', fontSize: '13px' }}>{val}</span></span>
+                                <span style={{ fontSize: '11px', opacity: 0.6 }}>{desc}</span>
                               </button>
                             );
                           })}
@@ -454,7 +454,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
 
                       {/* Portfolio Name with Smart Suggestions */}
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                        <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                           Portfolio Name
                         </label>
                         <input 
@@ -468,7 +468,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                             <Sparkles size={11} color="var(--primary)" />
-                            <span style={{ fontSize: '0.6rem', color: 'var(--primary)', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Smart Suggestions</span>
+                            <span style={{ fontSize: '10px', color: 'var(--primary)', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Smart Suggestions</span>
                           </div>
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                             {generateNameSuggestions(accForm.type, accForm.initialBalance).map((sug, i) => (
@@ -482,7 +482,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                                   border: accForm.name === sug ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.07)',
                                   background: accForm.name === sug ? 'rgba(13,240,166,0.12)' : 'rgba(255,255,255,0.03)',
                                   color: accForm.name === sug ? 'var(--primary)' : 'var(--text-muted)',
-                                  fontSize: '0.72rem',
+                                  fontSize: '11px',
                                   cursor: 'pointer',
                                   fontWeight: '600',
                                   transition: 'all 0.15s ease',
@@ -498,7 +498,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
 
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                          <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                          <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                             Website
                           </label>
                           <input 
@@ -511,7 +511,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                          <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                          <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                             Profit Split (%)
                           </label>
                           <select 
@@ -532,7 +532,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                       </div>
 
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <label style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                        <label style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                           Starting Balance
                         </label>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
@@ -550,7 +550,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                                   background: isSelected ? 'rgba(13, 240, 166, 0.1)' : 'rgba(255,255,255,0.02)',
                                   color: isSelected ? 'var(--primary)' : 'var(--text-muted)',
                                   fontWeight: '750',
-                                  fontSize: '0.85rem',
+                                  fontSize: '13px',
                                   cursor: 'pointer',
                                   transition: 'all 0.15s ease'
                                 }}
@@ -562,13 +562,13 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                         </div>
                         
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '5px' }}>
-                          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Or Custom Balance:</span>
+                          <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Or Custom Balance:</span>
                           <input 
                             type="number" 
                             placeholder="Custom Balance"
                             value={[5000, 10000, 20000, 50000, 100000, 200000].includes(Number(accForm.initialBalance)) ? '' : accForm.initialBalance}
                             onChange={(e) => setAccForm({...accForm, initialBalance: e.target.value})}
-                            style={{ flex: 1, padding: '8px 12px', fontSize: '0.85rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px' }}
+                            style={{ flex: 1, padding: '8px 12px', fontSize: '13px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px' }}
                           />
                         </div>
                       </div>
@@ -623,7 +623,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {profile.customRules.map((rule, index) => (
                 <div key={index} className="glass" style={{ padding: '10px 15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.9rem' }}>{rule}</span>
+                  <span style={{ fontSize: '14px' }}>{rule}</span>
                   <button onClick={() => {
                     const updated = profile.customRules.filter((_, i) => i !== index);
                     const updatedProfile = { ...profile, customRules: updated };
@@ -645,7 +645,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
               <Layout size={20} color="var(--primary)" />
               Live Trade Entry Form Builder
             </h4>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '25px' }}>Customize categories for "Prepare for Battle".</p>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '25px' }}>Customize categories for "Prepare for Battle".</p>
 
             <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
               <input 
@@ -665,7 +665,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                     style={{ padding: '12px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
                     onClick={() => setActiveFieldIdx(activeFieldIdx === fIdx ? null : fIdx)}
                   >
-                    <span style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{field.label}</span>
+                    <span style={{ fontWeight: 'bold', fontSize: '14px' }}>{field.label}</span>
                     <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                       <button onClick={(e) => { e.stopPropagation(); removeField('formFields', fIdx); }} style={{ background: 'transparent', border: 'none', color: 'var(--danger)', opacity: 0.4 }}><Trash2 size={14} /></button>
                       {activeFieldIdx === fIdx ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -674,12 +674,12 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                   {activeFieldIdx === fIdx && (
                     <div style={{ padding: '15px', borderTop: '1px solid var(--border)', background: 'rgba(255,255,255,0.01)' }}>
                       <div style={{ display: 'flex', gap: '10px', marginBottom: '12px' }}>
-                        <input type="text" placeholder="Add option..." value={newOption} onChange={(e) => setNewOption(e.target.value)} style={{ flex: 1, fontSize: '0.8rem' }} />
+                        <input type="text" placeholder="Add option..." value={newOption} onChange={(e) => setNewOption(e.target.value)} style={{ flex: 1, fontSize: '13px' }} />
                         <button className="btn-primary" onClick={() => addOption('formFields', fIdx)} style={{ padding: '5px 12px' }}><Plus size={14} /></button>
                       </div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                         {field.options.map((opt, oIdx) => (
-                          <div key={oIdx} className="glass" style={{ padding: '4px 10px', borderRadius: '15px', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <div key={oIdx} className="glass" style={{ padding: '4px 10px', borderRadius: '15px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                             {opt}
                             <button onClick={() => removeOption('formFields', fIdx, oIdx)} style={{ background: 'transparent', border: 'none', color: 'var(--danger)', opacity: 0.6 }}>×</button>
                           </div>
@@ -698,8 +698,8 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
               <FlaskRound size={20} color="var(--accent)" />
               Backtest Session Form Builder
             </h4>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '5px' }}>Customize categories for Strategy Lab trades.</p>
-            <p style={{ fontSize: '0.75rem', color: 'var(--primary)', marginBottom: '25px', opacity: 0.8 }}>Note: Trading Accounts are managed globally in the left panel.</p>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '5px' }}>Customize categories for Strategy Lab trades.</p>
+            <p style={{ fontSize: '11px', color: 'var(--primary)', marginBottom: '25px', opacity: 0.8 }}>Note: Trading Accounts are managed globally in the left panel.</p>
 
             <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
               <input 
@@ -719,7 +719,7 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                     style={{ padding: '12px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
                     onClick={() => setActiveBTFieldIdx(activeBTFieldIdx === fIdx ? null : fIdx)}
                   >
-                    <span style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{field.label}</span>
+                    <span style={{ fontWeight: 'bold', fontSize: '14px' }}>{field.label}</span>
                     <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                       <button onClick={(e) => { e.stopPropagation(); removeField('backtestFields', fIdx); }} style={{ background: 'transparent', border: 'none', color: 'var(--danger)', opacity: 0.4 }}><Trash2 size={14} /></button>
                       {activeBTFieldIdx === fIdx ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -728,12 +728,12 @@ const Settings = ({ user, onUpdateProfile, accounts, onAddAccount, onDeleteAccou
                   {activeBTFieldIdx === fIdx && (
                     <div style={{ padding: '15px', borderTop: '1px solid var(--border)', background: 'rgba(255,255,255,0.01)' }}>
                       <div style={{ display: 'flex', gap: '10px', marginBottom: '12px' }}>
-                        <input type="text" placeholder="Add option..." value={newBTOption} onChange={(e) => setNewBTOption(e.target.value)} style={{ flex: 1, fontSize: '0.8rem' }} />
+                        <input type="text" placeholder="Add option..." value={newBTOption} onChange={(e) => setNewBTOption(e.target.value)} style={{ flex: 1, fontSize: '13px' }} />
                         <button className="btn-primary" onClick={() => addOption('backtestFields', fIdx)} style={{ padding: '5px 12px', backgroundColor: 'var(--accent)' }}><Plus size={14} /></button>
                       </div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                         {field.options.map((opt, oIdx) => (
-                          <div key={oIdx} className="glass" style={{ padding: '4px 10px', borderRadius: '15px', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <div key={oIdx} className="glass" style={{ padding: '4px 10px', borderRadius: '15px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                             {opt}
                             <button onClick={() => removeOption('backtestFields', fIdx, oIdx)} style={{ background: 'transparent', border: 'none', color: 'var(--danger)', opacity: 0.6 }}>×</button>
                           </div>

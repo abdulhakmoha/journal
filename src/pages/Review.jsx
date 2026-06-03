@@ -238,11 +238,11 @@ const MoodChart = ({ trades, t }) => {
       {data.map((m, i) => (
         <motion.div key={m.mood} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: '600', color: COLORS[m.mood] }}>
+            <span style={{ fontSize: '13px', fontWeight: '600', color: COLORS[m.mood] }}>
               {t(m.mood.toLowerCase())}
               <span style={{ color: 'var(--text-muted)', fontWeight: 'normal', fontSize: '0.73rem', marginLeft: '6px' }}>({m.count} trades)</span>
             </span>
-            <div style={{ display: 'flex', gap: '14px', fontSize: '0.78rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '14px', fontSize: '13px', alignItems: 'center' }}>
               <span style={{ color: 'var(--success)' }}>✅ {m.wins}</span>
               <span style={{ color: 'var(--danger)' }}>❌ {m.losses}</span>
               <span style={{ color: m.netR >= 0 ? 'var(--success)' : 'var(--danger)', fontWeight: 'bold' }}>{m.netR >= 0 ? '+' : ''}{m.netR}%</span>
@@ -355,7 +355,7 @@ const Review = ({ trades, accounts }) => {
           </button>
           <div>
             <h2 className="text-gradient" style={{ margin: 0 }}>{t('weeklyReview')}</h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: '5px 0 0' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '13px', margin: '5px 0 0' }}>
               {language === 'so' ? 'Falanqayn ku salaysan xogta dhabta ah ee ganacsigaaga.' : 'Data-driven insights based on your actual execution history.'}
             </p>
           </div>
@@ -370,7 +370,7 @@ const Review = ({ trades, accounts }) => {
             <option value="Custom Month">Custom Month</option>
           </select>
           {timeframe === 'Custom Month' && (
-            <input type="month" value={customMonth} onChange={e => setCustomMonth(e.target.value)} style={{ background: 'rgba(255,255,255,0.05)', border: 'none', color: 'white', padding: '8px 12px', borderRadius: '8px', fontSize: '0.85rem' }} />
+            <input type="month" value={customMonth} onChange={e => setCustomMonth(e.target.value)} style={{ background: 'rgba(255,255,255,0.05)', border: 'none', color: 'white', padding: '8px 12px', borderRadius: '8px', fontSize: '13px' }} />
           )}
         </div>
       </header>
@@ -385,7 +385,7 @@ const Review = ({ trades, accounts }) => {
           { label: t('mistakes'), value: mistakes, color: mistakes > 2 ? 'var(--danger)' : 'var(--success)' },
         ].map((stat, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className="glass-card" style={{ padding: '25px', textAlign: 'center' }}>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginBottom: '10px', textTransform: 'uppercase' }}>{stat.label}</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '11px', marginBottom: '10px', textTransform: 'uppercase' }}>{stat.label}</p>
             <h3 style={{ fontSize: '2rem', fontWeight: '900', color: stat.color }}>{stat.value}</h3>
           </motion.div>
         ))}
@@ -412,7 +412,7 @@ const Review = ({ trades, accounts }) => {
               const height = (d.winRate / maxWR) * 140;
               return (
                 <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '0.7rem', fontWeight: 'bold', color: d.winRate >= 60 ? 'var(--success)' : d.winRate >= 40 ? 'var(--primary)' : 'var(--danger)' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 'bold', color: d.winRate >= 60 ? 'var(--success)' : d.winRate >= 40 ? 'var(--primary)' : 'var(--danger)' }}>
                     {d.count > 0 ? `${d.winRate}%` : ''}
                   </span>
                   <motion.div
@@ -421,8 +421,8 @@ const Review = ({ trades, accounts }) => {
                     transition={{ duration: 0.8, delay: i * 0.1 }}
                     style={{ width: '100%', background: d.winRate >= 60 ? 'var(--success)' : d.winRate >= 40 ? 'var(--primary)' : 'rgba(239,68,68,0.4)', borderRadius: '6px 6px 0 0', minHeight: d.count > 0 ? '5px' : '0' }}
                   />
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{d.day}</span>
-                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{d.count}T</span>
+                  <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{d.day}</span>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{d.count}T</span>
                 </div>
               );
             })}
@@ -443,12 +443,12 @@ const Review = ({ trades, accounts }) => {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 background: stat.winRate >= 60 ? 'rgba(0,200,150,0.15)' : stat.winRate >= 40 ? 'rgba(26,59,110,0.1)' : 'rgba(192,57,43,0.1)',
                 border: `2px solid ${stat.winRate >= 60 ? 'var(--success)' : stat.winRate >= 40 ? 'var(--primary)' : 'var(--danger)'}`,
-                fontSize: '1.4rem', fontWeight: '900'
+                fontSize: '18px', fontWeight: '900'
               }}>
                 {stat.grade}
               </div>
-              <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: stat.winRate >= 60 ? 'var(--success)' : 'var(--text-main)' }}>{stat.winRate}%</p>
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{stat.count} trades</p>
+              <p style={{ fontSize: '16px', fontWeight: 'bold', color: stat.winRate >= 60 ? 'var(--success)' : 'var(--text-main)' }}>{stat.winRate}%</p>
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{stat.count} trades</p>
             </div>
           ))}
         </div>
@@ -468,15 +468,15 @@ const Review = ({ trades, accounts }) => {
             return (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
                 <div style={{ background: 'rgba(245,158,11,0.08)', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '5px', textTransform: 'uppercase' }}>{language === 'so' ? 'Trades Xilli News' : 'Trades During News'}</p>
+                  <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '5px', textTransform: 'uppercase' }}>{language === 'so' ? 'Trades Xilli News' : 'Trades During News'}</p>
                   <p style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--warning)' }}>{conflicts.length}</p>
                 </div>
                 <div style={{ background: cRate < 40 ? 'rgba(192,57,43,0.08)' : 'rgba(0,200,150,0.08)', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '5px', textTransform: 'uppercase' }}>{t('winRate')}</p>
+                  <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '5px', textTransform: 'uppercase' }}>{t('winRate')}</p>
                   <p style={{ fontSize: '2rem', fontWeight: '900', color: cRate < 40 ? 'var(--danger)' : 'var(--success)' }}>{cRate}%</p>
                 </div>
                 <div style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '5px', textTransform: 'uppercase' }}>{language === 'so' ? 'Khasaare' : 'Losses'}</p>
+                  <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '5px', textTransform: 'uppercase' }}>{language === 'so' ? 'Khasaare' : 'Losses'}</p>
                   <p style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--danger)' }}>{conflicts.length - cWins.length}</p>
                 </div>
               </div>
@@ -492,12 +492,12 @@ const Review = ({ trades, accounts }) => {
           <span style={{
             background: 'linear-gradient(135deg, var(--navy), var(--navy-dark))',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            fontSize: '1.2rem', fontWeight: '800'
+            fontSize: '16px', fontWeight: '800'
           }}>
             {t('coachReview')}
           </span>
           <span style={{
-            fontSize: '0.65rem', color: 'var(--text-muted)',
+            fontSize: '11px', color: 'var(--text-muted)',
             background: 'rgba(26,59,110,0.1)', padding: '3px 10px',
             borderRadius: '10px', border: '1px solid rgba(26,59,110,0.2)',
             WebkitTextFillColor: 'var(--text-muted)', WebkitBackgroundClip: 'unset'
@@ -526,10 +526,10 @@ const Review = ({ trades, accounts }) => {
                 display: 'flex', alignItems: 'center', gap: '10px',
                 background: 'rgba(255,255,255,0.01)'
               }}>
-                <span style={{ fontSize: '1.2rem' }}>{section.icon}</span>
+                <span style={{ fontSize: '16px' }}>{section.icon}</span>
                 <span style={{ fontWeight: '700', fontSize: '0.95rem', color: 'var(--text-main)' }}>{section.title}</span>
               </div>
-              <div style={{ padding: '18px 20px', fontSize: '0.9rem', lineHeight: '1.85', color: 'var(--text-muted)' }}>
+              <div style={{ padding: '18px 20px', fontSize: '14px', lineHeight: '1.85', color: 'var(--text-muted)' }}>
                 {section.body}
               </div>
             </motion.div>

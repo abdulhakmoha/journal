@@ -272,10 +272,10 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                   className="glass-card" 
                   style={{ position: 'absolute', top: '100%', right: 0, marginTop: '10px', padding: '15px', width: '200px', zIndex: 100, boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}
                 >
-                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '10px', textTransform: 'uppercase' }}>Show/Hide Columns</p>
+                  <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '10px', textTransform: 'uppercase' }}>Show/Hide Columns</p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {Object.keys(visibleColumns).map(col => (
-                      <label key={col} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.85rem', cursor: 'pointer' }}>
+                      <label key={col} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', cursor: 'pointer' }}>
                         <input 
                           type="checkbox" 
                           checked={visibleColumns[col]} 
@@ -299,39 +299,39 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
       {/* Advanced Stats Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '20px' }}>
          <div className="glass-card" style={{ padding: '15px' }}>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Win Rate</p>
-            <p style={{ fontSize: '1.4rem', fontWeight: 'bold', color: currentStats.winRate >= 50 ? 'var(--success)' : 'var(--warning)' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Win Rate</p>
+            <p style={{ fontSize: '18px', fontWeight: 'bold', color: currentStats.winRate >= 50 ? 'var(--success)' : 'var(--warning)' }}>
               {currentStats.winRate}%
             </p>
          </div>
          <div className="glass-card" style={{ padding: '15px' }}>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Avg Gain / Trade</p>
-            <p style={{ fontSize: '1.4rem', fontWeight: 'bold', color: parseFloat(currentStats.expectancy) >= 0 ? 'var(--success)' : 'var(--danger)' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Avg Gain / Trade</p>
+            <p style={{ fontSize: '18px', fontWeight: 'bold', color: parseFloat(currentStats.expectancy) >= 0 ? 'var(--success)' : 'var(--danger)' }}>
               {currentStats.expectancy}R
             </p>
          </div>
          <div className="glass-card" style={{ padding: '15px' }}>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Win : Loss Ratio</p>
-            <p style={{ fontSize: '1.4rem', fontWeight: 'bold', color: parseFloat(currentStats.profitFactor) >= 1.5 ? 'var(--success)' : 'var(--danger)' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Win : Loss Ratio</p>
+            <p style={{ fontSize: '18px', fontWeight: 'bold', color: parseFloat(currentStats.profitFactor) >= 1.5 ? 'var(--success)' : 'var(--danger)' }}>
               {currentStats.profitFactor}
             </p>
          </div>
          <div className="glass-card" style={{ padding: '15px' }}>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Max Streaks</p>
-            <p style={{ fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--text-main)', display: 'flex', gap: '10px' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Max Streaks</p>
+            <p style={{ fontSize: '18px', fontWeight: 'bold', color: 'var(--text-main)', display: 'flex', gap: '10px' }}>
               <span style={{ color: 'var(--success)' }}>{currentStats.maxWinStreak}W</span>
               <span style={{ color: 'var(--danger)' }}>{currentStats.maxLossStreak}L</span>
             </p>
          </div>
          <div className="glass-card" style={{ padding: '15px' }}>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Best Setup</p>
-            <p style={{ fontSize: '1.4rem', fontWeight: 'bold', color: currentStats.bestSetup.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Best Setup</p>
+            <p style={{ fontSize: '18px', fontWeight: 'bold', color: currentStats.bestSetup.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)' }}>
               {currentStats.bestSetup.name}
             </p>
          </div>
          <div className="glass-card" style={{ padding: '15px' }}>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Best Hour</p>
-            <p style={{ fontSize: '1.4rem', fontWeight: 'bold', color: currentStats.bestHour.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Best Hour</p>
+            <p style={{ fontSize: '18px', fontWeight: 'bold', color: currentStats.bestHour.rate >= 50 ? 'var(--primary)' : 'var(--text-muted)' }}>
               {currentStats.bestHour.name}
             </p>
          </div>
@@ -358,26 +358,26 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
               {/* Status Filter */}
               <div style={{ display: 'flex', gap: '5px' }}>
                 {['All', 'Win', 'Loss', 'BE'].map(s => (
-                  <button key={s} onClick={() => setFilterStatus(s)} style={{ padding: '5px 12px', borderRadius: '20px', border: 'none', fontSize: '0.78rem', fontWeight: '600', cursor: 'pointer', background: filterStatus === s ? (s === 'Win' ? 'var(--success)' : s === 'Loss' ? 'var(--danger)' : s === 'BE' ? 'var(--warning)' : 'var(--primary)') : 'rgba(255,255,255,0.05)', color: filterStatus === s ? 'white' : 'var(--text-muted)', transition: 'all 0.2s' }}>
+                  <button key={s} onClick={() => setFilterStatus(s)} style={{ padding: '5px 12px', borderRadius: '20px', border: 'none', fontSize: '13px', fontWeight: '600', cursor: 'pointer', background: filterStatus === s ? (s === 'Win' ? 'var(--success)' : s === 'Loss' ? 'var(--danger)' : s === 'BE' ? 'var(--warning)' : 'var(--primary)') : 'rgba(255,255,255,0.05)', color: filterStatus === s ? 'white' : 'var(--text-muted)', transition: 'all 0.2s' }}>
                     {s === 'Win' ? '✅ Win' : s === 'Loss' ? '❌ Loss' : s === 'BE' ? '➖ BE' : 'All'}
                   </button>
                 ))}
               </div>
 
               {/* Account Filter */}
-              <select value={filterAccount} onChange={(e) => setFilterAccount(e.target.value)} style={{ padding: '6px 12px', borderRadius: '20px', fontSize: '0.78rem' }}>
+              <select value={filterAccount} onChange={(e) => setFilterAccount(e.target.value)} style={{ padding: '6px 12px', borderRadius: '20px', fontSize: '13px' }}>
                 <option value="All">All Accounts</option>
                 {(accounts || []).map(acc => <option key={acc._id} value={acc.name}>{acc.name}</option>)}
               </select>
 
               {/* Export CSV */}
-              <button onClick={exportToCSV} style={{ padding: '6px 15px', borderRadius: '20px', border: '1px solid var(--primary)', background: 'rgba(56,189,248,0.1)', color: 'var(--primary)', fontSize: '0.78rem', cursor: 'pointer', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <button onClick={exportToCSV} style={{ padding: '6px 15px', borderRadius: '20px', border: '1px solid var(--primary)', background: 'rgba(56,189,248,0.1)', color: 'var(--primary)', fontSize: '13px', cursor: 'pointer', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 ⬇ Export CSV ({filteredTrades.length})
               </button>
 
               {/* Reset filters */}
               {(filterStatus !== 'All' || filterAccount !== 'All' || searchTerm) && (
-                <button onClick={() => { setFilterStatus('All'); setFilterAccount('All'); setSearchTerm(''); }} style={{ padding: '5px 12px', borderRadius: '20px', border: 'none', background: 'rgba(239,68,68,0.1)', color: 'var(--danger)', fontSize: '0.78rem', cursor: 'pointer' }}>✕ Reset</button>
+                <button onClick={() => { setFilterStatus('All'); setFilterAccount('All'); setSearchTerm(''); }} style={{ padding: '5px 12px', borderRadius: '20px', border: 'none', background: 'rgba(239,68,68,0.1)', color: 'var(--danger)', fontSize: '13px', cursor: 'pointer' }}>✕ Reset</button>
               )}
             </div>
           </div>
@@ -386,15 +386,15 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                 <tr>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{t('tradingDate').toUpperCase()} / {t('tradingTime').toUpperCase()}</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>SYMBOL</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{t('type').toUpperCase()}</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{t('status').toUpperCase()}</th>
-                  {visibleColumns.pips && <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>PIPS</th>}
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>P/L (%)</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{t('account').toUpperCase()}</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>CHARTS</th>
-                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'right' }}>ACTIONS</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '13px' }}>{t('tradingDate').toUpperCase()} / {t('tradingTime').toUpperCase()}</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '13px' }}>SYMBOL</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '13px' }}>{t('type').toUpperCase()}</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '13px' }}>{t('status').toUpperCase()}</th>
+                  {visibleColumns.pips && <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '13px' }}>PIPS</th>}
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '13px' }}>P/L (%)</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '13px' }}>{t('account').toUpperCase()}</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '13px' }}>CHARTS</th>
+                  <th style={{ padding: '15px 20px', color: 'var(--text-muted)', fontSize: '13px', textAlign: 'right' }}>ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
@@ -409,10 +409,10 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                           <td style={{ padding: '15px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                               <div className="glass" style={{ padding: '5px 8px', borderRadius: '6px', textAlign: 'center', minWidth: '45px' }}>
-                                <span style={{ fontSize: '0.65rem', color: 'var(--primary)', fontWeight: 'bold', display: 'block' }}>{new Date(trade.timestamp).toLocaleDateString('en-GB', { weekday: 'short' }).toUpperCase()}</span>
-                                <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>{new Date(trade.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
+                                <span style={{ fontSize: '11px', color: 'var(--primary)', fontWeight: 'bold', display: 'block' }}>{new Date(trade.timestamp).toLocaleDateString('en-GB', { weekday: 'short' }).toUpperCase()}</span>
+                                <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>{new Date(trade.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
                               </div>
-                              <span style={{ fontSize: '0.85rem' }}>{new Date(trade.timestamp).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                              <span style={{ fontSize: '13px' }}>{new Date(trade.timestamp).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
                             </div>
                           </td>
                         )}
@@ -428,7 +428,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                         )}
                         {visibleColumns.type && (
                           <td style={{ padding: '15px' }}>
-                            <span style={{ color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)', fontSize: '0.85rem' }}>{trade.type}</span>
+                            <span style={{ color: trade.type === 'Long' ? 'var(--success)' : 'var(--danger)', fontSize: '13px' }}>{trade.type}</span>
                           </td>
                         )}
                         {visibleColumns.status && (
@@ -436,7 +436,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                             <span style={{
                               padding: '6px 12px',
                               borderRadius: '12px',
-                              fontSize: '0.8rem',
+                              fontSize: '13px',
                               fontWeight: 'bold',
                               background: trade.status?.toLowerCase().includes('win') ? 'rgba(0, 200, 150, 0.15)' : trade.status?.toLowerCase().includes('loss') ? 'rgba(192, 57, 43, 0.15)' : 'rgba(26, 59, 110, 0.15)',
                               color: trade.status?.toLowerCase().includes('win') ? 'var(--success)' : trade.status?.toLowerCase().includes('loss') ? 'var(--danger)' : 'var(--primary)'
@@ -451,7 +451,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                             <span style={{ 
                               color: trade.pips > 0 ? 'var(--success)' : trade.pips < 0 ? 'var(--danger)' : 'var(--text-muted)',
                               fontWeight: '500',
-                              fontSize: '0.85rem'
+                              fontSize: '13px'
                             }}>
                               {trade.pips > 0 ? `+${trade.pips}` : trade.pips || '0'}
                             </span>
@@ -475,13 +475,13 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                           </td>
                         )}
 
-                        {visibleColumns.account && <td style={{ padding: '15px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>{trade.account || 'Primary'}</td>}
+                        {visibleColumns.account && <td style={{ padding: '15px', fontSize: '13px', color: 'var(--text-muted)' }}>{trade.account || 'Primary'}</td>}
                         
                         <td style={{ padding: '15px' }}>
                           <div style={{ display: 'flex', gap: '8px' }}>
                              {trade.beforeChart && <ImageIcon size={16} color="var(--primary)" />}
                              {trade.afterChart && <ImageIcon size={16} color="var(--success)" />}
-                             {!trade.beforeChart && !trade.afterChart && <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>—</span>}
+                             {!trade.beforeChart && !trade.afterChart && <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>—</span>}
                           </div>
                         </td>
 
@@ -504,7 +504,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                             >
                               <div style={{ padding: '30px', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '30px', borderBottom: '1px solid var(--border)' }}>
                                 <div className="glass" style={{ padding: '15px', borderRadius: '12px' }}>
-                                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                                   <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '10px', display: 'flex', justifyContent: 'space-between' }}>
                                      BEFORE CHART
                                      {trade.beforeChart && <Maximize2 size={14} style={{ cursor: 'pointer' }} onClick={() => setSelectedImage(trade.beforeChart)} />}
                                    </p>
@@ -515,10 +515,10 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                                        style={{ width: '100%', borderRadius: '8px', cursor: 'zoom-in' }} 
                                        onClick={() => setSelectedImage(trade.beforeChart)}
                                      />
-                                   ) : <p style={{ textAlign: 'center', padding: '20px', color: 'var(--text-muted)', fontSize: '0.8rem' }}>No Before Chart uploaded.</p>}
+                                   ) : <p style={{ textAlign: 'center', padding: '20px', color: 'var(--text-muted)', fontSize: '13px' }}>No Before Chart uploaded.</p>}
                                 </div>
                                 <div className="glass" style={{ padding: '15px', borderRadius: '12px' }}>
-                                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                                   <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '10px', display: 'flex', justifyContent: 'space-between' }}>
                                      AFTER CHART
                                      {trade.afterChart && <Maximize2 size={14} style={{ cursor: 'pointer' }} onClick={() => setSelectedImage(trade.afterChart)} />}
                                    </p>
@@ -529,10 +529,10 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                                        style={{ width: '100%', borderRadius: '8px', cursor: 'zoom-in' }} 
                                        onClick={() => setSelectedImage(trade.afterChart)}
                                      />
-                                   ) : <p style={{ textAlign: 'center', padding: '20px', color: 'var(--text-muted)', fontSize: '0.8rem' }}>No After Chart uploaded.</p>}
+                                   ) : <p style={{ textAlign: 'center', padding: '20px', color: 'var(--text-muted)', fontSize: '13px' }}>No After Chart uploaded.</p>}
                                 </div>
                                 <div style={{ gridColumn: 'span 2' }}>
-                                   <h5 style={{ fontSize: '0.9rem', marginBottom: '10px', color: 'var(--primary)' }}>Trade Mindset & Rules</h5>
+                                   <h5 style={{ fontSize: '14px', marginBottom: '10px', color: 'var(--primary)' }}>Trade Mindset & Rules</h5>
 
                                    {trade.newsConflict && (
                                      <div style={{
@@ -542,7 +542,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                                        background: 'rgba(239, 68, 68, 0.1)',
                                        border: '1px solid rgba(239, 68, 68, 0.2)',
                                        color: '#f87171',
-                                       fontSize: '0.85rem',
+                                       fontSize: '13px',
                                        display: 'flex',
                                        alignItems: 'center',
                                        gap: '8px'
@@ -556,12 +556,12 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
 
                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                                       <div className="glass" style={{ padding: '15px', borderRadius: '8px' }}>
-                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('preMood')}</p>
+                                        <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('preMood')}</p>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                                           <span style={{
                                             padding: '4px 10px',
                                             borderRadius: '12px',
-                                            fontSize: '0.75rem',
+                                            fontSize: '11px',
                                             fontWeight: 'bold',
                                             background: 'rgba(56, 189, 248, 0.15)',
                                             color: 'var(--primary)'
@@ -569,16 +569,16 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                                             {t(trade.preMood?.toLowerCase()) || trade.preMood}
                                           </span>
                                         </div>
-                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('preThoughts')}</p>
-                                        <p style={{ fontSize: '0.85rem' }}>{trade.preMindset || 'No notes.'}</p>
+                                        <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('preThoughts')}</p>
+                                        <p style={{ fontSize: '13px' }}>{trade.preMindset || 'No notes.'}</p>
                                       </div>
                                       <div className="glass" style={{ padding: '15px', borderRadius: '8px' }}>
-                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('postMood')}</p>
+                                        <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('postMood')}</p>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                                           <span style={{
                                             padding: '4px 10px',
                                             borderRadius: '12px',
-                                            fontSize: '0.75rem',
+                                            fontSize: '11px',
                                             fontWeight: 'bold',
                                             background: 'rgba(0, 200, 150, 0.15)',
                                             color: 'var(--success)'
@@ -586,8 +586,8 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                                             {t(trade.postMood?.toLowerCase()) || trade.postMood}
                                           </span>
                                         </div>
-                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('postThoughts')}</p>
-                                        <p style={{ fontSize: '0.85rem' }}>{trade.postMindset || 'No notes.'}</p>
+                                        <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('postThoughts')}</p>
+                                        <p style={{ fontSize: '13px' }}>{trade.postMindset || 'No notes.'}</p>
                                       </div>
                                    </div>
                                 </div>
@@ -606,19 +606,19 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
       ) : (
         <div className="glass-card" style={{ padding: '25px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+            <h3 style={{ fontSize: '16px', fontWeight: 'bold' }}>
               {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
             </h3>
             <div style={{ display: 'flex', gap: '10px' }}>
               <button onClick={prevMonth} className="icon-btn"><ChevronLeft size={20} /></button>
-              <button onClick={() => setCurrentDate(new Date())} style={{ padding: '5px 15px', borderRadius: '8px', border: '1px solid var(--border)', background: 'transparent', color: 'var(--text-muted)', fontSize: '0.8rem' }}>Today</button>
+              <button onClick={() => setCurrentDate(new Date())} style={{ padding: '5px 15px', borderRadius: '8px', border: '1px solid var(--border)', background: 'transparent', color: 'var(--text-muted)', fontSize: '13px' }}>Today</button>
               <button onClick={nextMonth} className="icon-btn"><ChevronRight size={20} /></button>
             </div>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)', borderRadius: '12px', overflow: 'hidden' }}>
             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
-              <div key={d} style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'bold' }}>
+              <div key={d} style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', textAlign: 'center', fontSize: '13px', color: 'var(--text-muted)', fontWeight: 'bold' }}>
                 {d}
               </div>
             ))}
@@ -639,7 +639,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                     marginBottom: '8px'
                   }}>
                     <span style={{ 
-                      fontSize: '0.85rem', 
+                      fontSize: '13px', 
                       fontWeight: 'bold', 
                       color: isToday ? 'var(--primary)' : 'var(--text-muted)',
                       background: isToday ? 'rgba(56, 189, 248, 0.1)' : 'transparent',
@@ -670,7 +670,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                         key={t._id}
                         onClick={() => toggleExpand(t._id)}
                         style={{ 
-                          fontSize: '0.7rem', 
+                          fontSize: '11px', 
                           padding: '6px 8px', 
                           borderRadius: '6px', 
                           background: t.status === 'Win' ? 'linear-gradient(to right, rgba(0, 200, 150, 0.15), rgba(0, 200, 150, 0.05))' : t.status === 'Loss' ? 'linear-gradient(to right, rgba(192, 57, 43, 0.15), rgba(192, 57, 43, 0.05))' : 'rgba(255,255,255,0.05)',
@@ -697,7 +697,7 @@ const Journal = ({ trades, onEdit, onDelete, onAdd, accounts, selectedAccount, s
                           </span>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '2px' }}>
-                          <span style={{ fontWeight: 'bold', color: 'var(--text-main)', fontSize: '0.7rem' }}>{t.symbol}</span>
+                          <span style={{ fontWeight: 'bold', color: 'var(--text-main)', fontSize: '11px' }}>{t.symbol}</span>
                           {session && (
                             <span style={{ 
                               fontSize: '0.55rem', 

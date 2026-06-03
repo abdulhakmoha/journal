@@ -187,13 +187,13 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
       const isWin = data.result === 'Win';
       return (
         <div className="glass-card" style={{ padding: '12px 16px', border: '1px solid var(--border)', background: 'rgba(15, 23, 42, 0.95)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
-          <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '5px', fontWeight: '700', textTransform: 'uppercase' }}>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '5px', fontWeight: '700', textTransform: 'uppercase' }}>
             Trade {data.name.replace('T', '')}
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>{data.symbol}</span>
+            <span style={{ fontWeight: 'bold', fontSize: '14px' }}>{data.symbol}</span>
             <span style={{ 
-              fontSize: '0.65rem', 
+              fontSize: '11px', 
               fontWeight: '800', 
               padding: '2px 6px', 
               borderRadius: '4px',
@@ -203,7 +203,7 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
               {data.result ? data.result.toUpperCase() : 'N/A'}
             </span>
           </div>
-          <p style={{ fontSize: '0.85rem', fontWeight: '600' }}>
+          <p style={{ fontSize: '13px', fontWeight: '600' }}>
             Cumulative P&L: <span style={{ color: data.pl >= 0 ? 'var(--success)' : 'var(--danger)' }}>{data.pl >= 0 ? '+' : ''}{data.pl}%</span>
           </p>
         </div>
@@ -221,18 +221,18 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
           <h2 className="text-gradient">
             {language === 'so' ? 'Qaybta Falanqaynta' : 'Trading Dashboard'}
           </h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
             {language === 'so' ? 'Kormeer oo falanqee natiijooyinka akoonnadaada.' : 'Track and analyze your professional trading account performance.'}
           </p>
         </div>
         <div className="glass" style={{ padding: '5px 12px', display: 'flex', alignItems: 'center', gap: '10px', borderRadius: '12px' }}>
-          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', paddingLeft: '4px' }}>
+          <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', paddingLeft: '4px' }}>
             {language === 'so' ? 'Akoonka:' : 'Account:'}
           </span>
           <select 
             value={selectedChartAccount}
             onChange={(e) => setSelectedAccount(e.target.value)}
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-main)', fontSize: '0.85rem', fontWeight: '700', outline: 'none', padding: '5px' }}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-main)', fontSize: '13px', fontWeight: '700', outline: 'none', padding: '5px' }}
           >
             <option value="All Accounts">{language === 'so' ? 'Dhammaan Akoonnada' : 'All Accounts Combined'}</option>
             {accounts.map(acc => <option key={acc._id || acc.id} value={acc.name}>{acc.name}</option>)}
@@ -308,7 +308,7 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
                 <ChartIcon size={18} color="var(--primary)" />
                 {language === 'so' ? 'Koraalka Equity-ga' : 'Equity Growth Curve'}
               </h4>
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                 {language === 'so' ? 'Muuqaalka koboca raasamaalka ee waqtiga.' : 'Visualizing your capital journey over time.'}
               </p>
             </div>
@@ -364,16 +364,16 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
                     {isPass && <CheckCircle2 size={16} color="var(--success)" className="pulse-dot-active" />}
                     {isFail && <XCircle size={16} color="var(--danger)" />}
                     {obj.status === 'progress' && <Calendar size={16} color="var(--warning)" />}
-                    <span style={{ fontWeight: '600', fontSize: '0.85rem', color: 'var(--text-main)' }}>
+                    <span style={{ fontWeight: '600', fontSize: '13px', color: 'var(--text-main)' }}>
                       {language === 'so' ? obj.nameSo : obj.name}
                     </span>
                   </div>
-                  <div style={{ fontWeight: '500', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  <div style={{ fontWeight: '500', fontSize: '13px', color: 'var(--text-muted)' }}>
                     {obj.target}
                   </div>
                   <div style={{ 
                     fontWeight: '700', 
-                    fontSize: '0.85rem', 
+                    fontSize: '13px', 
                     color: isFail ? 'var(--danger)' : isPass ? 'var(--success)' : 'var(--warning)' 
                   }}>
                     {obj.current}
@@ -394,7 +394,7 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
       {/* Account Health Cards */}
       <div>
-        <h3 style={{ fontSize: '1.2rem', marginBottom: '15px', fontWeight: '700', color: 'var(--text-main)' }}>
+        <h3 style={{ fontSize: '16px', marginBottom: '15px', fontWeight: '700', color: 'var(--text-main)' }}>
           {language === 'so' ? 'Xaaladda Akoonnada' : 'Account Details & Status'}
         </h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
@@ -431,7 +431,7 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
               {acc.target > 0 && (
                 <div style={{ marginTop: '12px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
                     <span>Target: {acc.target}%</span>
                     <span>{Math.min(100, Math.max(0, (parseFloat(acc.currentPL) / acc.target) * 100)).toFixed(0)}%</span>
                   </div>
@@ -446,12 +446,12 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
                 </div>
               )}
               
-              <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', color: 'var(--text-muted)' }}>
                  <span>{acc.tradeCount} Trades</span>
                  <span style={{ 
                    color: acc.isBlown ? 'var(--danger)' : acc.isPassed ? 'var(--success)' : 'var(--text-main)',
                    fontWeight: '800',
-                   fontSize: '0.7rem',
+                   fontSize: '11px',
                    background: acc.isPassed && ['Funded', 'Personal'].includes(acc.type) ? 'rgba(0, 200, 150, 0.12)' : 'rgba(255,255,255,0.02)',
                    padding: '3px 8px',
                    borderRadius: '6px',

@@ -326,7 +326,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
           <p style={{ color: 'var(--text-muted)' }}>{t('mindsetDesc')}</p>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('disciplineScore')}</p>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '5px' }}>{t('disciplineScore')}</p>
           <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--primary)' }}>{grade}</div>
         </div>
       </div>
@@ -338,15 +338,15 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '15px' }}>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('tradingDate')}</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('tradingDate')}</label>
                   <input type="date" style={{ width: '100%' }} value={formData.date} onChange={(e) => setFormData({...formData, date: e.target.value})} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('tradingTime')}</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('tradingTime')}</label>
                   <input type="time" style={{ width: '100%' }} value={formData.time} onChange={(e) => setFormData({...formData, time: e.target.value})} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('account')}</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('account')}</label>
                   <select style={{ width: '100%' }} value={formData.account} onChange={(e) => setFormData({...formData, account: e.target.value})}>
                     {accounts.map((acc, i) => <option key={i} value={acc.name}>{acc.name}</option>)}
                   </select>
@@ -358,7 +358,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
                   .filter(field => !['account', 'trading account'].includes(field.label.toLowerCase()))
                   .map((field, i) => (
                   <div key={i}>
-                    <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{field.label}</label>
+                    <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{field.label}</label>
                     <select 
                        style={{ width: '100%' }} 
                        value={formData[field.label] || ''} 
@@ -373,14 +373,14 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
 
              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '15px' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('type')}</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('type')}</label>
                   <select style={{ width: '100%' }} value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})}>
                     <option value="Long">Long</option>
                     <option value="Short">Short</option>
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('unit')}</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('unit')}</label>
                   <select 
                     style={{ width: '100%' }} 
                     value={formData.riskUnit || '%'} 
@@ -391,20 +391,20 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
                     {t('risk')} ({formData.riskUnit || '%'})
                   </label>
                   <input type="number" step="any" placeholder={formData.riskUnit === 'Pips' ? 'e.g. 10' : 'e.g. 1'} style={{ width: '100%' }} value={formData.risk} onChange={(e) => setFormData({...formData, risk: e.target.value})} required />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
                     {t('reward')} ({formData.riskUnit || '%'})
                   </label>
                   <input type="number" step="any" placeholder={formData.riskUnit === 'Pips' ? 'e.g. 30' : 'e.g. 3'} style={{ width: '100%' }} value={formData.reward} onChange={(e) => setFormData({...formData, reward: e.target.value})} required />
                 </div>
                 {formData.riskUnit === 'Pips' && (
                   <div>
-                    <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                    <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
                       Pips Gained/Lost
                     </label>
                     <input type="number" step="any" placeholder="e.g. +50" style={{ width: '100%', border: '1px solid var(--primary)', background: 'rgba(26, 59, 110, 0.05)' }} value={formData.pips} onChange={(e) => setFormData({...formData, pips: e.target.value})} />
@@ -414,7 +414,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
 
              <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '20px' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('status')}</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('status')}</label>
                   <select style={{ width: '100%' }} value={formData.status} onChange={(e) => setFormData({...formData, status: e.target.value})}>
                     <option value="Win">{t('win')} ✅</option>
                     <option value="Loss">{t('loss')} ❌</option>
@@ -424,7 +424,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '25px' }}>
                   <input type="checkbox" checked={formData.isMistake} onChange={(e) => setFormData({...formData, isMistake: e.target.checked})} />
-                  <label style={{ fontSize: '0.85rem', color: formData.isMistake ? 'var(--danger)' : 'var(--text-muted)' }}>{t('mistake')}</label>
+                  <label style={{ fontSize: '13px', color: formData.isMistake ? 'var(--danger)' : 'var(--text-muted)' }}>{t('mistake')}</label>
                 </div>
              </div>
           </div>
@@ -448,19 +448,19 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
                 }}>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', flex: 1, padding: '6px 0' }}>
                     <input type="checkbox" checked={formData.rules[rule]} onChange={() => handleRuleToggle(rule)} />
-                    <span style={{ fontSize: '0.85rem', color: formData.rules[rule] ? 'var(--text-main)' : 'var(--text-sub)' }}>{rule}</span>
+                    <span style={{ fontSize: '13px', color: formData.rules[rule] ? 'var(--text-main)' : 'var(--text-sub)' }}>{rule}</span>
                   </label>
                   <button 
                     type="button" 
                     onClick={() => handleDeleteRule(rule)} 
-                    style={{ background: 'transparent', border: 'none', color: 'var(--danger)', cursor: 'pointer', opacity: 0.6, fontSize: '0.9rem', padding: '4px 8px' }}
+                    style={{ background: 'transparent', border: 'none', color: 'var(--danger)', cursor: 'pointer', opacity: 0.6, fontSize: '14px', padding: '4px 8px' }}
                     title="Delete rule"
                   >
                     ✕
                   </button>
                 </div>
               ))}
-              {Object.keys(formData.rules).length === 0 && <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center', padding: '20px' }}>No rules defined.</p>}
+              {Object.keys(formData.rules).length === 0 && <p style={{ fontSize: '13px', color: 'var(--text-muted)', textAlign: 'center', padding: '20px' }}>No rules defined.</p>}
             </div>
 
             {/* Add new rule */}
@@ -470,13 +470,13 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
                 placeholder={language === 'so' ? 'Ku dar sharci...' : 'Add new rule...'} 
                 value={newRuleText} 
                 onChange={(e) => setNewRuleText(e.target.value)} 
-                style={{ padding: '8px 12px', fontSize: '0.8rem', flex: 1 }}
+                style={{ padding: '8px 12px', fontSize: '13px', flex: 1 }}
               />
               <button 
                 type="button" 
                 onClick={handleAddRule} 
                 className="btn-primary" 
-                style={{ padding: '8px 16px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+                style={{ padding: '8px 16px', fontSize: '13px', whiteSpace: 'nowrap' }}
               >
                 + Add
               </button>
@@ -487,7 +487,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
         {/* Chart Uploads */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '30px' }}>
           <div className="glass" style={{ padding: '20px', textAlign: 'center', border: '1px dashed var(--border)' }}>
-             <h4 style={{ fontSize: '0.8rem', marginBottom: '15px', color: 'var(--text-muted)' }}>{t('beforeChart')}</h4>
+             <h4 style={{ fontSize: '13px', marginBottom: '15px', color: 'var(--text-muted)' }}>{t('beforeChart')}</h4>
              {formData.beforeChart ? (
                <div style={{ position: 'relative' }}>
                  <img src={getImageUrl(formData.beforeChart)} alt="Before" style={{ width: '100%', borderRadius: '8px' }} />
@@ -496,13 +496,13 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
              ) : (
                <label style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '20px' }}>
                  <Upload size={24} color="var(--primary)" />
-                 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{uploading.before ? 'Uploading...' : 'Upload Entry Chart'}</span>
+                 <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{uploading.before ? 'Uploading...' : 'Upload Entry Chart'}</span>
                  <input type="file" hidden onChange={(e) => handleFileUpload(e, 'before')} />
                </label>
              )}
           </div>
           <div className="glass" style={{ padding: '20px', textAlign: 'center', border: '1px dashed var(--border)' }}>
-             <h4 style={{ fontSize: '0.8rem', marginBottom: '15px', color: 'var(--text-muted)' }}>{t('afterChart')}</h4>
+             <h4 style={{ fontSize: '13px', marginBottom: '15px', color: 'var(--text-muted)' }}>{t('afterChart')}</h4>
              {formData.afterChart ? (
                <div style={{ position: 'relative' }}>
                  <img src={getImageUrl(formData.afterChart)} alt="After" style={{ width: '100%', borderRadius: '8px' }} />
@@ -511,7 +511,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
              ) : (
                <label style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '20px' }}>
                  <Upload size={24} color="var(--success)" />
-                 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{uploading.after ? 'Uploading...' : 'Upload Result Chart'}</span>
+                 <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{uploading.after ? 'Uploading...' : 'Upload Result Chart'}</span>
                  <input type="file" hidden onChange={(e) => handleFileUpload(e, 'after')} />
                </label>
              )}
@@ -523,7 +523,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
           <div className="glass" style={{ padding: '20px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('preMood')}</label>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('preMood')}</label>
                 <select style={{ width: '100%' }} value={formData.preMood} onChange={(e) => setFormData({...formData, preMood: e.target.value})}>
                   <option value="Confident">{t('confident')}</option>
                   <option value="Fearful">{t('fearful')}</option>
@@ -533,7 +533,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
                 </select>
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('preThoughts')}</label>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('preThoughts')}</label>
                 <textarea placeholder="Psychology before entry..." style={{ width: '100%', minHeight: '80px' }} value={formData.preMindset} onChange={(e) => setFormData({...formData, preMindset: e.target.value})} />
               </div>
             </div>
@@ -541,7 +541,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
           <div className="glass" style={{ padding: '20px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('postMood')}</label>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('postMood')}</label>
                 <select style={{ width: '100%' }} value={formData.postMood} onChange={(e) => setFormData({...formData, postMood: e.target.value})}>
                   <option value="Confident">{t('confident')}</option>
                   <option value="Fearful">{t('fearful')}</option>
@@ -551,7 +551,7 @@ const TradeEntry = ({ onSave, customRules, formFields, initialData, accounts, us
                 </select>
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('postThoughts')}</label>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>{t('postThoughts')}</label>
                 <textarea placeholder="Lessons learned after exit..." style={{ width: '100%', minHeight: '80px' }} value={formData.postMindset} onChange={(e) => setFormData({...formData, postMindset: e.target.value})} />
               </div>
             </div>
