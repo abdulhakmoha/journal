@@ -12,10 +12,74 @@ import {
   XCircle,
   Calendar,
   Layers,
+  Percent,
+  Scale,
   LineChart as ChartIcon 
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useLanguage } from '../context/LanguageContext';
+
+const MetricCard = ({ label, value, icon: Icon, type, suffix = '' }) => {
+  let bg, border, textColor;
+  
+  if (type === 'mint') {
+    bg = 'linear-gradient(135deg, var(--mint-light) 0%, rgba(255, 255, 255, 0.9) 100%)';
+    border = '1px solid rgba(0, 200, 150, 0.18)';
+    textColor = 'var(--mint-dark)';
+  } else if (type === 'navy') {
+    bg = 'linear-gradient(135deg, var(--navy-glow) 0%, rgba(255, 255, 255, 0.9) 100%)';
+    border = '1px solid rgba(26, 59, 110, 0.18)';
+    textColor = 'var(--navy)';
+  } else if (type === 'warning') {
+    bg = 'linear-gradient(135deg, var(--warning-bg) 0%, rgba(255, 255, 255, 0.9) 100%)';
+    border = '1px solid rgba(160, 92, 16, 0.18)';
+    textColor = 'var(--warning)';
+  } else if (type === 'danger') {
+    bg = 'linear-gradient(135deg, var(--danger-bg) 0%, rgba(255, 255, 255, 0.9) 100%)';
+    border = '1px solid rgba(192, 57, 43, 0.18)';
+    textColor = '#C0392B';
+  } else {
+    bg = 'linear-gradient(135deg, var(--frost) 0%, rgba(255, 255, 255, 0.9) 100%)';
+    border = '1px solid var(--frost-mid)';
+    textColor = 'var(--slate)';
+  }
+
+  return (
+    <div style={{
+      background: bg,
+      borderRadius: '14px',
+      padding: '16px 18px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+      border: border,
+      boxShadow: 'var(--shadow-sm)',
+      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      cursor: 'default',
+      minHeight: '90px'
+    }}
+    onMouseEnter={e => {
+      e.currentTarget.style.transform = 'translateY(-2px)';
+      e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.transform = 'none';
+      e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+    }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <Icon size={15} color={textColor} style={{ opacity: 0.9 }} />
+        <span style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', letterSpacing: '0.01em', textTransform: 'none' }}>
+          {label}
+        </span>
+      </div>
+      <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '700', fontFamily: 'var(--font-sans)', display: 'flex', alignItems: 'baseline', marginTop: 'auto' }}>
+        {value}
+        {suffix && <span style={{ fontSize: '13px', fontWeight: '500', color: 'var(--slate-mid)', marginLeft: '2px' }}>{suffix}</span>}
+      </div>
+    </div>
+  );
+};
 
 const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) => {
   const { language } = useLanguage();
@@ -93,6 +157,33 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
   };
 
   const disciplineScore = calculateDisciplineScore();
+
+  const calculateWinRate = () => {
+    if (activeTrades.length === 0) return 0;
+    const wins = activeTrades.filter(t => t.status === 'Win').length;
+    return Math.round((wins / activeTrades.length) * 100);
+  };
+  const winRate = calculateWinRate();
+
+  const calculateProfitFactor = () => {
+    let grossProfit = 0;
+    let grossLoss = 0;
+    activeTrades.forEach(t => {
+      const isPips = t.riskUnit === 'Pips';
+      const riskPercent = parseFloat(t.riskPercent) || 1;
+      let val = 0;
+      if (t.status === 'Win') {
+        val = isPips ? (parseFloat(t.rr || 0) * riskPercent) : parseFloat(t.reward || 0);
+        grossProfit += val;
+      } else if (t.status === 'Loss') {
+        val = isPips ? riskPercent : parseFloat(t.reward || 0);
+        grossLoss += Math.abs(val);
+      }
+    });
+    if (grossLoss === 0) return grossProfit > 0 ? 'N/A' : '0.00';
+    return (grossProfit / grossLoss).toFixed(2);
+  };
+  const profitFactor = calculateProfitFactor();
 
   // Prop Firm Objectives Calculations
   const getObjectives = () => {
@@ -213,6 +304,8 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
     return null;
   };
 
+  const getPLTheme = (val) => (val >= 0 ? 'mint' : 'danger');
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
       
@@ -241,178 +334,58 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
         </div>
       </div>
 
-      {/* Top Header with Quick Stats Cards styled EXACTLY like sawirka 2aad */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+      {/* Top Header with Quick Stats Cards styled EXACTLY like the user's mockup */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
         
-        {/* Card 1: Portfolio P&L */}
-        <div style={{
-          background: 'var(--white)',
-          borderRadius: '12px',
-          padding: '16px 20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-sm)'
-        }}>
-          <div>
-            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Portfolio P&L</p>
-            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
-              {currentPL >= 0 ? '+' : ''}{currentPL.toFixed(2)}%
-            </div>
-          </div>
-          <div style={{
-            background: currentPL >= 0 ? 'var(--mint-light)' : 'var(--danger-bg)',
-            color: currentPL >= 0 ? 'var(--success)' : 'var(--danger)',
-            padding: '4px 8px',
-            borderRadius: '6px',
-            fontSize: '11px',
-            fontWeight: '700',
-            fontFamily: 'var(--font-sans)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2px',
-            alignSelf: 'center'
-          }}>
-            {currentPL >= 0 ? '↑' : '↓'} {Math.abs(currentPL).toFixed(1)}%
-          </div>
-        </div>
+        <MetricCard 
+          label={language === 'so' ? 'Faa\'iido/Khasaaraha P&L' : 'Portfolio P&L'} 
+          value={`${currentPL >= 0 ? '+' : ''}${currentPL.toFixed(2)}%`}
+          icon={currentPL >= 0 ? TrendingUp : TrendingDown}
+          type={getPLTheme(currentPL)}
+        />
 
-        {/* Card 2: Active Accounts */}
-        <div style={{
-          background: 'var(--white)',
-          borderRadius: '12px',
-          padding: '16px 20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-sm)'
-        }}>
-          <div>
-            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Active accounts</p>
-            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
-              {accounts.length}
-            </div>
-          </div>
-          <div style={{
-            background: 'rgba(26, 59, 110, 0.05)',
-            color: 'var(--navy)',
-            padding: '4px 8px',
-            borderRadius: '6px',
-            fontSize: '11px',
-            fontWeight: '700',
-            fontFamily: 'var(--font-sans)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2px',
-            alignSelf: 'center'
-          }}>
-            Live
-          </div>
-        </div>
+        <MetricCard 
+          label={language === 'so' ? 'Boqolleyda Guusha' : 'Win rate'} 
+          value={`${winRate}%`}
+          icon={Percent}
+          type="mint"
+        />
 
-        {/* Card 3: Discipline Score */}
-        <div style={{
-          background: 'var(--white)',
-          borderRadius: '12px',
-          padding: '16px 20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-sm)'
-        }}>
-          <div>
-            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Discipline score</p>
-            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
-              {disciplineScore}%
-            </div>
-          </div>
-          <div style={{
-            background: disciplineScore > 70 ? 'var(--mint-light)' : 'var(--warning-bg)',
-            color: disciplineScore > 70 ? 'var(--success)' : 'var(--warning)',
-            padding: '4px 8px',
-            borderRadius: '6px',
-            fontSize: '11px',
-            fontWeight: '700',
-            fontFamily: 'var(--font-sans)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2px',
-            alignSelf: 'center'
-          }}>
-            {disciplineScore > 70 ? '↑ 100%' : '→ ' + disciplineScore + '%'}
-          </div>
-        </div>
+        <MetricCard 
+          label={language === 'so' ? 'Akoonnada Firfircoon' : 'Active accounts'} 
+          value={accounts.length}
+          icon={Layers}
+          type="navy"
+        />
 
-        {/* Card 4: Total Pips Gained */}
-        <div style={{
-          background: 'var(--white)',
-          borderRadius: '12px',
-          padding: '16px 20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-sm)'
-        }}>
-          <div>
-            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Total pips gained</p>
-            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
-              {totalPips > 0 ? '+' : ''}{totalPips}
-            </div>
-          </div>
-          <div style={{
-            background: totalPips >= 0 ? 'var(--mint-light)' : 'var(--danger-bg)',
-            color: totalPips >= 0 ? 'var(--success)' : 'var(--danger)',
-            padding: '4px 8px',
-            borderRadius: '6px',
-            fontSize: '11px',
-            fontWeight: '700',
-            fontFamily: 'var(--font-sans)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2px',
-            alignSelf: 'center'
-          }}>
-            {totalPips >= 0 ? '↑' : '↓'} {Math.abs(totalPips)}
-          </div>
-        </div>
+        <MetricCard 
+          label={language === 'so' ? 'Dhibcaha Anshaxa' : 'Discipline score'} 
+          value={`${disciplineScore}%`}
+          icon={Award}
+          type="warning"
+        />
 
-        {/* Card 5: Total Trades */}
-        <div style={{
-          background: 'var(--white)',
-          borderRadius: '12px',
-          padding: '16px 20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-sm)'
-        }}>
-          <div>
-            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Total trades</p>
-            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
-              {activeTrades.length}
-            </div>
-          </div>
-          <div style={{
-            background: 'rgba(26, 59, 110, 0.05)',
-            color: 'var(--navy)',
-            padding: '4px 8px',
-            borderRadius: '6px',
-            fontSize: '11px',
-            fontWeight: '700',
-            fontFamily: 'var(--font-sans)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2px',
-            alignSelf: 'center'
-          }}>
-            Closed
-          </div>
-        </div>
+        <MetricCard 
+          label={language === 'so' ? 'Factor-ka Faa\'iidada' : 'Profit factor'} 
+          value={profitFactor}
+          icon={Scale}
+          type="warning"
+        />
+
+        <MetricCard 
+          label={language === 'so' ? 'Pips-ka Guud' : 'Total pips'} 
+          value={`${totalPips > 0 ? '+' : ''}${totalPips}`}
+          icon={Target}
+          type={getPLTheme(totalPips)}
+        />
+
+        <MetricCard 
+          label={language === 'so' ? 'Ganacsiyada Guud' : 'Total trades'} 
+          value={activeTrades.length}
+          icon={Activity}
+          type="navy"
+        />
+
       </div>
 
       {/* Main Equity Curve & Objectives Grid */}
