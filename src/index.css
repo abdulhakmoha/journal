@@ -14,10 +14,10 @@
   --frost-mid:      #D8E2F5;
   --frost-deep:     #BFD0EE;
 
-  /* Step 3 · Tertiary — Mapped to Trust Navy shades */
-  --slate:          var(--navy-dark);      /* #12295A */
-  --slate-mid:      var(--navy);           /* #1A3B6E */
-  --slate-light:    #6B7A9F;               /* Soft slate/navy tint */
+  /* Step 3 · Tertiary — Ink Slate */
+  --slate:          #3E4E6C;
+  --slate-mid:      #6B7A9F;
+  --slate-light:    #9BA8C2;
 
   /* Step 4 · Accent — Meridian Mint */
   --mint:           #00C896;
@@ -51,10 +51,10 @@
   --info-bg:        #EAF2FF;
 
   /* Text */
-  --text-main:      var(--slate);
-  --text-sub:       var(--slate-mid);
-  --text-muted:     var(--slate-light);
-  --text-heading:   var(--navy-deepest);   /* #0D1F45 */
+  --text-main:      var(--slate-mid);      /* #6B7A9F */
+  --text-sub:       var(--slate-mid);      /* #6B7A9F */
+  --text-muted:     var(--slate-light);    /* #9BA8C2 */
+  --text-heading:   var(--slate);          /* #3E4E6C */
 
   /* Borders & Surfaces */
   --border:         rgba(26, 59, 110, 0.12);
@@ -100,7 +100,7 @@ body {
   font-size: 14px;
   line-height: 1.75;
   background-color: var(--bg-body);
-  color: var(--slate);
+  color: var(--text-main);
   overflow-x: hidden;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -119,7 +119,7 @@ h1 {
   font-size: 32px;
   font-weight: 400;
   line-height: 1.1;
-  color: var(--navy);
+  color: var(--text-heading);
   letter-spacing: normal;
 }
 
@@ -127,7 +127,7 @@ h2 {
   font-family: var(--font-sans);
   font-size: 22px;
   font-weight: 600;
-  color: var(--navy);
+  color: var(--text-heading);
   letter-spacing: -0.02em;
   line-height: 1.3;
 }
@@ -136,7 +136,7 @@ h3 {
   font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 600;
-  color: var(--navy);
+  color: var(--text-heading);
   letter-spacing: -0.01em;
 }
 
@@ -150,7 +150,7 @@ h4 {
   font-family: var(--font-serif);
   font-size: 48px;
   line-height: 1;
-  color: var(--navy);
+  color: var(--text-heading);
 }
 
 .text-caption {
