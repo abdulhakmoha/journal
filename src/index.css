@@ -14,10 +14,10 @@
   --frost-mid:      #D8E2F5;
   --frost-deep:     #BFD0EE;
 
-  /* Step 3 · Tertiary — Ink Slate */
-  --slate:          #3E4E6C;
-  --slate-mid:      #6B7A9F;
-  --slate-light:    #9BA8C2;
+  /* Step 3 · Tertiary — Mapped to Trust Navy shades */
+  --slate:          var(--navy-dark);      /* #12295A */
+  --slate-mid:      var(--navy);           /* #1A3B6E */
+  --slate-light:    #6B7A9F;               /* Soft slate/navy tint */
 
   /* Step 4 · Accent — Meridian Mint */
   --mint:           #00C896;
@@ -54,7 +54,7 @@
   --text-main:      var(--slate);
   --text-sub:       var(--slate-mid);
   --text-muted:     var(--slate-light);
-  --text-heading:   var(--navy);
+  --text-heading:   var(--navy-deepest);   /* #0D1F45 */
 
   /* Borders & Surfaces */
   --border:         rgba(26, 59, 110, 0.12);
