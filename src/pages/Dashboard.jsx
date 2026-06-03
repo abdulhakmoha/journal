@@ -246,14 +246,14 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
         
         {/* Card 1: Portfolio P&L */}
         <div style={{
-          background: 'var(--frost)',
+          background: 'var(--white)',
           borderRadius: '12px',
           padding: '16px 20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          border: 'none',
-          boxShadow: 'none'
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-sm)'
         }}>
           <div>
             <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Portfolio P&L</p>
@@ -280,14 +280,14 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
         {/* Card 2: Active Accounts */}
         <div style={{
-          background: 'var(--frost)',
+          background: 'var(--white)',
           borderRadius: '12px',
           padding: '16px 20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          border: 'none',
-          boxShadow: 'none'
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-sm)'
         }}>
           <div>
             <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Active accounts</p>
@@ -314,14 +314,14 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
         {/* Card 3: Discipline Score */}
         <div style={{
-          background: 'var(--frost)',
+          background: 'var(--white)',
           borderRadius: '12px',
           padding: '16px 20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          border: 'none',
-          boxShadow: 'none'
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-sm)'
         }}>
           <div>
             <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Discipline score</p>
@@ -348,14 +348,14 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
         {/* Card 4: Total Pips Gained */}
         <div style={{
-          background: 'var(--frost)',
+          background: 'var(--white)',
           borderRadius: '12px',
           padding: '16px 20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          border: 'none',
-          boxShadow: 'none'
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-sm)'
         }}>
           <div>
             <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Total pips gained</p>
@@ -382,14 +382,14 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
         {/* Card 5: Total Trades */}
         <div style={{
-          background: 'var(--frost)',
+          background: 'var(--white)',
           borderRadius: '12px',
           padding: '16px 20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          border: 'none',
-          boxShadow: 'none'
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-sm)'
         }}>
           <div>
             <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Total trades</p>
@@ -525,10 +525,10 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
               style={{ 
                 padding: '20px', 
                 cursor: 'pointer',
-                background: 'var(--frost)',
+                background: 'var(--white)',
                 borderRadius: '12px',
-                border: 'none',
-                boxShadow: 'none'
+                border: '1px solid var(--border)',
+                boxShadow: 'var(--shadow-sm)'
               }}
               onClick={() => setSelectedAccount(acc.name)}
             >
