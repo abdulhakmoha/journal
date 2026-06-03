@@ -19,63 +19,63 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useLanguage } from '../context/LanguageContext';
 
-const MetricCard = ({ label, value, icon: Icon, type, suffix = '' }) => {
-  let bg, border, textColor;
+const MetricCard = ({ label, value, icon: Icon, trendValue, trendType }) => {
+  let pillBg = 'rgba(26, 59, 110, 0.05)';
+  let pillColor = 'var(--navy)';
   
-  if (type === 'mint') {
-    bg = 'linear-gradient(135deg, var(--mint-light) 0%, rgba(255, 255, 255, 0.9) 100%)';
-    border = '1px solid rgba(0, 200, 150, 0.18)';
-    textColor = 'var(--mint-dark)';
-  } else if (type === 'navy') {
-    bg = 'linear-gradient(135deg, var(--navy-glow) 0%, rgba(255, 255, 255, 0.9) 100%)';
-    border = '1px solid rgba(26, 59, 110, 0.18)';
-    textColor = 'var(--navy)';
-  } else if (type === 'warning') {
-    bg = 'linear-gradient(135deg, var(--warning-bg) 0%, rgba(255, 255, 255, 0.9) 100%)';
-    border = '1px solid rgba(160, 92, 16, 0.18)';
-    textColor = 'var(--warning)';
-  } else if (type === 'danger') {
-    bg = 'linear-gradient(135deg, var(--danger-bg) 0%, rgba(255, 255, 255, 0.9) 100%)';
-    border = '1px solid rgba(192, 57, 43, 0.18)';
-    textColor = '#C0392B';
-  } else {
-    bg = 'linear-gradient(135deg, var(--frost) 0%, rgba(255, 255, 255, 0.9) 100%)';
-    border = '1px solid var(--frost-mid)';
-    textColor = 'var(--slate)';
+  if (trendType === 'win' || trendType === 'up') {
+    pillBg = 'var(--mint-light)';
+    pillColor = 'var(--success)';
+  } else if (trendType === 'loss' || trendType === 'down') {
+    pillBg = 'var(--danger-bg)';
+    pillColor = 'var(--danger)';
+  } else if (trendType === 'warning') {
+    pillBg = 'var(--warning-bg)';
+    pillColor = 'var(--warning)';
   }
 
   return (
     <div style={{
-      background: bg,
-      borderRadius: '14px',
+      background: 'var(--frost)',
+      borderRadius: '12px',
       padding: '16px 18px',
       display: 'flex',
       flexDirection: 'column',
-      gap: '10px',
-      border: border,
-      boxShadow: 'var(--shadow-sm)',
-      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-      cursor: 'default',
-      minHeight: '90px'
-    }}
-    onMouseEnter={e => {
-      e.currentTarget.style.transform = 'translateY(-2px)';
-      e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-    }}
-    onMouseLeave={e => {
-      e.currentTarget.style.transform = 'none';
-      e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+      gap: '8px',
+      border: 'none',
+      boxShadow: 'none',
+      minHeight: '85px',
+      position: 'relative'
     }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <Icon size={15} color={textColor} style={{ opacity: 0.9 }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <Icon size={14} color="var(--slate-mid)" style={{ opacity: 0.8 }} />
         <span style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', letterSpacing: '0.01em', textTransform: 'none' }}>
           {label}
         </span>
       </div>
-      <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '700', fontFamily: 'var(--font-sans)', display: 'flex', alignItems: 'baseline', marginTop: 'auto' }}>
-        {value}
-        {suffix && <span style={{ fontSize: '13px', fontWeight: '500', color: 'var(--slate-mid)', marginLeft: '2px' }}>{suffix}</span>}
+      
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 'auto' }}>
+        <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '700', fontFamily: 'var(--font-sans)' }}>
+          {value}
+        </div>
+        
+        {trendValue && (
+          <div style={{
+            background: pillBg,
+            color: pillColor,
+            padding: '3px 6px',
+            borderRadius: '6px',
+            fontSize: '10px',
+            fontWeight: '700',
+            fontFamily: 'var(--font-sans)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px'
+          }}>
+            {trendValue}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -304,8 +304,6 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
     return null;
   };
 
-  const getPLTheme = (val) => (val >= 0 ? 'mint' : 'danger');
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
       
@@ -334,59 +332,68 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
         </div>
       </div>
 
-      {/* Top Header with Quick Stats Cards styled EXACTLY like the user's mockup */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
-        
-        <MetricCard 
-          label={language === 'so' ? 'Faa\'iido/Khasaaraha P&L' : 'Portfolio P&L'} 
-          value={`${currentPL >= 0 ? '+' : ''}${currentPL.toFixed(2)}%`}
-          icon={currentPL >= 0 ? TrendingUp : TrendingDown}
-          type={getPLTheme(currentPL)}
-        />
+      {/* Metric Cards Section wrapped in a clean, elevated white card container */}
+      <section className="glass-card" style={{ padding: '24px', border: '1px solid var(--border)', background: 'var(--white)', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
+          
+          <MetricCard 
+            label={language === 'so' ? 'Faa\'iido/Khasaaraha P&L' : 'Portfolio P&L'} 
+            value={`${currentPL >= 0 ? '+' : ''}${currentPL.toFixed(2)}%`}
+            icon={currentPL >= 0 ? TrendingUp : TrendingDown}
+            trendValue={`${currentPL >= 0 ? '↑' : '↓'} ${Math.abs(currentPL).toFixed(1)}%`}
+            trendType={currentPL >= 0 ? 'win' : 'loss'}
+          />
 
-        <MetricCard 
-          label={language === 'so' ? 'Boqolleyda Guusha' : 'Win rate'} 
-          value={`${winRate}%`}
-          icon={Percent}
-          type="mint"
-        />
+          <MetricCard 
+            label={language === 'so' ? 'Boqolleyda Guusha' : 'Win rate'} 
+            value={`${winRate}%`}
+            icon={Percent}
+            trendValue={winRate > 50 ? '↑ Normal' : '↓ Low'}
+            trendType={winRate > 50 ? 'win' : 'loss'}
+          />
 
-        <MetricCard 
-          label={language === 'so' ? 'Akoonnada Firfircoon' : 'Active accounts'} 
-          value={accounts.length}
-          icon={Layers}
-          type="navy"
-        />
+          <MetricCard 
+            label={language === 'so' ? 'Akoonnada Firfircoon' : 'Active accounts'} 
+            value={accounts.length}
+            icon={Layers}
+            trendValue="Live"
+            trendType="neutral"
+          />
 
-        <MetricCard 
-          label={language === 'so' ? 'Dhibcaha Anshaxa' : 'Discipline score'} 
-          value={`${disciplineScore}%`}
-          icon={Award}
-          type="warning"
-        />
+          <MetricCard 
+            label={language === 'so' ? 'Dhibcaha Anshaxa' : 'Discipline score'} 
+            value={`${disciplineScore}%`}
+            icon={Award}
+            trendValue={disciplineScore > 70 ? '↑ Perfect' : '→ Stable'}
+            trendType={disciplineScore > 70 ? 'win' : 'warning'}
+          />
 
-        <MetricCard 
-          label={language === 'so' ? 'Factor-ka Faa\'iidada' : 'Profit factor'} 
-          value={profitFactor}
-          icon={Scale}
-          type="warning"
-        />
+          <MetricCard 
+            label={language === 'so' ? 'Factor-ka Faa\'iidada' : 'Profit factor'} 
+            value={profitFactor}
+            icon={Scale}
+            trendValue={parseFloat(profitFactor) > 1.5 ? '↑ High' : '→ Stable'}
+            trendType={parseFloat(profitFactor) > 1.5 ? 'win' : 'neutral'}
+          />
 
-        <MetricCard 
-          label={language === 'so' ? 'Pips-ka Guud' : 'Total pips'} 
-          value={`${totalPips > 0 ? '+' : ''}${totalPips}`}
-          icon={Target}
-          type={getPLTheme(totalPips)}
-        />
+          <MetricCard 
+            label={language === 'so' ? 'Pips-ka Guud' : 'Total pips'} 
+            value={`${totalPips > 0 ? '+' : ''}${totalPips}`}
+            icon={Target}
+            trendValue={`${totalPips >= 0 ? '↑' : '↓'} ${Math.abs(totalPips)}`}
+            trendType={totalPips >= 0 ? 'win' : 'loss'}
+          />
 
-        <MetricCard 
-          label={language === 'so' ? 'Ganacsiyada Guud' : 'Total trades'} 
-          value={activeTrades.length}
-          icon={Activity}
-          type="navy"
-        />
+          <MetricCard 
+            label={language === 'so' ? 'Ganacsiyada Guud' : 'Total trades'} 
+            value={activeTrades.length}
+            icon={Activity}
+            trendValue="Closed"
+            trendType="neutral"
+          />
 
-      </div>
+        </div>
+      </section>
 
       {/* Main Equity Curve & Objectives Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '30px', alignItems: 'start' }}>
