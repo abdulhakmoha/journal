@@ -218,7 +218,7 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
       {/* Top Header Selector */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
         <div>
-          <h2 className="text-gradient" style={{ fontSize: '1.8rem', fontWeight: '800' }}>
+          <h2 className="text-gradient">
             {language === 'so' ? 'Qaybta Falanqaynta' : 'Trading Dashboard'}
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
@@ -244,10 +244,10 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
         <div className="glass-card accent-primary" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Portfolio P&L</p>
-            <h2 style={{ fontSize: '1.8rem', color: currentPL >= 0 ? 'var(--success)' : 'var(--danger)', fontWeight: '800', marginTop: '5px' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Portfolio P&L</p>
+            <div style={{ fontSize: '18px', color: currentPL >= 0 ? 'var(--success)' : 'var(--danger)', fontWeight: '600', marginTop: '5px' }}>
               {currentPL >= 0 ? '+' : ''}{currentPL}%
-            </h2>
+            </div>
           </div>
           <div style={{ background: currentPL >= 0 ? 'rgba(0, 200, 150, 0.12)' : 'rgba(192, 57, 43, 0.12)', padding: '10px', borderRadius: '50%', color: currentPL >= 0 ? 'var(--success)' : 'var(--danger)' }}>
             {currentPL >= 0 ? <TrendingUp size={22} /> : <TrendingDown size={22} />}
@@ -256,8 +256,8 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
         <div className="glass-card accent-purple" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Active Accounts</p>
-            <h2 style={{ fontSize: '1.8rem', fontWeight: '800', marginTop: '5px' }}>{accounts.length}</h2>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Active Accounts</p>
+            <div style={{ fontSize: '18px', fontWeight: '600', marginTop: '5px', color: 'var(--navy)' }}>{accounts.length}</div>
           </div>
           <div style={{ background: 'rgba(26, 59, 110, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--primary)' }}>
             <Layers size={22} />
@@ -266,8 +266,8 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
         <div className="glass-card accent-warning" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Discipline Score</p>
-            <h2 style={{ fontSize: '1.8rem', color: 'var(--warning)', fontWeight: '800', marginTop: '5px' }}>{disciplineScore}%</h2>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Discipline Score</p>
+            <div style={{ fontSize: '18px', color: 'var(--warning)', fontWeight: '600', marginTop: '5px' }}>{disciplineScore}%</div>
           </div>
           <div style={{ background: 'rgba(160, 92, 16, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--warning)' }}>
             <Award size={22} />
@@ -276,10 +276,10 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
         <div className="glass-card accent-primary" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Pips Gained</p>
-            <h2 style={{ fontSize: '1.8rem', color: totalPips >= 0 ? 'var(--success)' : 'var(--danger)', fontWeight: '800', marginTop: '5px' }}>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Pips Gained</p>
+            <div style={{ fontSize: '18px', color: totalPips >= 0 ? 'var(--success)' : 'var(--danger)', fontWeight: '600', marginTop: '5px' }}>
               {totalPips > 0 ? '+' : ''}{totalPips}
-            </h2>
+            </div>
           </div>
           <div style={{ background: totalPips >= 0 ? 'rgba(0, 200, 150, 0.12)' : 'rgba(192, 57, 43, 0.12)', padding: '10px', borderRadius: '50%', color: totalPips >= 0 ? 'var(--primary)' : 'var(--danger)' }}>
             <Target size={22} />
@@ -288,8 +288,8 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
         <div className="glass-card accent-purple" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Trades</p>
-            <h2 style={{ fontSize: '1.8rem', fontWeight: '800', marginTop: '5px' }}>{activeTrades.length}</h2>
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Trades</p>
+            <div style={{ fontSize: '18px', fontWeight: '600', marginTop: '5px', color: 'var(--navy)' }}>{activeTrades.length}</div>
           </div>
           <div style={{ background: 'rgba(0, 200, 150, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--primary)' }}>
             <Zap size={22} />
@@ -413,8 +413,8 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
-                  <h4 style={{ fontSize: '1.05rem', fontWeight: '700', marginBottom: '2px' }}>{acc.name}</h4>
-                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{acc.type}</span>
+                  <h4 style={{ fontSize: '14px', fontWeight: '600', color: 'var(--navy)', marginBottom: '2px' }}>{acc.name}</h4>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{acc.type}</span>
                 </div>
                 {acc.isBlown ? (
                   <ShieldAlert size={18} color="var(--danger)" />
@@ -425,9 +425,9 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
                 )}
               </div>
 
-              <h2 style={{ fontSize: '1.6rem', color: parseFloat(acc.currentPL) >= 0 ? 'var(--success)' : 'var(--danger)', fontWeight: '800' }}>
+              <div style={{ fontSize: '18px', fontWeight: '600', color: parseFloat(acc.currentPL) >= 0 ? 'var(--success)' : 'var(--danger)' }}>
                 {parseFloat(acc.currentPL) > 0 ? '+' : ''}{acc.currentPL}%
-              </h2>
+              </div>
 
               {acc.target > 0 && (
                 <div style={{ marginTop: '12px' }}>

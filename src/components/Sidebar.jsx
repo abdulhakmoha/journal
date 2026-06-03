@@ -58,8 +58,8 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
           transition: 'all 0.15s ease',
           textAlign: 'left',
           width: '100%',
-          fontWeight: isActive ? '600' : '400',
-          fontSize: '0.85rem',
+          fontWeight: isActive ? '600' : '500',
+          fontSize: '13px',
           letterSpacing: '0.01em',
           position: 'relative',
         }}
@@ -88,8 +88,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
   };
 
   const SectionLabel = ({ label }) => (
-    <div style={{
-      fontSize: '0.58rem', fontWeight: '700', letterSpacing: '0.1em',
+      fontSize: '10px', fontWeight: '700', letterSpacing: '0.1em',
       color: 'rgba(255,255,255,0.25)', margin: '16px 0 5px 14px',
       textTransform: 'uppercase'
     }}>{label}</div>
@@ -124,10 +123,10 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
             <TrendingUp size={18} color="#0D1F45" />
           </div>
           <div>
-            <div style={{ fontWeight: '800', fontSize: '1rem', color: '#ffffff', letterSpacing: '-0.02em' }}>
+            <div style={{ fontWeight: '800', fontSize: '15px', color: '#ffffff', letterSpacing: '-0.02em' }}>
               SomTrader
             </div>
-            <div style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.35)', marginTop: '-1px' }}>Pro Analytics</div>
+            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '-1px' }}>Pro Analytics</div>
           </div>
         </div>
 
@@ -138,7 +137,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
               key={lang}
               onClick={() => setLanguage(lang.toLowerCase())}
               style={{
-                flex: 1, padding: '4px 0', fontSize: '0.68rem', borderRadius: '6px',
+                flex: 1, padding: '4px 0', fontSize: '11px', borderRadius: '6px',
                 border: 'none', fontWeight: '700', cursor: 'pointer', transition: 'all 0.15s ease',
                 background: language === lang.toLowerCase() ? '#1A3B6E' : 'transparent',
                 color: language === lang.toLowerCase() ? 'white' : 'rgba(255,255,255,0.4)',
@@ -155,7 +154,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
           style={{
             width: '100%', padding: '10px', borderRadius: '10px', border: 'none',
             background: '#00C896',
-            color: '#0D1F45', fontWeight: '700', fontSize: '0.82rem',
+            color: '#0D1F45', fontWeight: '600', fontSize: '13px',
             cursor: 'pointer', display: 'flex', alignItems: 'center',
             justifyContent: 'center', gap: '8px', transition: 'all 0.2s ease',
             boxShadow: '0 4px 14px rgba(0,200,150,0.35)',
@@ -205,14 +204,14 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
                   cursor: 'pointer',
                   transition: 'all 0.15s ease',
                   width: '100%',
-                  fontSize: '0.8rem',
+                  fontSize: '13px',
                   textAlign: 'left'
                 }}
                 onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
                 onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
-                  <span style={{ fontSize: '0.85rem' }}>{icon}</span>
+                  <span style={{ fontSize: '13px' }}>{icon}</span>
                   <span style={{ 
                     whiteSpace: 'nowrap', 
                     overflow: 'hidden', 
@@ -221,7 +220,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
                   }}>{acc.name}</span>
                 </div>
                 <span style={{
-                  fontSize: '0.58rem',
+                  fontSize: '10px',
                   fontWeight: '700',
                   background: isActive ? '#00C896' : 'rgba(255,255,255,0.05)',
                   color: isActive ? '#0D1F45' : 'rgba(255,255,255,0.3)',
@@ -250,14 +249,14 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
               cursor: 'pointer',
               transition: 'all 0.15s ease',
               width: '100%',
-              fontSize: '0.8rem',
+              fontSize: '13px',
               textAlign: 'left',
               gap: '8px'
             }}
             onMouseEnter={e => { if (selectedAccount !== 'All Accounts') e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
             onMouseLeave={e => { if (selectedAccount !== 'All Accounts') e.currentTarget.style.background = 'transparent'; }}
           >
-            <span style={{ fontSize: '0.85rem' }}>📂</span>
+            <span style={{ fontSize: '13px' }}>📂</span>
             <span style={{ fontWeight: selectedAccount === 'All Accounts' ? '600' : '400' }}>
               {language === 'so' ? 'Dhammaan' : 'All Accounts'}
             </span>
@@ -285,11 +284,11 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
           border: '1px solid rgba(255,255,255,0.07)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', fontWeight: '600' }}>
+            <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: '600' }}>
               {t('disciplineScore')}
             </span>
             <span style={{
-              fontSize: '0.78rem', fontWeight: '800',
+              fontSize: '13px', fontWeight: '800',
               color: disciplineScore > 70 ? '#00C896' : disciplineScore > 40 ? '#F0A500' : '#C0392B'
             }}>{disciplineScore}%</span>
           </div>
@@ -323,10 +322,10 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                <span style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.4)', fontWeight: '600' }}>
+                <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: '600' }}>
                   {language === 'so' ? 'Maalmo Tijaabo' : 'Trial Days'}
                 </span>
-                <span style={{ fontSize: '0.72rem', fontWeight: '800', color: expired ? '#f87171' : '#fbbf24' }}>
+                <span style={{ fontSize: '12px', fontWeight: '800', color: expired ? '#f87171' : '#fbbf24' }}>
                   {days}/30
                 </span>
               </div>
@@ -348,7 +347,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
             background: 'rgba(192,57,43,0.07)', border: '1px solid rgba(192,57,43,0.15)',
             color: '#E74C3C', display: 'flex', alignItems: 'center',
             justifyContent: 'center', gap: '8px', cursor: 'pointer',
-            fontSize: '0.8rem', fontWeight: '600', transition: 'all 0.15s ease'
+            fontSize: '13px', fontWeight: '600', transition: 'all 0.15s ease'
           }}
           onMouseEnter={e => { e.currentTarget.style.background = 'rgba(192,57,43,0.14)'; }}
           onMouseLeave={e => { e.currentTarget.style.background = 'rgba(192,57,43,0.07)'; }}

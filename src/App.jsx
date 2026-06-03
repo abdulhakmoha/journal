@@ -251,7 +251,7 @@ function App() {
             <div style={{ fontSize: '0.6rem', fontWeight: '700', color: 'var(--primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '2px' }}>
               SomTrader · {activeTab.replace(/-/g, ' ')}
             </div>
-            <h1 style={{ fontSize: '1.35rem', fontWeight: '800', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-main)' }}>
+            <h1 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               Welcome back, <span style={{ color: 'var(--primary)', textTransform: 'capitalize' }}>{user?.name?.split(' ')[0] || 'Trader'}</span> 👋
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: '1px' }}>
