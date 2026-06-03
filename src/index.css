@@ -29,10 +29,10 @@
   --white:          #FFFFFF;
 
   /* ── SEMANTIC MAPPINGS ───────────────────────────────── */
-  --bg-body:        var(--frost);
-  --bg-dark:        var(--frost-mid);
-  --bg-card:        var(--white);
-  --bg-card-hover:  #F7FAFF;
+  --bg-body:        var(--white);
+  --bg-dark:        var(--frost);
+  --bg-card:        var(--frost);
+  --bg-card-hover:  var(--frost-mid);
 
   /* Brand primary */
   --primary:        var(--navy);
