@@ -1,5 +1,24 @@
 import React from 'react';
-import { LayoutDashboard, BookOpen, Target, Settings, Brain, PlusCircle, BarChart2, Zap, PlusSquare, LayoutList, FlaskConical, Calculator, LogOut, Globe, Shield, Award, TrendingUp } from 'lucide-react';
+import { 
+  LayoutDashboard, 
+  BookOpen, 
+  Target, 
+  Settings, 
+  Brain, 
+  PlusCircle, 
+  BarChart2, 
+  Zap, 
+  PlusSquare, 
+  LayoutList, 
+  FlaskConical, 
+  Calculator, 
+  LogOut, 
+  Globe, 
+  Shield, 
+  Award, 
+  TrendingUp,
+  ChevronRight 
+} from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -40,7 +59,6 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
   const NavItem = ({ item, accentOverride }) => {
     const Icon = item.icon;
     const isActive = activeTab === item.id;
-    const accent = accentOverride || '#00C896';
     return (
       <button
         key={item.id}
@@ -49,13 +67,14 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
           display: 'flex',
           alignItems: 'center',
           gap: '11px',
-          padding: '9px 14px',
+          padding: '10px 14px',
           borderRadius: '10px',
           border: 'none',
-          background: isActive ? 'rgba(0,200,150,0.12)' : 'transparent',
-          color: isActive ? '#ffffff' : 'rgba(255,255,255,0.5)',
+          background: isActive ? 'var(--white)' : 'transparent',
+          color: isActive ? 'var(--navy)' : 'var(--slate-mid)',
+          boxShadow: isActive ? '0 4px 12px rgba(26, 59, 110, 0.06)' : 'none',
           cursor: 'pointer',
-          transition: 'all 0.15s ease',
+          transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
           textAlign: 'left',
           width: '100%',
           fontWeight: isActive ? '600' : '500',
@@ -63,33 +82,55 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
           letterSpacing: '0.01em',
           position: 'relative',
         }}
-        onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)'; }}
-        onMouseLeave={e => { if (!isActive) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; }}}
+        onMouseEnter={e => { 
+          if (!isActive) {
+            e.currentTarget.style.background = 'rgba(26, 59, 110, 0.04)'; 
+            e.currentTarget.style.color = 'var(--navy)';
+          } 
+        }}
+        onMouseLeave={e => { 
+          if (!isActive) { 
+            e.currentTarget.style.background = 'transparent'; 
+            e.currentTarget.style.color = 'var(--slate-mid)'; 
+          }
+        }}
       >
-        {/* Active indicator — Meridian Mint */}
+        {/* Active indicator bar - beautifully rounded and styled like the 2nd image */}
         {isActive && (
           <div style={{
-            position: 'absolute', left: 0, top: '20%', height: '60%',
-            width: '3px', borderRadius: '0 3px 3px 0',
-            background: 'linear-gradient(180deg, #00C896, #00A87E)'
+            position: 'absolute', 
+            left: '4px', 
+            top: '15%', 
+            height: '70%',
+            width: '4px', 
+            borderRadius: '4px',
+            background: 'linear-gradient(180deg, var(--mint), var(--navy))'
           }} />
         )}
         <div style={{
-          width: '30px', height: '30px', borderRadius: '8px', flexShrink: 0,
-          background: isActive ? 'rgba(0,200,150,0.2)' : 'rgba(255,255,255,0.05)',
+          width: '28px', height: '28px', borderRadius: '6px', flexShrink: 0,
+          background: isActive ? 'var(--frost)' : 'transparent',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          transition: 'background 0.15s ease'
+          transition: 'all 0.15s ease'
         }}>
-          <Icon size={15} color={isActive ? '#00C896' : 'rgba(255,255,255,0.45)'} />
+          <Icon size={15} color={isActive ? 'var(--navy)' : 'var(--slate-mid)'} />
         </div>
         <span>{t(translationKeys[item.id] || item.id)}</span>
+
+        {isActive && (
+          <ChevronRight size={14} style={{ marginLeft: 'auto', color: 'var(--slate-light)' }} />
+        )}
       </button>
     );
   };
 
   const SectionLabel = ({ label }) => (
-      fontSize: '10px', fontWeight: '700', letterSpacing: '0.1em',
-      color: 'rgba(255,255,255,0.25)', margin: '16px 0 5px 14px',
+    <div style={{
+      fontSize: '11px', 
+      fontWeight: '700', 
+      letterSpacing: '0.05em',
+      color: 'var(--slate-light)', 
+      margin: '16px 0 5px 14px',
       textTransform: 'uppercase'
     }}>{label}</div>
   );
@@ -100,7 +141,7 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
       style={{
         width: '240px',
         minHeight: '100vh',
-        background: '#0D1F45',
+        background: 'var(--frost)',
         display: 'flex',
         flexDirection: 'column',
         padding: '0',
@@ -108,42 +149,59 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
         top: 0,
         overflowY: 'auto',
         flexShrink: 0,
-        borderRight: '1px solid rgba(255,255,255,0.07)',
+        borderRight: '1px solid var(--frost-mid)',
       }}
     >
-      {/* Logo */}
+      {/* Logo Section */}
       <div style={{ padding: '24px 18px 16px 18px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
           <div style={{
             width: '34px', height: '34px', borderRadius: '10px',
-            background: '#00C896',
+            background: 'var(--mint)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 14px rgba(0,200,150,0.35)'
+            boxShadow: 'var(--shadow-mint)'
           }}>
-            <TrendingUp size={18} color="#0D1F45" />
+            <TrendingUp size={18} color="var(--navy-deepest)" />
           </div>
           <div>
-            <div style={{ fontWeight: '800', fontSize: '15px', color: '#ffffff', letterSpacing: '-0.02em' }}>
+            <div style={{ fontWeight: '800', fontSize: '16px', color: 'var(--navy)', letterSpacing: '-0.02em' }}>
               SomTrader
             </div>
-            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '-1px' }}>Pro Analytics</div>
+            <div style={{ fontSize: '11px', color: 'var(--slate-mid)', marginTop: '-1px' }}>Pro Analytics</div>
           </div>
         </div>
 
         {/* Lang toggle */}
-        <div style={{ display: 'flex', gap: '5px', marginTop: '14px', background: 'rgba(255,255,255,0.06)', padding: '3px', borderRadius: '8px' }}>
-          {['EN', 'SO'].map(lang => (
-            <button
-              key={lang}
-              onClick={() => setLanguage(lang.toLowerCase())}
-              style={{
-                flex: 1, padding: '4px 0', fontSize: '11px', borderRadius: '6px',
-                border: 'none', fontWeight: '700', cursor: 'pointer', transition: 'all 0.15s ease',
-                background: language === lang.toLowerCase() ? '#1A3B6E' : 'transparent',
-                color: language === lang.toLowerCase() ? 'white' : 'rgba(255,255,255,0.4)',
-              }}
-            >{lang}</button>
-          ))}
+        <div style={{ 
+          display: 'flex', 
+          gap: '4px', 
+          marginTop: '16px', 
+          background: 'rgba(26, 59, 110, 0.05)', 
+          padding: '3px', 
+          borderRadius: '8px' 
+        }}>
+          {['EN', 'SO'].map(lang => {
+            const isSelected = language === lang.toLowerCase();
+            return (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang.toLowerCase())}
+                style={{
+                  flex: 1, 
+                  padding: '5px 0', 
+                  fontSize: '11px', 
+                  borderRadius: '6px',
+                  border: 'none', 
+                  fontWeight: '700', 
+                  cursor: 'pointer', 
+                  transition: 'all 0.15s ease',
+                  background: isSelected ? 'var(--white)' : 'transparent',
+                  color: isSelected ? 'var(--navy)' : 'var(--slate-mid)',
+                  boxShadow: isSelected ? 'var(--shadow-sm)' : 'none',
+                }}
+              >{lang}</button>
+            );
+          })}
         </div>
       </div>
 
@@ -152,23 +210,32 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
         <button
           onClick={onOpenNewTrade}
           style={{
-            width: '100%', padding: '10px', borderRadius: '10px', border: 'none',
-            background: '#00C896',
-            color: '#0D1F45', fontWeight: '600', fontSize: '13px',
-            cursor: 'pointer', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', gap: '8px', transition: 'all 0.2s ease',
-            boxShadow: '0 4px 14px rgba(0,200,150,0.35)',
+            width: '100%', 
+            padding: '10px', 
+            borderRadius: '10px', 
+            border: 'none',
+            background: 'var(--mint)',
+            color: 'var(--navy-dark)', 
+            fontWeight: '600', 
+            fontSize: '13px',
+            cursor: 'pointer', 
+            display: 'flex', 
+            alignItems: 'center',
+            justifyContent: 'center', 
+            gap: '8px', 
+            transition: 'all 0.2s ease',
+            boxShadow: 'var(--shadow-mint)',
             letterSpacing: '0.01em'
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#00A87E'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#00C896'; }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'var(--mint-dark)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'var(--mint)'; }}
         >
           <PlusCircle size={16} /> {t('newTrade')}
         </button>
       </div>
 
       {/* Divider */}
-      <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', margin: '0 12px 4px 12px' }} />
+      <div style={{ height: '1px', background: 'var(--border)', margin: '0 12px 4px 12px' }} />
 
       {/* Nav */}
       <nav style={{ flex: 1, padding: '4px 10px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
@@ -196,21 +263,34 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '7px 10px',
+                  padding: '8px 10px',
                   borderRadius: '8px',
                   border: 'none',
-                  background: isActive ? 'rgba(255,255,255,0.1)' : 'transparent',
-                  color: isActive ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                  background: isActive ? 'var(--white)' : 'transparent',
+                  color: isActive ? 'var(--navy)' : 'var(--slate-mid)',
+                  boxShadow: isActive ? '0 4px 12px rgba(26, 59, 110, 0.05)' : 'none',
                   cursor: 'pointer',
                   transition: 'all 0.15s ease',
                   width: '100%',
                   fontSize: '13px',
-                  textAlign: 'left'
+                  textAlign: 'left',
+                  position: 'relative'
                 }}
-                onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
-                onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
+                onMouseEnter={e => { 
+                  if (!isActive) e.currentTarget.style.background = 'rgba(26, 59, 110, 0.04)'; 
+                }}
+                onMouseLeave={e => { 
+                  if (!isActive) e.currentTarget.style.background = 'transparent'; 
+                }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
+                  {isActive && (
+                    <div style={{
+                      position: 'absolute', left: '2px', top: '20%', height: '60%',
+                      width: '3px', borderRadius: '3px',
+                      background: 'linear-gradient(180deg, var(--mint), var(--navy))'
+                    }} />
+                  )}
                   <span style={{ fontSize: '13px' }}>{icon}</span>
                   <span style={{ 
                     whiteSpace: 'nowrap', 
@@ -222,11 +302,12 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
                 <span style={{
                   fontSize: '10px',
                   fontWeight: '700',
-                  background: isActive ? '#00C896' : 'rgba(255,255,255,0.05)',
-                  color: isActive ? '#0D1F45' : 'rgba(255,255,255,0.3)',
+                  background: isActive ? 'var(--navy)' : 'var(--frost-mid)',
+                  color: isActive ? 'var(--white)' : 'var(--slate)',
                   padding: '2px 6px',
                   borderRadius: '10px',
-                  textTransform: 'uppercase'
+                  textTransform: 'uppercase',
+                  transition: 'all 0.15s ease'
                 }}>{acc.type}</span>
               </button>
             );
@@ -241,21 +322,34 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
             style={{
               display: 'flex',
               alignItems: 'center',
-              padding: '7px 10px',
+              padding: '8px 10px',
               borderRadius: '8px',
               border: 'none',
-              background: selectedAccount === 'All Accounts' ? 'rgba(255,255,255,0.1)' : 'transparent',
-              color: selectedAccount === 'All Accounts' ? '#ffffff' : 'rgba(255,255,255,0.5)',
+              background: selectedAccount === 'All Accounts' ? 'var(--white)' : 'transparent',
+              color: selectedAccount === 'All Accounts' ? 'var(--navy)' : 'var(--slate-mid)',
+              boxShadow: selectedAccount === 'All Accounts' ? '0 4px 12px rgba(26, 59, 110, 0.05)' : 'none',
               cursor: 'pointer',
               transition: 'all 0.15s ease',
               width: '100%',
               fontSize: '13px',
               textAlign: 'left',
-              gap: '8px'
+              gap: '8px',
+              position: 'relative'
             }}
-            onMouseEnter={e => { if (selectedAccount !== 'All Accounts') e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
-            onMouseLeave={e => { if (selectedAccount !== 'All Accounts') e.currentTarget.style.background = 'transparent'; }}
+            onMouseEnter={e => { 
+              if (selectedAccount !== 'All Accounts') e.currentTarget.style.background = 'rgba(26, 59, 110, 0.04)'; 
+            }}
+            onMouseLeave={e => { 
+              if (selectedAccount !== 'All Accounts') e.currentTarget.style.background = 'transparent'; 
+            }}
           >
+            {selectedAccount === 'All Accounts' && (
+              <div style={{
+                position: 'absolute', left: '2px', top: '20%', height: '60%',
+                width: '3px', borderRadius: '3px',
+                background: 'linear-gradient(180deg, var(--mint), var(--navy))'
+              }} />
+            )}
             <span style={{ fontSize: '13px' }}>📂</span>
             <span style={{ fontWeight: selectedAccount === 'All Accounts' ? '600' : '400' }}>
               {language === 'so' ? 'Dhammaan' : 'All Accounts'}
@@ -268,9 +362,9 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
 
         {user?.isAdmin && (
           <>
-            <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', margin: '8px 4px' }} />
+            <div style={{ height: '1px', background: 'var(--border)', margin: '8px 4px' }} />
             <SectionLabel label="Admin" />
-            {adminItems.map(item => <NavItem key={item.id} item={item} accentOverride="#f59e0b" />)}
+            {adminItems.map(item => <NavItem key={item.id} item={item} />)}
           </>
         )}
       </nav>
@@ -279,24 +373,27 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
       <div style={{ padding: '12px 10px 16px 10px' }}>
         {/* Discipline Score */}
         <div style={{
-          background: 'rgba(255,255,255,0.05)', borderRadius: '12px',
-          padding: '14px', marginBottom: '8px',
-          border: '1px solid rgba(255,255,255,0.07)'
+          background: 'var(--white)', 
+          borderRadius: '12px',
+          padding: '14px', 
+          marginBottom: '8px',
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-sm)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: '600' }}>
+            <span style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '600' }}>
               {t('disciplineScore')}
             </span>
             <span style={{
               fontSize: '13px', fontWeight: '800',
-              color: disciplineScore > 70 ? '#00C896' : disciplineScore > 40 ? '#F0A500' : '#C0392B'
+              color: disciplineScore > 70 ? 'var(--mint-dark)' : disciplineScore > 40 ? 'var(--warning)' : 'var(--danger)'
             }}>{disciplineScore}%</span>
           </div>
-          <div style={{ height: '4px', background: 'rgba(255,255,255,0.08)', borderRadius: '10px', overflow: 'hidden' }}>
+          <div style={{ height: '4px', background: 'var(--frost-mid)', borderRadius: '10px', overflow: 'hidden' }}>
             <div style={{
               width: `${disciplineScore}%`, height: '100%',
               background: disciplineScore > 70
-                ? 'linear-gradient(90deg, #00A87E, #00C896)'
+                ? 'linear-gradient(90deg, var(--mint-dark), var(--mint))'
                 : disciplineScore > 40
                   ? 'linear-gradient(90deg, #c77c00, #F0A500)'
                   : 'linear-gradient(90deg, #A33030, #C0392B)',
@@ -315,24 +412,27 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
             <div
               onClick={() => setActiveTab('pricing')}
               style={{
-                background: expired ? 'rgba(220,38,38,0.1)' : 'rgba(245,158,11,0.08)',
-                border: `1px solid ${expired ? 'rgba(220,38,38,0.2)' : 'rgba(245,158,11,0.2)'}`,
-                borderRadius: '10px', padding: '10px 12px', cursor: 'pointer',
-                marginBottom: '8px'
+                background: expired ? 'var(--danger-bg)' : 'var(--warning-bg)',
+                border: `1px solid ${expired ? 'rgba(192,57,43,0.15)' : 'rgba(160,92,16,0.15)'}`,
+                borderRadius: '10px', 
+                padding: '10px 12px', 
+                cursor: 'pointer',
+                marginBottom: '8px',
+                boxShadow: 'var(--shadow-sm)'
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: '600' }}>
+                <span style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '600' }}>
                   {language === 'so' ? 'Maalmo Tijaabo' : 'Trial Days'}
                 </span>
-                <span style={{ fontSize: '12px', fontWeight: '800', color: expired ? '#f87171' : '#fbbf24' }}>
+                <span style={{ fontSize: '12px', fontWeight: '800', color: expired ? 'var(--danger)' : 'var(--warning)' }}>
                   {days}/30
                 </span>
               </div>
-              <div style={{ height: '3px', background: 'rgba(255,255,255,0.08)', borderRadius: '10px', overflow: 'hidden' }}>
+              <div style={{ height: '3px', background: 'rgba(26, 59, 110, 0.08)', borderRadius: '10px', overflow: 'hidden' }}>
                 <div style={{
                   width: `${(days / 30) * 100}%`, height: '100%',
-                  background: expired ? '#ef4444' : '#f59e0b', borderRadius: '10px', transition: 'width 1s ease'
+                  background: expired ? 'var(--danger)' : 'var(--warning)', borderRadius: '10px', transition: 'width 1s ease'
                 }} />
               </div>
             </div>
@@ -343,14 +443,27 @@ const Sidebar = ({ activeTab, setActiveTab, disciplineScore, tradesCount, accoun
         <button
           onClick={() => { if (window.confirm(t('confirmLogout'))) logout(); }}
           style={{
-            width: '100%', padding: '9px 12px', borderRadius: '10px',
-            background: 'rgba(192,57,43,0.07)', border: '1px solid rgba(192,57,43,0.15)',
-            color: '#E74C3C', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', gap: '8px', cursor: 'pointer',
-            fontSize: '13px', fontWeight: '600', transition: 'all 0.15s ease'
+            width: '100%', 
+            padding: '9px 12px', 
+            borderRadius: '10px',
+            background: 'rgba(192,57,43,0.04)', 
+            border: '1px solid rgba(192,57,43,0.12)',
+            color: 'var(--danger)', 
+            display: 'flex', 
+            alignItems: 'center',
+            justifyContent: 'center', 
+            gap: '8px', 
+            cursor: 'pointer',
+            fontSize: '13px', 
+            fontWeight: '600', 
+            transition: 'all 0.15s ease'
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(192,57,43,0.14)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(192,57,43,0.07)'; }}
+          onMouseEnter={e => { 
+            e.currentTarget.style.background = 'rgba(192,57,43,0.08)'; 
+          }}
+          onMouseLeave={e => { 
+            e.currentTarget.style.background = 'rgba(192,57,43,0.04)'; 
+          }}
         >
           <LogOut size={15} /> {t('signOut')}
         </button>

@@ -96,13 +96,11 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
   // Prop Firm Objectives Calculations
   const getObjectives = () => {
-    // 1. Minimum Trading Days
     const dates = activeTrades.map(t => new Date(t.timestamp).toDateString());
     const uniqueDays = new Set(dates).size;
     const daysTarget = 5;
     const daysStatus = uniqueDays >= daysTarget ? 'pass' : 'progress';
 
-    // 2. Max Daily Loss (-5%)
     const dailyPLs = {};
     activeTrades.forEach(t => {
       const dateStr = new Date(t.timestamp).toDateString();
@@ -121,7 +119,6 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
     const maxDailyLossLimit = -5.00;
     const dailyLossStatus = worstDay <= maxDailyLossLimit ? 'fail' : (activeTrades.length > 0 ? 'pass' : 'progress');
 
-    // 3. Max Loss (-10%)
     let worstPeak = 0;
     let runPL = 0;
     const chronTrades = [...activeTrades].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
@@ -140,7 +137,6 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
     const maxLossLimit = -10.00;
     const maxLossStatus = worstPeak <= maxLossLimit ? 'fail' : (activeTrades.length > 0 ? 'pass' : 'progress');
 
-    // 4. Profit Target
     const activeAccount = accounts.find(a => a.name === selectedChartAccount) || { target: 8, initialBalance: 10000, type: 'Challenge' };
     const targetVal = parseFloat(activeAccount.target) || 8;
     const profitStatus = currentPL >= targetVal ? 'pass' : 'progress';
@@ -179,32 +175,37 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
   const objectives = getObjectives();
 
-  // Custom Chart Tooltip
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       if (data.name === 'Start') return null;
       const isWin = data.result === 'Win';
       return (
-        <div className="glass-card" style={{ padding: '12px 16px', border: '1px solid var(--border)', background: 'rgba(15, 23, 42, 0.95)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
-          <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '5px', fontWeight: '700', textTransform: 'uppercase' }}>
+        <div style={{ 
+          padding: '12px 16px', 
+          border: '1px solid var(--border)', 
+          background: 'var(--navy-deepest)', 
+          borderRadius: '12px',
+          boxShadow: 'var(--shadow-md)' 
+        }}>
+          <p style={{ fontSize: '11px', color: 'var(--slate-light)', marginBottom: '5px', fontWeight: '700', textTransform: 'uppercase' }}>
             Trade {data.name.replace('T', '')}
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <span style={{ fontWeight: 'bold', fontSize: '14px' }}>{data.symbol}</span>
+            <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'var(--white)' }}>{data.symbol}</span>
             <span style={{ 
               fontSize: '11px', 
               fontWeight: '800', 
               padding: '2px 6px', 
               borderRadius: '4px',
-              background: isWin ? 'rgba(0, 200, 150, 0.15)' : 'rgba(192, 57, 43, 0.15)',
+              background: isWin ? 'var(--mint-light)' : 'var(--danger-bg)',
               color: isWin ? 'var(--success)' : 'var(--danger)'
             }}>
               {data.result ? data.result.toUpperCase() : 'N/A'}
             </span>
           </div>
-          <p style={{ fontSize: '13px', fontWeight: '600' }}>
-            Cumulative P&L: <span style={{ color: data.pl >= 0 ? 'var(--success)' : 'var(--danger)' }}>{data.pl >= 0 ? '+' : ''}{data.pl}%</span>
+          <p style={{ fontSize: '13px', fontWeight: '600', color: 'var(--white)' }}>
+            Cumulative P&L: <span style={{ color: data.pl >= 0 ? 'var(--mint)' : '#E74C3C' }}>{data.pl >= 0 ? '+' : ''}{data.pl}%</span>
           </p>
         </div>
       );
@@ -218,10 +219,10 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
       {/* Top Header Selector */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
         <div>
-          <h2 className="text-gradient">
+          <h2 className="text-gradient" style={{ fontSize: '22px', fontWeight: '600', fontFamily: 'var(--font-sans)' }}>
             {language === 'so' ? 'Qaybta Falanqaynta' : 'Trading Dashboard'}
           </h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '11px', fontFamily: 'var(--font-sans)', marginTop: '2px' }}>
             {language === 'so' ? 'Kormeer oo falanqee natiijooyinka akoonnadaada.' : 'Track and analyze your professional trading account performance.'}
           </p>
         </div>
@@ -240,59 +241,176 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
         </div>
       </div>
 
-      {/* Top Header with Quick Stats */}
+      {/* Top Header with Quick Stats Cards styled EXACTLY like sawirka 2aad */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
-        <div className="glass-card accent-primary" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        
+        {/* Card 1: Portfolio P&L */}
+        <div style={{
+          background: 'var(--frost)',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: 'none',
+          boxShadow: 'none'
+        }}>
           <div>
-            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Portfolio P&L</p>
-            <div style={{ fontSize: '18px', color: currentPL >= 0 ? 'var(--success)' : 'var(--danger)', fontWeight: '600', marginTop: '5px' }}>
-              {currentPL >= 0 ? '+' : ''}{currentPL}%
+            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Portfolio P&L</p>
+            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
+              {currentPL >= 0 ? '+' : ''}{currentPL.toFixed(2)}%
             </div>
           </div>
-          <div style={{ background: currentPL >= 0 ? 'rgba(0, 200, 150, 0.12)' : 'rgba(192, 57, 43, 0.12)', padding: '10px', borderRadius: '50%', color: currentPL >= 0 ? 'var(--success)' : 'var(--danger)' }}>
-            {currentPL >= 0 ? <TrendingUp size={22} /> : <TrendingDown size={22} />}
+          <div style={{
+            background: currentPL >= 0 ? 'var(--mint-light)' : 'var(--danger-bg)',
+            color: currentPL >= 0 ? 'var(--success)' : 'var(--danger)',
+            padding: '4px 8px',
+            borderRadius: '6px',
+            fontSize: '11px',
+            fontWeight: '700',
+            fontFamily: 'var(--font-sans)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px',
+            alignSelf: 'center'
+          }}>
+            {currentPL >= 0 ? '↑' : '↓'} {Math.abs(currentPL).toFixed(1)}%
           </div>
         </div>
 
-        <div className="glass-card accent-purple" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* Card 2: Active Accounts */}
+        <div style={{
+          background: 'var(--frost)',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: 'none',
+          boxShadow: 'none'
+        }}>
           <div>
-            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Active Accounts</p>
-            <div style={{ fontSize: '18px', fontWeight: '600', marginTop: '5px', color: 'var(--navy)' }}>{accounts.length}</div>
+            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Active accounts</p>
+            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
+              {accounts.length}
+            </div>
           </div>
-          <div style={{ background: 'rgba(26, 59, 110, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--primary)' }}>
-            <Layers size={22} />
+          <div style={{
+            background: 'rgba(26, 59, 110, 0.05)',
+            color: 'var(--navy)',
+            padding: '4px 8px',
+            borderRadius: '6px',
+            fontSize: '11px',
+            fontWeight: '700',
+            fontFamily: 'var(--font-sans)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px',
+            alignSelf: 'center'
+          }}>
+            Live
           </div>
         </div>
 
-        <div className="glass-card accent-warning" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* Card 3: Discipline Score */}
+        <div style={{
+          background: 'var(--frost)',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: 'none',
+          boxShadow: 'none'
+        }}>
           <div>
-            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Discipline Score</p>
-            <div style={{ fontSize: '18px', color: 'var(--warning)', fontWeight: '600', marginTop: '5px' }}>{disciplineScore}%</div>
+            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Discipline score</p>
+            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
+              {disciplineScore}%
+            </div>
           </div>
-          <div style={{ background: 'rgba(160, 92, 16, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--warning)' }}>
-            <Award size={22} />
+          <div style={{
+            background: disciplineScore > 70 ? 'var(--mint-light)' : 'var(--warning-bg)',
+            color: disciplineScore > 70 ? 'var(--success)' : 'var(--warning)',
+            padding: '4px 8px',
+            borderRadius: '6px',
+            fontSize: '11px',
+            fontWeight: '700',
+            fontFamily: 'var(--font-sans)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px',
+            alignSelf: 'center'
+          }}>
+            {disciplineScore > 70 ? '↑ 100%' : '→ ' + disciplineScore + '%'}
           </div>
         </div>
 
-        <div className="glass-card accent-primary" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* Card 4: Total Pips Gained */}
+        <div style={{
+          background: 'var(--frost)',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: 'none',
+          boxShadow: 'none'
+        }}>
           <div>
-            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Pips Gained</p>
-            <div style={{ fontSize: '18px', color: totalPips >= 0 ? 'var(--success)' : 'var(--danger)', fontWeight: '600', marginTop: '5px' }}>
+            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Total pips gained</p>
+            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
               {totalPips > 0 ? '+' : ''}{totalPips}
             </div>
           </div>
-          <div style={{ background: totalPips >= 0 ? 'rgba(0, 200, 150, 0.12)' : 'rgba(192, 57, 43, 0.12)', padding: '10px', borderRadius: '50%', color: totalPips >= 0 ? 'var(--primary)' : 'var(--danger)' }}>
-            <Target size={22} />
+          <div style={{
+            background: totalPips >= 0 ? 'var(--mint-light)' : 'var(--danger-bg)',
+            color: totalPips >= 0 ? 'var(--success)' : 'var(--danger)',
+            padding: '4px 8px',
+            borderRadius: '6px',
+            fontSize: '11px',
+            fontWeight: '700',
+            fontFamily: 'var(--font-sans)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px',
+            alignSelf: 'center'
+          }}>
+            {totalPips >= 0 ? '↑' : '↓'} {Math.abs(totalPips)}
           </div>
         </div>
 
-        <div className="glass-card accent-purple" style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* Card 5: Total Trades */}
+        <div style={{
+          background: 'var(--frost)',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: 'none',
+          boxShadow: 'none'
+        }}>
           <div>
-            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Trades</p>
-            <div style={{ fontSize: '18px', fontWeight: '600', marginTop: '5px', color: 'var(--navy)' }}>{activeTrades.length}</div>
+            <p style={{ fontSize: '11px', color: 'var(--slate-mid)', fontWeight: '500', fontFamily: 'var(--font-sans)', textTransform: 'none' }}>Total trades</p>
+            <div style={{ fontSize: '22px', color: 'var(--navy)', fontWeight: '600', fontFamily: 'var(--font-sans)', marginTop: '4px' }}>
+              {activeTrades.length}
+            </div>
           </div>
-          <div style={{ background: 'rgba(0, 200, 150, 0.12)', padding: '10px', borderRadius: '50%', color: 'var(--primary)' }}>
-            <Zap size={22} />
+          <div style={{
+            background: 'rgba(26, 59, 110, 0.05)',
+            color: 'var(--navy)',
+            padding: '4px 8px',
+            borderRadius: '6px',
+            fontSize: '11px',
+            fontWeight: '700',
+            fontFamily: 'var(--font-sans)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px',
+            alignSelf: 'center'
+          }}>
+            Closed
           </div>
         </div>
       </div>
@@ -301,14 +419,14 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '30px', alignItems: 'start' }}>
         
         {/* Equity Curve Chart */}
-        <section className="glass-card accent-primary" style={{ padding: '25px' }}>
+        <section className="glass-card" style={{ padding: '25px', border: 'none', background: 'var(--white)', boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <div>
-              <h4 style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '700' }}>
-                <ChartIcon size={18} color="var(--primary)" />
+              <h4 style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '600', fontFamily: 'var(--font-sans)', color: 'var(--navy)' }}>
+                <ChartIcon size={16} color="var(--navy)" />
                 {language === 'so' ? 'Koraalka Equity-ga' : 'Equity Growth Curve'}
               </h4>
-              <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-sans)', marginTop: '2px' }}>
                 {language === 'so' ? 'Muuqaalka koboca raasamaalka ee waqtiga.' : 'Visualizing your capital journey over time.'}
               </p>
             </div>
@@ -323,7 +441,7 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
                     <stop offset="95%" stopColor={currentPL >= 0 ? 'var(--success)' : 'var(--danger)'} stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(26, 59, 110, 0.05)" vertical={false} />
                 <XAxis dataKey="name" stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="var(--text-muted)" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(val) => `${val}%`} />
                 <Tooltip content={<CustomTooltip />} />
@@ -342,13 +460,13 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
         </section>
 
         {/* Prop Firm Objectives Tracker */}
-        <section className="glass-card accent-primary" style={{ padding: '25px', height: '100%' }}>
-          <h4 style={{ fontSize: '1.1rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '700' }}>
-            <Activity size={18} color="var(--primary)" />
+        <section className="glass-card" style={{ padding: '25px', border: 'none', background: 'var(--white)', boxShadow: 'var(--shadow-sm)', height: '100%' }}>
+          <h4 style={{ fontSize: '14px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '600', fontFamily: 'var(--font-sans)', color: 'var(--navy)' }}>
+            <Activity size={16} color="var(--navy)" />
             {language === 'so' ? 'Habka Hubinta Shuruudaha (Prop Objectives)' : 'Prop Firm Objectives Tracker'}
           </h4>
           <div style={{ display: 'flex', flexDirection: 'column', borderRadius: '12px', border: '1px solid var(--border)', overflow: 'hidden' }}>
-            <div className="objectives-grid objectives-header">
+            <div className="objectives-grid objectives-header" style={{ fontSize: '11px', fontWeight: '600', background: 'var(--frost)' }}>
               <div>{language === 'so' ? 'QODOBKA' : 'TRADING OBJECTIVE'}</div>
               <div>{language === 'so' ? 'BARTILMAAMEED' : 'TARGET'}</div>
               <div>{language === 'so' ? 'HADDA' : 'CURRENT'}</div>
@@ -359,12 +477,12 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
               const isPass = obj.status === 'pass';
               const isFail = obj.status === 'fail';
               return (
-                <div className="objectives-grid" key={i}>
+                <div className="objectives-grid" key={i} style={{ borderBottom: i === objectives.length - 1 ? 'none' : '1px solid var(--border)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    {isPass && <CheckCircle2 size={16} color="var(--success)" className="pulse-dot-active" />}
+                    {isPass && <CheckCircle2 size={16} color="var(--success)" />}
                     {isFail && <XCircle size={16} color="var(--danger)" />}
                     {obj.status === 'progress' && <Calendar size={16} color="var(--warning)" />}
-                    <span style={{ fontWeight: '600', fontSize: '13px', color: 'var(--text-main)' }}>
+                    <span style={{ fontWeight: '500', fontSize: '13px', color: 'var(--text-main)' }}>
                       {language === 'so' ? obj.nameSo : obj.name}
                     </span>
                   </div>
@@ -379,7 +497,7 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
                     {obj.current}
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <span className={`objective-status-badge ${obj.status}`}>
+                    <span className={`objective-status-badge ${obj.status}`} style={{ fontSize: '11px', fontWeight: '700' }}>
                       {obj.status === 'pass' && (language === 'so' ? 'Baasay' : 'Passed')}
                       {obj.status === 'fail' && (language === 'so' ? 'Fashil' : 'Failed')}
                       {obj.status === 'progress' && (language === 'so' ? 'Socda' : 'Ongoing')}
@@ -394,7 +512,7 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
 
       {/* Account Health Cards */}
       <div>
-        <h3 style={{ fontSize: '16px', marginBottom: '15px', fontWeight: '700', color: 'var(--text-main)' }}>
+        <h3 style={{ fontSize: '16px', marginBottom: '15px', fontWeight: '600', color: 'var(--text-main)', fontFamily: 'var(--font-sans)' }}>
           {language === 'so' ? 'Xaaladda Akoonnada' : 'Account Details & Status'}
         </h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
@@ -404,55 +522,58 @@ const Dashboard = ({ trades, accounts, selectedAccount, setSelectedAccount }) =>
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className={`glass-card ${acc.isBlown ? 'accent-danger' : acc.isPassed ? 'accent-success' : 'accent-primary'}`}
               style={{ 
                 padding: '20px', 
-                cursor: 'pointer'
+                cursor: 'pointer',
+                background: 'var(--frost)',
+                borderRadius: '12px',
+                border: 'none',
+                boxShadow: 'none'
               }}
               onClick={() => setSelectedAccount(acc.name)}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
-                  <h4 style={{ fontSize: '14px', fontWeight: '600', color: 'var(--navy)', marginBottom: '2px' }}>{acc.name}</h4>
-                  <span style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{acc.type}</span>
+                  <h4 style={{ fontSize: '14px', fontWeight: '600', color: 'var(--navy)', marginBottom: '2px', fontFamily: 'var(--font-sans)' }}>{acc.name}</h4>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)' }}>{acc.type}</span>
                 </div>
                 {acc.isBlown ? (
                   <ShieldAlert size={18} color="var(--danger)" />
                 ) : acc.isPassed ? (
                   <CheckCircle2 size={18} color="var(--success)" />
                 ) : (
-                  <Activity size={18} color="var(--primary)" className="pulse-dot-active" />
+                  <Activity size={18} color="var(--navy)" className="pulse-dot-active" />
                 )}
               </div>
 
-              <div style={{ fontSize: '18px', fontWeight: '600', color: parseFloat(acc.currentPL) >= 0 ? 'var(--success)' : 'var(--danger)' }}>
+              <div style={{ fontSize: '22px', fontWeight: '600', color: parseFloat(acc.currentPL) >= 0 ? 'var(--success)' : 'var(--danger)', fontFamily: 'var(--font-sans)' }}>
                 {parseFloat(acc.currentPL) > 0 ? '+' : ''}{acc.currentPL}%
               </div>
 
               {acc.target > 0 && (
                 <div style={{ marginTop: '12px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px', fontFamily: 'var(--font-sans)', color: 'var(--slate-mid)' }}>
                     <span>Target: {acc.target}%</span>
                     <span>{Math.min(100, Math.max(0, (parseFloat(acc.currentPL) / acc.target) * 100)).toFixed(0)}%</span>
                   </div>
-                  <div style={{ height: '5px', background: 'rgba(255,255,255,0.03)', borderRadius: '10px', overflow: 'hidden' }}>
+                  <div style={{ height: '5px', background: 'rgba(26, 59, 110, 0.08)', borderRadius: '10px', overflow: 'hidden' }}>
                     <div style={{ 
                       height: '100%', 
                       width: `${Math.min(100, Math.max(0, (parseFloat(acc.currentPL) / acc.target) * 100))}%`, 
-                      background: 'var(--primary)',
+                      background: 'var(--navy)',
                       borderRadius: '10px'
                     }}></div>
                   </div>
                 </div>
               )}
               
-              <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', color: 'var(--text-muted)' }}>
+              <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-sans)' }}>
                  <span>{acc.tradeCount} Trades</span>
                  <span style={{ 
-                   color: acc.isBlown ? 'var(--danger)' : acc.isPassed ? 'var(--success)' : 'var(--text-main)',
-                   fontWeight: '800',
+                   color: acc.isBlown ? 'var(--danger)' : acc.isPassed ? 'var(--success)' : 'var(--navy)',
+                   fontWeight: '700',
                    fontSize: '11px',
-                   background: acc.isPassed && ['Funded', 'Personal'].includes(acc.type) ? 'rgba(0, 200, 150, 0.12)' : 'rgba(255,255,255,0.02)',
+                   background: acc.isPassed && ['Funded', 'Personal'].includes(acc.type) ? 'var(--mint-light)' : 'rgba(26, 59, 110, 0.06)',
                    padding: '3px 8px',
                    borderRadius: '6px',
                    letterSpacing: '0.5px'

@@ -65,13 +65,13 @@
   /* Button text */
   --btn-text:       #FFFFFF;
 
-  /* Sidebar — Navy deep */
-  --sidebar-bg:     var(--navy-deepest);
-  --sidebar-hover:  rgba(255, 255, 255, 0.07);
-  --sidebar-active: rgba(0, 200, 150, 0.18);
-  --sidebar-text:   rgba(255, 255, 255, 0.55);
-  --sidebar-text-active: #FFFFFF;
-  --sidebar-border: rgba(255, 255, 255, 0.07);
+  /* Sidebar — Light Cloud Frost */
+  --sidebar-bg:     var(--frost);
+  --sidebar-hover:  rgba(26, 59, 110, 0.04);
+  --sidebar-active: var(--white);
+  --sidebar-text:   var(--slate-mid);
+  --sidebar-text-active: var(--navy);
+  --sidebar-border: var(--frost-mid);
 
   /* Shadows */
   --shadow-sm:      0 1px 3px rgba(26, 59, 110, 0.07), 0 1px 2px rgba(26, 59, 110, 0.04);
@@ -211,7 +211,7 @@ h4 {
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-family: var(--font-sans);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -238,7 +238,7 @@ h4 {
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-family: var(--font-sans);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -257,7 +257,7 @@ h4 {
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-family: var(--font-sans);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -277,7 +277,7 @@ h4 {
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-family: var(--font-sans);
   cursor: pointer;
   transition: all 0.15s ease;
@@ -296,7 +296,7 @@ input, select, textarea {
   padding: 10px 14px;
   color: var(--text-main);
   outline: none;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-family: var(--font-sans);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   width: 100%;
@@ -347,18 +347,18 @@ select option {
 /* ─── Sidebar ─── */
 .sidebar {
   background: var(--sidebar-bg) !important;
-  border: none !important;
+  border-right: 1px solid var(--sidebar-border) !important;
   border-radius: 0 !important;
   backdrop-filter: none !important;
 }
 
 /* ─── Sidebar section headers ─── */
 .sidebar-section-header {
-  font-size: 10px;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: rgba(255, 255, 255, 0.28);
-  margin: 16px 0 5px 14px;
+  margin: 20px 0 6px 14px;
   text-transform: uppercase;
 }
 
@@ -391,9 +391,9 @@ select option {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 10px;
+  padding: 3px 10px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.03em;
 }
@@ -431,7 +431,7 @@ select option {
 .objectives-header {
   font-weight: 600;
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   background: var(--frost);
@@ -444,10 +444,9 @@ select option {
   gap: 5px;
   padding: 4px 10px;
   border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
 }
 .objective-status-badge.pass {
   background: var(--mint-light);
@@ -502,16 +501,16 @@ select option {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 10px;
+  padding: 3px 10px;
   border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 /* ─── Palette strip utility ─── */
-.section-eyebrow, .section-label {
-  font-size: 10px;
-  font-weight: 600;
+.section-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mint-dark);
@@ -536,7 +535,7 @@ select option {
     justify-content: space-between;
     align-items: center !important;
     border-radius: 0 !important;
-    border-top: 1px solid rgba(255,255,255,0.08) !important;
+    border-top: 1px solid var(--sidebar-border) !important;
     z-index: 1000;
   }
   .sidebar .logo, .sidebar .btn-primary, .sidebar div:last-child {
